@@ -9,8 +9,5 @@
         <module name="WeBlog" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="WeBlog" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>
