@@ -3,10 +3,6 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-  <component name="Kotlin2JsCompilerArguments">
-    <option name="sourceMapEmbedSources" />
-    <option name="sourceMapPrefix" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

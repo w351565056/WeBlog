@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/blogcontent.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="layui/layui.all.js"></script>
+    <script>
+        $(function () {
+            layui.use('layer', function(){
+                var $ = layui.jquery, layer = layui.layer;
+            })
+            //----------------------------转发
+            $(".blogcontent_body_bottom_zhuanfa").click(function () {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    shadeClose: true,
+                    skin: 'layer-molv',
+                    content: '<div class="blogcontent_body_bottom_zf">\n' +
+                        '        <div><span>输入你要说的话</span></div>\n' +
+                        '        <textarea name="" id="" cols="30" rows="10"></textarea>\n' +
+                        '        <div><input type="submit" value="提交"></div>\n' +
+                        '    </div>'
+                });
+            })
+            //-------------------------------收藏
+            $(".blogcontent_body_bottom_shoucang").click(function () {
+                var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
+                $(this).parent().parent().parent().parent().append($node);
+                $(".blogcontent_body_bottom_sc_demo").animate({height:"200px"});
+            })
+            //--------------------------------评论
+            $(".blogcontent_body_bottom_pinglun").click(function () {
+                var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
+                $(this).parent().parent().parent().parent().append($node);
+            })
+            //-------------------------------点赞
+            $(".blogcontent_body_bottom_zan").click(function () {
+                var str = $(this).find('img').attr("src");
+                if (str=="images/nolike.png"){
+                $(this).find('img').attr('src','images/like.png');
+                }else{
+                    $(this).find('img').attr('src','images/nolike.png');
+                }
+            })
+        })
+    </script>
+</head>
+<body style="background: #999999">
+<div class="blogcontent_main">
+    <div class="blogcontent_body_jubao">
+        <a href=""><span>v举报</span></a>
+    </div>
+    <div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>
+    <div class="blogcontent_body">
+        <div class="blogcontent_body_main">
+        <div class="blogcontent_body_name"><a href="">username</a></div>
+        <div class="blogcontent_body_word">初代和克隆的开心狐，两图差别只是十字架和眼镜这种没有什么用的小细节。
+        不知道有没有肝说不定全员都会画，大概可能♡(*´∀｀)人(´∀｀*)♡</div>
+        <div class="blogcontent_body_photo">
+            <img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div>
+        </div>
+            <div class="blogcontent_body_bottom">
+                <span class="blogcontent_body_bottom_shoucang">收藏(10)</span>
+                <span class="blogcontent_body_bottom_zhuanfa">转发(10)</span>
+                <span class="blogcontent_body_bottom_pinglun">评论(10)</span>
+                <span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span>
+            </div>
+        </div>
+    </div>
+    <div class="blogcontent_sanjiao"></div>
+</div>
+</body>
+</html>
