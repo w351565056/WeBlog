@@ -1,0 +1,359 @@
+.myZone_content{
+    background-image: url("../images/myZone/backgroundimg.jpg");
+    background-size: 2200px;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-position: -850px -150px;
+
+}
+body{
+    font-size: 12px;
+}
+a{
+    cursor: pointer;
+}
+.icon-header{
+    width: 16px;
+    height:16px;
+}
+.myZone_header {
+    background-color: white;
+    width: 920px;
+    margin-left: 220px;
+    height: 344px;
+    margin-bottom: 20px;
+}
+.myZone_header_show{
+    width: 920px;
+    height: 300px;
+    background-image: url("../images/myZone/backgroundimg.jpg");
+    background-size: cover;
+    color: white;
+}
+.myZone_header_photo{
+    position: relative;
+    top: 30px;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
+    margin: auto;
+}
+.myZone_header_photo img{
+    border-radius: 50px;
+    box-shadow: #93D1FF 0px 0px 5px 5px;
+}
+.myZone_header_username{
+    width: 920px;
+    height: 28px;
+    text-align: center;
+    position: relative;
+    top: 40px;
+    left: 10px;
+    font-size: 25px;
+}
+.myZone_header_intro{
+    width: 920px;
+    height: 28px;
+    text-align: center;
+    position: relative;
+    top: 53px;
+    font-size:13px;
+}
+
+
+.myZone_head_nav{
+    width: 920px;
+    height: 40px;
+    background: white;
+}
+.myZone_nav_wrap{
+    margin: auto;
+    width: 552px;
+    height: 40px;
+}
+.myZone_nav_wrap td{
+    width: 184px;
+    height: 40px;
+    font-size: 14px;
+
+    font-weight: bold;
+    text-align: center;
+}
+.nav_title{
+    display: block;
+    line-height: 42px;
+}
+.nav_border{
+    display: block;
+    width: 70px;
+    height: 2px;
+    margin: auto;
+    background: #f7691d;
+}
+.myZone_body {
+    width: 920px;
+    margin-left: 220px;
+}
+
+.myZone_left {
+    width: 300px;
+    display: inline-block;
+}
+
+.myZone_left_unit {
+    background-color: white;
+    height: 60px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+.myZone_right {
+    background-color: white;
+    width: 600px;
+    margin-left: 16px;
+    display: inline-block;
+    vertical-align: top;
+    min-height:445px;
+}
+
+.myZone_footer {
+    width: 100%;
+}
+
+.myZone_footer_1 {
+    margin-top: 20px;
+    height: 161px
+}
+
+.myZone_footer_2 {
+    height: 112px
+}
+.unit1_info{
+    float: left;
+    width: 99px;
+    height: 36px;
+    margin-top: 10px;
+}
+.border_left{
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-color: #d9d9d9;
+}
+.border_right{
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-color: #d9d9d9;
+}
+.border_bottom{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: #d9d9d9;
+}
+.a_left:hover{
+    color: #75c3f1;
+    cursor: pointer;
+}
+.unit1_number{
+    display: block;
+    font-size: 18px;
+    margin-left: 40px;
+    font-weight: 400;
+    color: #333;
+}
+.unit1_text{
+    color: #808080;
+    margin-top: -2px;
+    margin-left: 32px;
+    font-size: 13px;
+}
+.unit2_header{
+    height: 38px;
+    padding-left: 16px;
+    line-height: 38px;
+}
+.headr_info{
+    font-size: 14px;
+    font-weight: 700;
+}
+.unit2_bottom{
+    padding: 6px;
+
+}
+.unit2_bottom_text{
+    display: inline-block;
+    background-color: #f2f2f5;
+    width: 190px;
+    height:98px;
+}
+.unit2_bottom_text1{
+    font-size: 12px;
+    float: left;
+    margin-top: 8px;
+    margin-left:5px;
+}
+.unit2_bottom_text2{
+    font-size: 12px;
+    float: right;
+    margin-top: 50px;
+    margin-right: 8px;
+}
+.unit4_lv{
+    width: 25px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 8px;
+    padding: 0 5px 0 3px;
+    background-color: #ffb400;
+    font-size: 12px;
+    color: #fff;
+    font-style: italic;
+    letter-spacing: -0.1em;
+}
+.info{
+    color: #808080;
+    line-height: 20px;
+    font-size: 12px;
+}
+.unit4_middle{
+    margin: 15px;
+}
+.percent_text{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.percent{
+    margin-left: 5px;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+}
+.unit4_bottom{
+    line-height: 35px;
+    text-align: center;
+}
+.info_block{
+    margin-left: -8px;
+
+}
+.info_header{
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    display: inline-block;
+}
+.info_line{
+    border-color: #e6e6e6;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    display: inline-block;
+    margin-bottom: 4px;
+    width: 500px;
+}
+.info_button{
+    cursor: pointer;
+    display: inline-block;
+    line-height: 18px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 13px;
+    padding: 0px 9px 0 8px;
+}
+
+.attention{
+    width: 600px;
+}
+.attention_unit{
+    padding: 16px;
+}
+.attention_img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+.attention_info{
+    width: 400px;
+    height:127px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 15px;
+}
+.attention_name{
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+}
+.icon{
+    width: 12px;
+    height: 14px;
+    vertical-align: -2px;
+    margin-left: 3px;
+    display: inline-block;
+}
+.attention_row{
+    margin-top: 6px;
+}
+.a_attention{
+    margin-left: 3px;
+    color: #307d74;
+    cursor: pointer;
+}
+.a_attention_name:hover{
+    color: #307d74;
+}
+.attention_row_unit{
+    margin-left: 10px;
+    display: inline-block;
+    padding-left:10px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-color: #d9d9d9;
+}
+.attention_button{
+    font-size: 13px;
+    display: inline-block;
+    width: 85px;
+    height: 30px;
+    vertical-align: top;
+    line-height: 35px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d9d9d9;
+
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+}
+.attention_add{
+    display: inline-block;
+    font-size: 25px;
+    margin-bottom: 10px;
+    line-height: 25px;
+    color: #fa7d3c!important;
+    vertical-align: middle;
+
+}
+.icon_duihao{
+    width: 15px;
+    height:15px;
+    padding-left: 8px;
+    padding-right: 2px;
+}
+.icon_jiahao{
+    width: 13px;
+    height: 13px;
+}
+.icon_huxiang{
+    width: 16px;
+    height:21px;
+    padding-left: 8px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+.attention_text{
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 8px;
+    line-height: 25px;
+    vertical-align: middle;
+}
