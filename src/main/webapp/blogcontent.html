@@ -29,7 +29,7 @@
                 var $ = layui.jquery, layer = layui.layer;
             })
             //----------------------------转发
-            $(".blogcontent_body_bottom_zhuanfa").click(function () {
+            $("body").on('click','.blogcontent_body_bottom_zhuanfa',function () {
                 layer.open({
                     type: 1,
                     title: false,
@@ -44,18 +44,18 @@
                 });
             })
             //-------------------------------收藏
-            $(".blogcontent_body_bottom_shoucang").click(function () {
+            $("body").on('click','.blogcontent_body_bottom_shoucang',function () {
                 var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
                 $(this).parent().parent().parent().parent().append($node);
                 $(".blogcontent_body_bottom_sc_demo").animate({height:"200px"});
             })
             //--------------------------------评论
-            $(".blogcontent_body_bottom_pinglun").click(function () {
+            $("body").on('click','.blogcontent_body_bottom_pinglun',function () {
                 var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
                 $(this).parent().parent().parent().parent().append($node);
             })
             //-------------------------------点赞
-            $(".blogcontent_body_bottom_zan").click(function () {
+            $("body").on('click','.blogcontent_body_bottom_zan',function () {
                 var str = $(this).find('img').attr("src");
                 if (str=="images/nolike.png"){
                 $(this).find('img').attr('src','images/like.png');
@@ -77,7 +77,7 @@
         <!--<div class="blogcontent_body_name"><a href=""></a></div>-->
         <!--<div class="blogcontent_body_word"></div>-->
         <!--<div class="blogcontent_body_photo">-->
-            <!--<img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div>-->
+            <!--<img src="" alt=""><img src="" alt=""><img src="" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div>-->
         <!--</div>-->
             <!--<div class="blogcontent_body_bottom">-->
                 <!--<span class="blogcontent_body_bottom_shoucang">收藏(10)</span>-->
