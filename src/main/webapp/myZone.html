@@ -5,13 +5,21 @@
     <title>Title</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/myZone.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <script src="//at.alicdn.com/t/font_786622_igfdgk6diqe.js" type="text/javascript"></script>
     <script src="layui/layui.js"></script>
+
     <script>
         layui.use('element', function(){
             var element = layui.element;
-
         });
+        $(function () {
+            $(".nav_title").click(function () {
+                $(".nav_title").removeClass("nav_border_bottom");
+                $(this).addClass("nav_border_bottom");
+
+            })
+        })
     </script>
 
 </head>
@@ -38,9 +46,13 @@
         <div class="myZone_nav_wrap">
             <table>
                 <tr>
-                    <td><a href="#"><span class="nav_title">我的主页</span><span class="nav_border"></span></a></td>
+                    <td><a class="nav_title" href="#"><span>我的主页</span></a></td>
+                    <td><a class="nav_title" href="myZone_attention.html" target="myZone_iframe" ><span>我的关注</span></a></td>
+                    <td><a class="nav_title" href="myZone_fans.html" target="myZone_iframe" ><span>我的粉丝</span></a></td>
+
+                    <!--<td><a href="#"><span class="nav_title nav_border_bottom">我的主页</span></a></td>
                     <td><a href="#"><span class="nav_title">我的关注</span><span class="nav_border"></span></a></td>
-                    <td><a href="#"><span class="nav_title">我的粉丝</span><span class="nav_border"></span></a></td>
+                    <td><a href="#"><span class="nav_title">我的粉丝</span><span class="nav_border"></span></a></td>-->
                 </tr>
             </table>
         </div>
@@ -51,15 +63,15 @@
         <div class="myZone_left_unit">
             <div class="unit1_info">
                 <div class="unit1_number"><a class="a_left">9</a></div>
-                <div class="unit1_text"><a class="a_left">关注</a></div>
+                <div class="unit1_text"><a class="a_left" href="myZone_attention.html" target="myZone_iframe">关注</a></div>
             </div>
             <div class="unit1_info border_left">
                 <div class="unit1_number"><a class="a_left">2</a></div>
-                <div class="unit1_text"><a class="a_left">粉丝</a></div>
+                <div class="unit1_text"><a class="a_left" href="myZone_fans.html" target="myZone_iframe">粉丝</a></div>
             </div>
             <div class="unit1_info border_left">
                 <div class="unit1_number"><a class="a_left">2</a></div>
-                <div class="unit1_text"><a class="a_left">微博</a></div>
+                <div class="unit1_text"><a class="a_left" href="#">微博</a></div>
             </div>
         </div>
         <div class="myZone_left_unit" style="height: 172px">
@@ -72,11 +84,11 @@
                     </div>
                 </div>
             </div>
-            <div class="unit4_bottom"><a class="a_left">编辑个人资料 ></a></div>
+            <div class="unit4_bottom"><a class="a_left" href="myData_part1.html" target="myZone_iframe">编辑个人资料 ></a></div>
         </div>
     </div>
     <div class="myZone_right">
-        <iframe src="myZone_fans.html" scrolling="no" frameborder="no" width="100%" height="600px"></iframe>
+        <iframe name="myZone_iframe" src="myZone_fans.html" scrolling="no" frameborder="no" width="100%" height="600px"></iframe>
     </div>
 </div>
 <div class="myZone_footer">
