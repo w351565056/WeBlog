@@ -7,12 +7,11 @@ public class BlogDiscuss {
     private BigDecimal DISCUSS_ID;
     private BigDecimal BLOG_ID;
     private BigDecimal USER_ID;
-    String DISCUSS_TEXT;
-    String DISCUSS_IMG;
-    Date CREATE_DATE_TIME;
-    Date MODIFY_DATE_TIME;
+    private String DISCUSS_TEXT;
+    private String DISCUSS_IMG;
     private BigDecimal PREUSER_ID;
-
+    private Date CREATE_DATE_TIME;
+    private Date MODIFY_DATE_TIME;
 
     public BigDecimal getDISCUSS_ID() {
         return DISCUSS_ID;
@@ -54,6 +53,14 @@ public class BlogDiscuss {
         this.DISCUSS_IMG = DISCUSS_IMG;
     }
 
+    public BigDecimal getPREUSER_ID() {
+        return PREUSER_ID;
+    }
+
+    public void setPREUSER_ID(BigDecimal PREUSER_ID) {
+        this.PREUSER_ID = PREUSER_ID;
+    }
+
     public Date getCREATE_DATE_TIME() {
         return CREATE_DATE_TIME;
     }
@@ -69,14 +76,4 @@ public class BlogDiscuss {
     public void setMODIFY_DATE_TIME(Date MODIFY_DATE_TIME) {
         this.MODIFY_DATE_TIME = MODIFY_DATE_TIME;
     }
-
-    public BigDecimal getPREUSER_ID() {
-        return PREUSER_ID;
-    }
-
-    public void setPREUSER_ID(BigDecimal PREUSER_ID) {
-        this.PREUSER_ID = PREUSER_ID;
-    }
-
-
 }

@@ -1,18 +1,22 @@
 package entity;
 
-//import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BlogContent {
-    private BigDecimal  BLOG_ID;
+public class BlogLike {
+    private BigDecimal LIKE_ID;
+    private BigDecimal BLOG_ID;
     private BigDecimal USER_ID;
-    private String BLOG_TEXT;
-    private String BLOG_IMG;
-    private BigDecimal BLOG_FORWARD;
-    private BigDecimal REPORT;
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
+
+    public BigDecimal getLIKE_ID() {
+        return LIKE_ID;
+    }
+
+    public void setLIKE_ID(BigDecimal LIKE_ID) {
+        this.LIKE_ID = LIKE_ID;
+    }
 
     public BigDecimal getBLOG_ID() {
         return BLOG_ID;
@@ -28,38 +32,6 @@ public class BlogContent {
 
     public void setUSER_ID(BigDecimal USER_ID) {
         this.USER_ID = USER_ID;
-    }
-
-    public String getBLOG_TEXT() {
-        return BLOG_TEXT;
-    }
-
-    public void setBLOG_TEXT(String BLOG_TEXT) {
-        this.BLOG_TEXT = BLOG_TEXT;
-    }
-
-    public String getBLOG_IMG() {
-        return BLOG_IMG;
-    }
-
-    public void setBLOG_IMG(String BLOG_IMG) {
-        this.BLOG_IMG = BLOG_IMG;
-    }
-
-    public BigDecimal getBLOG_FORWARD() {
-        return BLOG_FORWARD;
-    }
-
-    public void setBLOG_FORWARD(BigDecimal BLOG_FORWARD) {
-        this.BLOG_FORWARD = BLOG_FORWARD;
-    }
-
-    public BigDecimal getREPORT() {
-        return REPORT;
-    }
-
-    public void setREPORT(BigDecimal REPORT) {
-        this.REPORT = REPORT;
     }
 
     public Date getCREATE_DATE_TIME() {

@@ -9,20 +9,6 @@
     <script type="text/javascript" src="layui/layui.all.js"></script>
     <script>
         $(function () {
-
-            $.ajax({
-                url: "/BlogDiscussServlet",
-                type: "post",
-                data: {"userId": "100001","blogId":"1","discussText":"haha"},
-                dataType: "json",
-                success: function (success) {
-                    if (success) {
-                        var $node = ('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
-                        $(this).parent().parent().parent().parent().append($node);
-                    }
-                }
-            })
-
             layui.use('layer', function(){
                 var $ = layui.jquery, layer = layui.layer;
             })
