@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("/ShowContentServlet")
@@ -21,11 +22,12 @@ public class ShowContentServlet extends HttpServlet {
            request.setCharacterEncoding("UTF-8");
            response.setCharacterEncoding("UTF-8");
            BlogContentDao showContentDao = new BlogContentDaoImpl();
-           String num= request.getParameter("num");
-           int i =Integer.parseInt(num);
-           List<BlogContent> list = showContentDao.ShowContent(i);
+           List<BlogContent> list = showContentDao.ShowContent();
            JSONArray json =JSONArray.fromObject(list);
-           response.getWriter().print(json);
+           PrintWriter out =response.getWriter();
+           out.print(json);
+           out.flush();
+           out.close();
        }catch (Exception e) {
            e.printStackTrace();
        }finally {
