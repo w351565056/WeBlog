@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeBlog</title>
+    <link type="text/css" href="css/register.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/blogcontent.css">
+    <link rel="stylesheet" href="layer/mobile/need/layer.css">
+    <script src="js/jquery-3.3.1.js"></script>
+
+
+    <script>
+        $(function () {
+           //背景图片轮播
+            setInterval("changImg()",5000);
+            //登录注册切换
+            $(".register_for_head div:eq(0)").css("background-color","white");
+            $(".register_for_head div:eq(0)").click(function () {
+                $(this).css("background-color","white");
+                $(".register_for_head div:eq(2)").css("background-color","rgba(0,0,0,0.3)");
+                $(".register_for_body2").hide();
+                $(".register_for_body1").show();
+            });
+            $(".register_for_head div:eq(2)").click(function () {
+                $(this).css("background-color","white");
+                $(".register_for_head div:eq(0)").css("background-color","rgba(0,0,0,0.3)");
+                $(".register_for_body1").hide();
+                $(".register_for_body2").show();
+            });
+
+            //账户登录，手机号登录切换
+            $("input[name='name1']").click(function () {
+                $(".register_body_left1").hide();
+                $(".register_body_left").show();
+            });
+            $("input[name='phone_no']").click(function () {
+                $(".register_body_left").hide();
+                $(".register_body_left1").show();
+            });
+
+
+            //用户注册协议ifream弹层
+            // layer.open({
+            //     type: 2,
+            //     title: '用户注册协议',
+            //     shadeClose: true,
+            //     shade: 0.8,
+            //     area: ['40%', '90%'],
+            //     content: 'agreement.html', //iframe的url
+            //     fadeIn:300,
+            //     btns:1,
+            //     btn:['确定','取消'],
+            //     shift:'right-bottom',
+            //     maxmin: true
+
+
+        });
+        function changImg() {
+            var num =7;
+            var imgId = Math.floor(Math.random() * num+1);
+            var imgUl="images/register/bg_"+imgId+".jpg";
+            $(".register_bg img").attr("src",imgUl);
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="register_bg" >
+        <img src="images/register/bg_1.jpg" width="1366px" height="650px"/>
+        <div class="register_log">
+            <span></span>
+        </div>
+        <div class="register_fom">
+            <div class="register_for_head">
+                <div class="register_head1">
+                    <h>登录</h>
+                </div>
+                <div class="register_head2"></div>
+                <div class="register_head1">
+                    <h>注册</h>
+                </div>
+            </div>
+
+            <div class="register_for_body1">
+                <form id="register_np" action="" method="post">
+                    <div class="register_body_left">
+                        <div class="register_btn">
+                            <input class="register_text" type="text" name="username1" placeholder="请输入用户名">
+                        </div>
+                        <div class="register_btn">
+                            <input class="register_text" type="password" name="password" placeholder="请输入密码"/>
+                        </div>
+                        <div class="register_btn">
+                            <input class="register_text1 register_font" type="button" name="button" value="登录"/>
+                        </div>
+                    </div>
+                     <div class="register_body_left1">
+                         <div class="register_btn">
+                             <input class="register_text" type="text" name="username1" placeholder="请输入手机号码">
+                         </div>
+                         <div class="register_btn">
+                             <input class="register_text" type="password" name="password" placeholder="请输入验证码"/>
+                         </div>
+                         <div class="register_btn">
+                             <input class="register_text register_font" type="button" name="button" value="登录"/>
+                         </div>
+                     </div>
+
+                </form>
+                <div class="register_body_right left">
+                    <span class="register_right_name">
+                        <input class="register_right_btn" type="button" name="name1" value="账户名登录"/>
+                    </span>
+                    <span class="register_right_name">
+                        <input class="register_right_btn" type="button" name="phone_no" value="手机号登录"/>
+                    </span>
+                    <p>
+                        <span></span><a href="">偶是管理员？</a>
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="register_for_body2">
+                <div class="register_body_left_tt">
+                    <form  action="" method="post">
+                        <div class="register_content">
+                            <input class="register_content_text" type="text" name="username" placeholder="请输入账户名"/>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="text" name="phone_no" placeholder="请输入手机号码"/>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="password" name="password" placeholder="请输入密码"/>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="password" name="re_password" placeholder="请确认密码"/>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_btn" type="button" name="submit" value="完成"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="register_body_right left ">
+                    <span class="register_img"></span>
+                    <span class="register_forget"><a href="">已有账号，去登录？>>>&nbsp;&nbsp;</a></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="register_bg_next">
+        <h2>发现和你志同道合和的人</h2>
+        <p class="sub">请问儿童由于突然立刻就会更发达，美女出现立刻就会更发达脚后跟范德萨<br>
+           田竹君田竹君田竹君朱军准只能说田竹君田竹君
+        </p>
+            <div class="next_img_content">
+                <div class="next_img">
+                    <div class="blogcontent_main">
+                        <div class="blogcontent_body_jubao">
+                            <a href=""><span>v举报</span></a>
+                        </div>
+                        <div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>
+                        <div class="blogcontent_body">
+                            <div class="blogcontent_body_main">
+                                <div class="blogcontent_body_name"><a href="">username</a></div>
+                                <div class="blogcontent_body_word">初代和克隆的开心狐，两图差别只是十字架和眼镜这种没有什么用的小细节。
+                                    不知道有没有肝说不定全员都会画，大概可能♡(*´∀｀)人(´∀｀*)♡</div>
+                                <div class="blogcontent_body_photo">
+                                    <img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg " alt=""><span class="blogcontent_body_showall">展示全部》</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blogcontent_sanjiao"></div>
+                    </div>
+                </div>
+                <div class="next_img">
+                    <div class="blogcontent_main">
+                        <div class="blogcontent_body_jubao">
+                            <a href=""><span>v举报</span></a>
+                        </div>
+                        <div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>
+                        <div class="blogcontent_body">
+                            <div class="blogcontent_body_main">
+                                <div class="blogcontent_body_name"><a href="">username</a></div>
+                                <div class="blogcontent_body_word">初代和克隆的开心狐，两图差别只是十字架和眼镜这种没有什么用的小细节。
+                                    不知道有没有肝说不定全员都会画，大概可能♡(*´∀｀)人(´∀｀*)♡</div>
+                                <div class="blogcontent_body_photo">
+                                    <img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg " alt=""><span class="blogcontent_body_showall">展示全部》</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blogcontent_sanjiao"></div>
+                    </div>
+                </div>
+                <div class="next_img">
+                    <div class="blogcontent_main">
+                        <div class="blogcontent_body_jubao">
+                            <a href=""><span>v举报</span></a>
+                        </div>
+                        <div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>
+                        <div class="blogcontent_body">
+                            <div class="blogcontent_body_main">
+                                <div class="blogcontent_body_name"><a href="">username</a></div>
+                                <div class="blogcontent_body_word">初代和克隆的开心狐，两图差别只是十字架和眼镜这种没有什么用的小细节。
+                                    不知道有没有肝说不定全员都会画，大概可能♡(*´∀｀)人(´∀｀*)♡</div>
+                                <div class="blogcontent_body_photo">
+                                    <img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg " alt=""><span class="blogcontent_body_showall">展示全部》</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blogcontent_sanjiao"></div>
+                    </div>
+                </div>
+                <div class="next_img">
+                    <div class="blogcontent_main">
+                        <div class="blogcontent_body_jubao">
+                            <a href=""><span>v举报</span></a>
+                        </div>
+                        <div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>
+                        <div class="blogcontent_body">
+                            <div class="blogcontent_body_main">
+                                <div class="blogcontent_body_name"><a href="">username</a></div>
+                                <div class="blogcontent_body_word">初代和克隆的开心狐，两图差别只是十字架和眼镜这种没有什么用的小细节。
+                                    不知道有没有肝说不定全员都会画，大概可能♡(*´∀｀)人(´∀｀*)♡</div>
+                                <div class="blogcontent_body_photo">
+                                    <img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg" alt=""><img src="images/register/ceshi.jpg " alt=""><span class="blogcontent_body_showall">展示全部》</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blogcontent_sanjiao"></div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <div class="register_footer">
+        <span class="register_footer_top">
+            <ul>
+                <li>联系我们&nbsp;&nbsp;&nbsp;|</li>
+                <li>移动客户端&nbsp;&nbsp;&nbsp;|</li>
+                <li>风格模板&nbsp;&nbsp;&nbsp;|</li>
+                <li>官方博客</li>
+
+            </ul>
+        </span>
+        <span class="register_footer_top1">
+            <ul>
+                <li>网易公司版权所有&nbsp;&nbsp;</li>
+                <li>©1997-2018&nbsp;&nbsp;</li>
+                <li>浙公网安备 33010002000017号&nbsp;&nbsp;</li>
+                <li>ICP备：浙B2-20090185-5</li>
+                <li>增值电信业务经营许可证：浙B2-20090185</li>
+
+            </ul>
+        </span>
+    </div>
+
+</body>
+</html>

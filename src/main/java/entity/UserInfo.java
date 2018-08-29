@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class UserInfo implements Serializable {
+
     private BigDecimal USER_ID;
     private String USER_NAME;
     private String USER_PASS;
