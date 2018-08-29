@@ -1,31 +1,32 @@
 package entity;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class BlogContent {
-    private int  BLOG_ID;
-    private int USER_iD;
+    private BigDecimal BLOG_ID;
+    private BigDecimal USER_ID;
     private String BLOG_TEXT;
     private String BLOG_IMG;
-    private int BLOG_FORWARD;
-    private int REPORT;
-    private Timestamp CREATE_DATE_TIME;
-    private Timestamp MODIFY_DATE_TIME;
-    public int getBLOG_ID() {
+    private BigDecimal BLOG_FORWARD;
+    private BigDecimal REPORT;
+    private Date CREATE_DATE_TIME;
+    private Date MODIFY_DATE_TIME;
+
+    public BigDecimal getBLOG_ID() {
         return BLOG_ID;
     }
 
-    public void setBLOG_ID(int BLOG_ID) {
+    public void setBLOG_ID(BigDecimal BLOG_ID) {
         this.BLOG_ID = BLOG_ID;
     }
 
-    public int getUSER_iD() {
-        return USER_iD;
+    public BigDecimal getUSER_ID() {
+        return USER_ID;
     }
 
-    public void setUSER_iD(int USER_iD) {
-        this.USER_iD = USER_iD;
+    public void setUSER_ID(BigDecimal USER_ID) {
+        this.USER_ID = USER_ID;
     }
 
     public String getBLOG_TEXT() {
@@ -44,36 +45,35 @@ public class BlogContent {
         this.BLOG_IMG = BLOG_IMG;
     }
 
-    public int getBLOG_FORWARD() {
+    public BigDecimal getBLOG_FORWARD() {
         return BLOG_FORWARD;
     }
 
-    public void setBLOG_FORWARD(int BLOG_FORWARD) {
+    public void setBLOG_FORWARD(BigDecimal BLOG_FORWARD) {
         this.BLOG_FORWARD = BLOG_FORWARD;
     }
 
-    public int getREPORT() {
+    public BigDecimal getREPORT() {
         return REPORT;
     }
 
-    public void setREPORT(int REPORT) {
+    public void setREPORT(BigDecimal REPORT) {
         this.REPORT = REPORT;
     }
 
-    public Timestamp getCREATE_DATE_TIME() {
+    public Date getCREATE_DATE_TIME() {
         return CREATE_DATE_TIME;
     }
 
-    public void setCREATE_DATE_TIME(Timestamp CREATE_DATE_TIME) {
+    public void setCREATE_DATE_TIME(Date CREATE_DATE_TIME) {
         this.CREATE_DATE_TIME = CREATE_DATE_TIME;
     }
 
-    public Timestamp getMODIFY_DATE_TIME() {
+    public Date getMODIFY_DATE_TIME() {
         return MODIFY_DATE_TIME;
     }
 
-    public void setMODIFY_DATE_TIME(Timestamp MODIFY_DATE_TIME) {
+    public void setMODIFY_DATE_TIME(Date MODIFY_DATE_TIME) {
         this.MODIFY_DATE_TIME = MODIFY_DATE_TIME;
     }
-
 }

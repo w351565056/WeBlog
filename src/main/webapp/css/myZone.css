@@ -73,22 +73,25 @@ a{
 }
 .myZone_nav_wrap td{
     width: 184px;
-    height: 40px;
+    height:45px;
     font-size: 14px;
-
     font-weight: bold;
     text-align: center;
 }
 .nav_title{
-    display: block;
-    line-height: 42px;
+    display: inline-block;
+    padding: 11px;
 }
-.nav_border{
-    display: block;
-    width: 70px;
-    height: 2px;
-    margin: auto;
-    background: #f7691d;
+.nav_title:hover{
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-color: #f7691d;
+}
+
+.nav_border_bottom{
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-color: #f7691d;
 }
 .myZone_body {
     width: 920px;

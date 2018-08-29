@@ -50,52 +50,32 @@
         </div>
         <span class="layui-icon layui-icon-add-circle fabu" id="btn" title="说点儿什么吧"></span>
     </div>
-
 </div>
-
-<div id="fff">
-
-</div>
-
-
-<!--<div id="layer-body">-->
-
-    <!--<div class="layer-body-center">-->
-        <!--<textarea name="desc" placeholder="说点儿什么吧" class="layui-textarea text"></textarea>-->
-    <!--</div>-->
-    <!--<div class="layer-body-footer">-->
-        <!--<span class="layui-icon layui-icon-face-surprised smile"></span>-->
-        <!--<span class="layui-icon layui-icon-picture pic"></span>-->
-        <!--<span class="layui-icon layui-icon-video vid"></span>-->
-        <!--<button class="layui-btn layui-btn-warm btn-fabu">发布</button>-->
-    <!--</div>-->
-<!--</div>-->
 <script>
     $("#btn").click(function () {
         layer.open({
-            type: 1,
+            type: 2,
             area: ['480px', '240px'],
             title: '有什么新鲜事想告诉大家',
             shade: 0.3, //遮罩透明度,,
             anim: 5,
-            content:'<div id="layer-body">'+
+            content:'blogpublish.html'
+            // content:'<div id="layer-body">'+
+            //
+            // '<div class="layer-body-center">'+
+            // '<textarea name="desc" placeholder="说点儿什么吧" class="layui-textarea text"></textarea>'+
+            // '</div>'+
+            // '<div class="layer-body-footer">'+
+            // '<span class="layui-icon layui-icon-face-surprised smile"></span>'+
+            // '<span class="layui-icon layui-icon-picture pic"></span>'+
+            // '<span class="layui-icon layui-icon-video vid"></span>'+
+            // '<button class="layui-btn layui-btn-warm btn-fabu">发布</button>'+
+            // '</div>'+
+            // '</div>'
 
-            '<div class="layer-body-center">'+
-            '<textarea name="desc" placeholder="说点儿什么吧" class="layui-textarea text"></textarea>'+
-            '</div>'+
-            '<div class="layer-body-footer">'+
-            '<span class="layui-icon layui-icon-face-surprised smile"></span>'+
-            '<span class="layui-icon layui-icon-picture pic"></span>'+
-            '<span class="layui-icon layui-icon-video vid"></span>'+
-            '<button class="layui-btn layui-btn-warm btn-fabu">发布</button>'+
-            '</div>'+
-            '</div>'
         })
     })
 
-    $(document).ready(function () {
-        $("#fff").load("myZone.html");
-    })
 </script>
 </body>
 </html>
