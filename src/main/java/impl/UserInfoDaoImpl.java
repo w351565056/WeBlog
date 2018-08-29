@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserInfoDaoImpl extends BaseDao<UserInfo> implements UserInfoDao {
     @Override
-    public List<UserInfo> showAllUser(){
-        return executeQuery("select * from user_info");
+    public List<UserInfo> showAllUser(int i){
+        return executeQuery("select * from user_info where user_id=?",new Object[]{i});
     }
 }

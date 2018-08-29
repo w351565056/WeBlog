@@ -21,7 +21,8 @@ import java.util.List;
 public class UserInfoServlet extends HttpServlet {
     UserInfoDao dao = new UserInfoDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<UserInfo> list = dao.showAllUser();
+        int num=100001;
+        List<UserInfo> list = dao.showAllUser(num);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);
