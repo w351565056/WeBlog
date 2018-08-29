@@ -1,7 +1,8 @@
 package servlet;
 
+import dao.BlogContentDao;
 import entity.BlogContent;
-import impl.ShowContentDaoImpl;
+import impl.BlogContentDaoImpl;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -16,12 +17,13 @@ import java.util.List;
 public class ShowContentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try {
+           //again
            request.setCharacterEncoding("UTF-8");
            response.setCharacterEncoding("UTF-8");
-           ShowContentDaoImpl showContentDaoImpl = new ShowContentDaoImpl();
+           BlogContentDao showContentDao = new BlogContentDaoImpl();
            String num= request.getParameter("num");
            int i =Integer.parseInt(num);
-           List<BlogContent> list = showContentDaoImpl.ShowContent(i);
+           List<BlogContent> list = showContentDao.ShowContent(i);
            JSONArray json =JSONArray.fromObject(list);
            response.getWriter().print(json);
        }catch (Exception e) {
