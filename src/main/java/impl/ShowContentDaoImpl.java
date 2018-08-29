@@ -9,7 +9,7 @@ import java.util.List;
 public class ShowContentDaoImpl extends BaseDao<BlogContent> implements ShowContentDao {
     @Override
     public List<BlogContent> ShowContent(int i) {
-        return executeQuery("select * from ");
+        return executeQuery("select * from BLOG_CONTENT where BLOG_ID < ?",new Object[]{(i+1)});
     }
 
     @Override
