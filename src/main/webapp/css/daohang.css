@@ -1,0 +1,246 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+#header {
+    height: 75px;
+    width: 100%;
+    background: #75c3f1;
+    /*background-attachment: fixed;*/
+    /*position: fixed;*/
+}
+
+.logo {
+    margin: 19px 0px 0 0;
+    width: 246px;
+    height: 56px;
+    background: #75c3f1;
+    float: left;
+    position: relative;
+}
+
+.logo a {
+    background: url("../images/logo.jpg") 0 0 no-repeat;
+    width: 206px;
+    height: 56px;
+    position: relative;
+    float: left;
+    background-size: 207px;
+    margin-left: 165px;
+    margin-top: -5px;
+}
+
+.btn .search {
+    font-size: 20px;
+    color: cornflowerblue;
+}
+
+.nav {
+    width: 740px;
+    height: 74px;
+    background: #75c3f1;
+    float: left;
+    margin-left: 180px;
+}
+
+.nav_left {
+    float: left;
+    position: relative;
+    top: 21px;
+    left: -11px;
+    width: 220px;
+    height: 34px;
+    margin-left: 26px;
+    padding: 2px 10px 2px 32px;
+    background-position: 0 -41px;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.nav_left .ssch {
+    background-color: red;
+    border-radius: 20px;
+}
+
+.nav_left .ssch .xtag {
+    background-color: #fff;
+}
+
+.btn {
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    width: 18px;
+    height: 18px;
+    background-position: 0 -81px;
+}
+
+form {
+    display: block;
+}
+
+.btn label {
+    position: absolute;
+    top: 5px;
+    left: 32px;
+    color: #666;
+    cursor: text;
+    z-index: 1;
+}
+
+.xtag input {
+    position: relative;
+    width: 145px;
+    height:21px;
+    padding: 4px 45px 2px 0;
+    _padding: 4px 40px 2px 0;
+    margin: 3px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    line-height: 18px;
+    color: black;
+    z-index: 3;
+}
+
+.middle-left {
+    width: 110px;
+    height: 60px;
+    background: #75c3f1;
+    float: left;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+
+.middle-mid {
+    width: 110px;
+    height: 60px;
+    background: #75c3f1;
+    float: left;
+    margin-top: 8px;
+    margin-left: -20px;
+}
+
+.middle-right {
+    width: 150px;
+    height: 60px;
+    background: #75c3f1;
+    float: left;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.middle-left .home {
+    text-align: center;
+    line-height: 20px;
+    font-size: 28px;
+    margin-top: 20px;
+    float: left;
+    margin-left: 5px;
+    color: white;
+}
+.middle-mid .home {
+    text-align: center;
+    line-height: 20px;
+    font-size: 28px;
+    margin-top: 20px;
+    float: left;
+    margin-left: 5px;
+    color: white;
+}
+.middle-right .home {
+    text-align: center;
+    line-height: 20px;
+    font-size: 28px;
+    margin-top: 20px;
+    float: left;
+    margin-left: 5px;
+    color: white;
+}
+
+.nav .fabu {
+    width: 26px;
+    height: 26px;
+    line-height: 25px;
+    text-align: center;
+    color: #fff;
+    font-size: 26px;
+    margin-top: 25px;
+    float: left;
+    margin-left: 5px;
+    background: #75c3f1;
+    cursor: pointer;
+}
+
+#layer-body{
+    width: 480px;
+    height: 190px;
+    background: white;
+    margin: 0 auto;
+}
+
+.layer-body-center{
+    width: 480px;
+    height: 100px;
+    background: white;
+    float: left;
+    margin-top: 40px;
+}
+
+.layer-body-footer{
+    width: 480px;
+    height: 50px;
+    background: white;
+    float: left;
+}
+
+.layer-body-center .text{
+    width: 450px;
+    height: 100px;
+    margin: 0 auto;
+    border: 2px solid lightgrey;
+}
+.layer-body-footer .smile {
+    color: #ff9000;
+    font-size: 22px;
+    position: relative;
+    left: 18px;
+    top: 10px;
+    cursor: pointer;
+
+}
+
+.layer-body-footer .pic {
+    color: #5FB878;
+    font-size: 23px;
+    position: relative;
+    left: 30px;
+    top: 11px;
+    cursor: pointer;
+}
+
+.layer-body-footer .vid{
+    color: #01AAED;
+    font-size: 23px;
+    position: relative;
+    left: 45px;
+    top: 13px;
+    cursor: pointer;
+}
+
+.layer-body-footer .btn-fabu{
+    width: auto;
+    height: 30px;
+    float: right;
+    margin-right: 16px;
+    margin-top: 10px;
+    line-height: 0px;
+}

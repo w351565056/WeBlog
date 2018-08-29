@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/layer.css">
+    <script src="js/layer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/daohang.css">
+</head>
+<body>
+<div id="header">
+    <div class="logo">
+        <a href="#"></a>
+
+    </div>
+
+    <div class="nav">
+
+        <div class="nav_left">
+            <div class="ssch">
+                <form class="xtag">
+                    <a href="#" class="btn">
+                        <span class="layui-icon layui-icon-search search"></span>
+                    </a>
+                    <input type="text" placeholder="搜索用户、标签" class="xtag" onfocus="this.isfocus = true;">
+                </form>
+
+            </div>
+        </div>
+
+        <div class="middle-left">
+            <a href="#">
+                <span class="layui-icon layui-icon-home home"></span>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;color: white">首页</p>
+            </a>
+        </div>
+        <div class="middle-mid">
+            <a href="#">
+                <span class="layui-icon layui-icon-fire home"></span>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;color: white">热门微博</p>
+            </a>
+        </div>
+        <div class="middle-right">
+            <a href="#" title="个人中心">
+                <span class="layui-icon layui-icon-username home"></span>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 15px;color: white"></p>
+            </a>
+        </div>
+        <span class="layui-icon layui-icon-add-circle fabu" id="btn" title="说点儿什么吧"></span>
+    </div>
+
+</div>
+
+<div id="fff">
+
+</div>
+
+
+<!--<div id="layer-body">-->
+
+    <!--<div class="layer-body-center">-->
+        <!--<textarea name="desc" placeholder="说点儿什么吧" class="layui-textarea text"></textarea>-->
+    <!--</div>-->
+    <!--<div class="layer-body-footer">-->
+        <!--<span class="layui-icon layui-icon-face-surprised smile"></span>-->
+        <!--<span class="layui-icon layui-icon-picture pic"></span>-->
+        <!--<span class="layui-icon layui-icon-video vid"></span>-->
+        <!--<button class="layui-btn layui-btn-warm btn-fabu">发布</button>-->
+    <!--</div>-->
+<!--</div>-->
+<script>
+    $("#btn").click(function () {
+        layer.open({
+            type: 1,
+            area: ['480px', '240px'],
+            title: '有什么新鲜事想告诉大家',
+            shade: 0.3, //遮罩透明度,,
+            anim: 5,
+            content:'<div id="layer-body">'+
+
+            '<div class="layer-body-center">'+
+            '<textarea name="desc" placeholder="说点儿什么吧" class="layui-textarea text"></textarea>'+
+            '</div>'+
+            '<div class="layer-body-footer">'+
+            '<span class="layui-icon layui-icon-face-surprised smile"></span>'+
+            '<span class="layui-icon layui-icon-picture pic"></span>'+
+            '<span class="layui-icon layui-icon-video vid"></span>'+
+            '<button class="layui-btn layui-btn-warm btn-fabu">发布</button>'+
+            '</div>'+
+            '</div>'
+        })
+    })
+
+    $(document).ready(function () {
+        $("#fff").load("myZone.html");
+    })
+</script>
+</body>
+</html>
