@@ -32,9 +32,9 @@ body {
     margin-top: -5px;
 }
 
-.search {
+.btn .search {
     font-size: 20px;
-    color: black;
+    color: cornflowerblue;
 }
 
 .nav {
@@ -94,10 +94,10 @@ form {
 .xtag input {
     position: relative;
     width: 145px;
-    height: 18px;
+    height:21px;
     padding: 4px 45px 2px 0;
     _padding: 4px 40px 2px 0;
-    margin: 5px;
+    margin: 3px;
     border: none;
     background-color: transparent;
     outline: none;
@@ -138,16 +138,35 @@ a {
     color: #fff;
 }
 
-.home {
+.middle-left .home {
     text-align: center;
     line-height: 20px;
-    font-size: 24px;
+    font-size: 28px;
     margin-top: 20px;
     float: left;
     margin-left: 5px;
+    color: white;
+}
+.middle-mid .home {
+    text-align: center;
+    line-height: 20px;
+    font-size: 28px;
+    margin-top: 20px;
+    float: left;
+    margin-left: 5px;
+    color: white;
+}
+.middle-right .home {
+    text-align: center;
+    line-height: 20px;
+    font-size: 28px;
+    margin-top: 20px;
+    float: left;
+    margin-left: 5px;
+    color: white;
 }
 
-.fabu {
+.nav .fabu {
     width: 26px;
     height: 26px;
     line-height: 25px;
@@ -183,13 +202,13 @@ a {
     float: left;
 }
 
-.text{
+.layer-body-center .text{
     width: 450px;
     height: 100px;
     margin: 0 auto;
     border: 2px solid lightgrey;
 }
-.smile {
+.layer-body-footer .smile {
     color: #ff9000;
     font-size: 22px;
     position: relative;
@@ -199,7 +218,7 @@ a {
 
 }
 
-.pic {
+.layer-body-footer .pic {
     color: #5FB878;
     font-size: 23px;
     position: relative;
@@ -208,7 +227,7 @@ a {
     cursor: pointer;
 }
 
-.vid{
+.layer-body-footer .vid{
     color: #01AAED;
     font-size: 23px;
     position: relative;
@@ -217,7 +236,7 @@ a {
     cursor: pointer;
 }
 
-.btn-fabu{
+.layer-body-footer .btn-fabu{
     width: auto;
     height: 30px;
     float: right;

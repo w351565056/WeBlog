@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration:none
+}
+.blogcontent_main{
+    width: 680px;
+    height: 342px;
+    margin-bottom: 16px;
+    clear: both;
+    position: relative;
+}
+.blogcontent_head{
+    width: 64px;
+    height: 64px;
+    float: left;
+    background-color: black;
+}
+.blogcontent_body{
+    width: 490px;
+    height: 281px;
+    padding: 25px 32px 28px 53px;
+    float: right;
+    background-color: white;
+    box-shadow: 5px 5px 5px darkgray;
+    border-radius: 3px;
+}
+.blogcontent_sanjiao{
+    position: relative;
+    top: 0px;
+    left: 80px;
+    height: 0px;
+    width: 0px;
+    border-top: 15px solid white;
+    border-right: 15px solid white;
+    border-bottom: 15px solid transparent;
+    border-left:15px solid transparent ;
+}
+.blogcontent_body_main{
+    position: relative;
+}
+.blogcontent_body_name a{
+    color: #4E5465;
+}
+.blogcontent_body_word{
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    color: #4E5465;
+}
+.blogcontent_body_photo{
+    position: absolute;
+    top: 110px;
+    left: 20px;
+}
+.blogcontent_body_photo img{
+    margin-right: 5px;
+    width: 120px;
+    height: 120px;
+}
+.blogcontent_body_showall{
+    position: absolute;
+    right: -65px;
+    bottom: 4px;
+    font-size: 12px;
+    color: #666666;
+}
+.blogcontent_body_bottom{
+    position: absolute;
+    top: 275px;
+    right: 10px;
+    text-align: right;
+    font-size: 12px;
+    color: #666666;
+}
+.blogcontent_body_bottom span{
+    margin-left: 30px;
+    cursor:pointer;
+}
+.blogcontent_body_bottom_zf{
+    margin: 30px;
+}
+.blogcontent_body_bottom_sc_demo{
+    width:515px ;
+    height: 24px;
+    padding: 10px 30px;
+    float: right;
+    background-color: white;
+    clear: both;
+    box-shadow: 5px 5px 5px darkgray;
+}
+.blogcontent_body_bottom_sc_demo img{
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+.blogcontent_body_bottom_sc_demosp{
+    float: left;
+}
+.blogcontent_body_bottom_sc_demosp span{
+    margin-left: 10px;
+    font-size: 12px;
+}
+.blogcontent_body_bottom_sc_username{
+    color: #4E5465;
+}
+.blogcontent_body_bottom_zan img{
+    vertical-align:middle;
+}
+.blogcontent_body_jubao{
+    font-size: 12px;
+    z-index: 1000;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+.blogcontent_body_jubao a span{
+    color: red;
+}
