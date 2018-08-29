@@ -1,18 +1,25 @@
 package entity;
 
-//import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BlogContent {
-    private BigDecimal  BLOG_ID;
+public class BlogDiscuss {
+    private BigDecimal DISCUSS_ID;
+    private BigDecimal BLOG_ID;
     private BigDecimal USER_ID;
-    private String BLOG_TEXT;
-    private String BLOG_IMG;
-    private BigDecimal BLOG_FORWARD;
-    private BigDecimal REPORT;
+    private String DISCUSS_TEXT;
+    private String DISCUSS_IMG;
+    private BigDecimal PREUSER_ID;
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
+
+    public BigDecimal getDISCUSS_ID() {
+        return DISCUSS_ID;
+    }
+
+    public void setDISCUSS_ID(BigDecimal DISCUSS_ID) {
+        this.DISCUSS_ID = DISCUSS_ID;
+    }
 
     public BigDecimal getBLOG_ID() {
         return BLOG_ID;
@@ -30,36 +37,28 @@ public class BlogContent {
         this.USER_ID = USER_ID;
     }
 
-    public String getBLOG_TEXT() {
-        return BLOG_TEXT;
+    public String getDISCUSS_TEXT() {
+        return DISCUSS_TEXT;
     }
 
-    public void setBLOG_TEXT(String BLOG_TEXT) {
-        this.BLOG_TEXT = BLOG_TEXT;
+    public void setDISCUSS_TEXT(String DISCUSS_TEXT) {
+        this.DISCUSS_TEXT = DISCUSS_TEXT;
     }
 
-    public String getBLOG_IMG() {
-        return BLOG_IMG;
+    public String getDISCUSS_IMG() {
+        return DISCUSS_IMG;
     }
 
-    public void setBLOG_IMG(String BLOG_IMG) {
-        this.BLOG_IMG = BLOG_IMG;
+    public void setDISCUSS_IMG(String DISCUSS_IMG) {
+        this.DISCUSS_IMG = DISCUSS_IMG;
     }
 
-    public BigDecimal getBLOG_FORWARD() {
-        return BLOG_FORWARD;
+    public BigDecimal getPREUSER_ID() {
+        return PREUSER_ID;
     }
 
-    public void setBLOG_FORWARD(BigDecimal BLOG_FORWARD) {
-        this.BLOG_FORWARD = BLOG_FORWARD;
-    }
-
-    public BigDecimal getREPORT() {
-        return REPORT;
-    }
-
-    public void setREPORT(BigDecimal REPORT) {
-        this.REPORT = REPORT;
+    public void setPREUSER_ID(BigDecimal PREUSER_ID) {
+        this.PREUSER_ID = PREUSER_ID;
     }
 
     public Date getCREATE_DATE_TIME() {

@@ -2,8 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class UserInfo implements Serializable {
 
@@ -19,9 +18,18 @@ public class UserInfo implements Serializable {
     private String BLOOD_TYPE;
     private Date BIRTHDAY;
     private String INTRO;
-    private Timestamp LOCK_STATE;
-    private Timestamp CREATE_DATE_TIME;
-    private Timestamp MODIFY_DATE_TIME;
+    private Date LOCK_STATE;
+    private Date CREATE_DATE_TIME;
+    private Date MODIFY_DATE_TIME;
+    private String QQ;
+
+    public String getQQ() {
+        return QQ;
+    }
+
+    public void setQQ(String QQ) {
+        this.QQ = QQ;
+    }
 
     public BigDecimal getUSER_ID() {
         return USER_ID;
@@ -119,27 +127,27 @@ public class UserInfo implements Serializable {
         this.INTRO = INTRO;
     }
 
-    public Timestamp getLOCK_STATE() {
+    public Date getLOCK_STATE() {
         return LOCK_STATE;
     }
 
-    public void setLOCK_STATE(Timestamp LOCK_STATE) {
+    public void setLOCK_STATE(Date LOCK_STATE) {
         this.LOCK_STATE = LOCK_STATE;
     }
 
-    public Timestamp getCREATE_DATE_TIME() {
+    public Date getCREATE_DATE_TIME() {
         return CREATE_DATE_TIME;
     }
 
-    public void setCREATE_DATE_TIME(Timestamp CREATE_DATE_TIME) {
+    public void setCREATE_DATE_TIME(Date CREATE_DATE_TIME) {
         this.CREATE_DATE_TIME = CREATE_DATE_TIME;
     }
 
-    public Timestamp getMODIFY_DATE_TIME() {
+    public Date getMODIFY_DATE_TIME() {
         return MODIFY_DATE_TIME;
     }
 
-    public void setMODIFY_DATE_TIME(Timestamp MODIFY_DATE_TIME) {
+    public void setMODIFY_DATE_TIME(Date MODIFY_DATE_TIME) {
         this.MODIFY_DATE_TIME = MODIFY_DATE_TIME;
     }
 }
