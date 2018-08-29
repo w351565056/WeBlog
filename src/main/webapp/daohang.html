@@ -33,23 +33,27 @@
         <div class="middle-left">
             <a href="#">
                 <span class="layui-icon layui-icon-home home"></span>
-                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;">首页</p>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;color: white">首页</p>
             </a>
         </div>
         <div class="middle-mid">
             <a href="#">
                 <span class="layui-icon layui-icon-fire home"></span>
-                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;">热门微博</p>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;color: white">热门微博</p>
             </a>
         </div>
         <div class="middle-right">
             <a href="#" title="个人中心">
                 <span class="layui-icon layui-icon-username home"></span>
-                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;"></p>
+                <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 15px;color: white"></p>
             </a>
         </div>
         <span class="layui-icon layui-icon-add-circle fabu" id="btn" title="说点儿什么吧"></span>
     </div>
+
+</div>
+
+<div id="fff">
 
 </div>
 
@@ -87,6 +91,10 @@
             '</div>'+
             '</div>'
         })
+    })
+
+    $(document).ready(function () {
+        $("#fff").load("myZone.html");
     })
 </script>
 </body>
