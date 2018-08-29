@@ -17,7 +17,7 @@ import java.util.List;
 public class ShowContentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try {
-           //again
+           //again2
            request.setCharacterEncoding("UTF-8");
            response.setCharacterEncoding("UTF-8");
            BlogContentDao showContentDao = new BlogContentDaoImpl();
