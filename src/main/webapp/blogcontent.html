@@ -51,12 +51,24 @@
             })
             //--------------------------------评论
             $("body").on('click','.blogcontent_body_bottom_pinglun',function () {
-                var $node=('<div class="blogcontent_body_bottom_sc_demo"><div>评论</div><textarea name="" id="" cols="50" rows="2"></textarea><div><input type="submit" class="submit_pinglun"></div></div>');
+                var $node=('<div class="blogcontent_body_bottom_sc_demo"><div>评论</div><textarea name="" id="" class="area" cols="50" rows="2"></textarea><div><input type="submit" class="submit_pinglun"></div></div>');
                 $(this).parent().parent().parent().parent().append($node);
                 $(".blogcontent_body_bottom_sc_demo").animate({height:"200px"});
             })
             $("body").on('click','.submit_pinglun',function () {
                 //评论提交事件
+                // var text = "yyy";
+                // var blog_id = "1";
+                // var user_id = "100001";
+                $.ajax({
+                    url:'/InsertDiscussServlet',
+                    type:'post',
+                    data:{"userId": "100001","blogId":"1","discussText":"yyy"},
+                    dataType:'json',
+                    success:function () {
+                        alert("111");
+                    }
+                });
             })
             //-------------------------------点赞
             $("body").on('click','.blogcontent_body_bottom_zan',function () {
@@ -71,6 +83,7 @@
     </script>
 </head>
 <body style="background: #999999">
+
 <!--<div class="blogcontent_main">-->
 <!--<div class="blogcontent_body_jubao">-->
 <!--<a href=""><span>v举报</span></a>-->

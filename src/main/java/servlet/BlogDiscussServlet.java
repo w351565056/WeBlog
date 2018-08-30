@@ -22,24 +22,24 @@ import java.util.List;
 public class BlogDiscussServlet extends HttpServlet {
 
     public BlogDiscussDao blogDiscussDao;
-
-    public BlogDiscussDao getBlogDiscussDao() {
-        return blogDiscussDao;
-    }
-
-    public void setBlogDiscussDao(BlogDiscussDao blogDiscussDao) {
-        this.blogDiscussDao = blogDiscussDao;
-    }
-
+//
+//    public BlogDiscussDao getBlogDiscussDao() {
+//        return blogDiscussDao;
+//    }
+//
+//    public void setBlogDiscussDao(BlogDiscussDao blogDiscussDao) {
+//        this.blogDiscussDao = blogDiscussDao;
+//    }
+//
     private BlogDiscuss blogDiscuss;
-
-    public BlogDiscuss getBlogDiscuss() {
-        return blogDiscuss;
-    }
-
-    public void setBlogDiscuss(BlogDiscuss blogDiscuss) {
-        this.blogDiscuss = blogDiscuss;
-    }
+//
+//    public BlogDiscuss getBlogDiscuss() {
+//        return blogDiscuss;
+//    }
+//
+//    public void setBlogDiscuss(BlogDiscuss blogDiscuss) {
+//        this.blogDiscuss = blogDiscuss;
+//    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1.
