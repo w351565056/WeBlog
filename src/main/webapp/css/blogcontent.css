@@ -119,3 +119,7 @@ a{
 .blogcontent_body_jubao a span{
     color: red;
 }
+.blogcontent_pinglun{
+    width: 575px;
+    background-color: white;
+}

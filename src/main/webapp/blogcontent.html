@@ -18,7 +18,8 @@
                 dataType:"json",
                 success:function (result) {
                     for (var i=0;i<result.length;i++){
-                        var $node=('<div class="blogcontent_main"><div class="blogcontent_body_jubao"><a href=""><span>v举报</span></a></div><div class="blogcontent_head"><a href=""><img src="" alt=""></a></div><div class="blogcontent_body"><div class="blogcontent_body_main"><div class="blogcontent_body_name"><a href="">'+result[i].USER_ID+'</a></div><div class="blogcontent_body_word">'+result[i].BLOG_TEXT+'</div><div class="blogcontent_body_photo"><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div></div><div class="blogcontent_body_bottom"><span class="blogcontent_body_bottom_shoucang">收藏(10)</span><span class="blogcontent_body_bottom_zhuanfa">转发(10)</span><span class="blogcontent_body_bottom_pinglun">评论(10)</span><span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span></div></div></div><div class="blogcontent_sanjiao"></div>');
+
+                        var $node=('<div class="blogcontent_main"><div class="blogcontent_body_jubao"><a href=""><span>v举报</span></a></div><div class="blogcontent_head"><a href=""><img src="'+result[i].HEAD_IMG+'" alt=""></a></div><div class="blogcontent_body"><div class="blogcontent_body_main"><div class="blogcontent_body_name"><a href="">'+result[i].USER_NAME+'</a></div><div class="blogcontent_body_word">'+result[i].BLOG_TEXT+'</div><div class="blogcontent_body_photo"><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div></div><div class="blogcontent_body_bottom"><span class="blogcontent_body_bottom_shoucang">收藏(10)</span><span class="blogcontent_body_bottom_zhuanfa">转发(10)</span><span class="blogcontent_body_bottom_pinglun">评论(10)</span><span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span></div></div></div><div class="blogcontent_sanjiao"></div>');
                         $('body').append($node);
                     // $(".blogcontent_body_name a").eq(i).text(result[i].USER_ID);
                     // $(".blogcontent_body_word").eq(i).text(result[i].BLOG_TEXT);
@@ -51,7 +52,7 @@
             })
             //--------------------------------评论
             $("body").on('click','.blogcontent_body_bottom_pinglun',function () {
-                var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
+                var $node=('');
                 $(this).parent().parent().parent().parent().append($node);
             })
             //-------------------------------点赞
@@ -111,5 +112,13 @@
     <!--</div>-->
     <!--<div class="blogcontent_sanjiao"></div>-->
 <!--</div>-->
+<div class="blogcontent_pinglun">
+<div>评论</div>
+<textarea name="" id="" cols="50" rows="2"></textarea>
+<div><input type="submit"></div>
+</div>
+<div>
+
+</div>
 </body>
 </html>
