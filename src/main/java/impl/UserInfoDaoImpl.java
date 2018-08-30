@@ -11,4 +11,10 @@ public class UserInfoDaoImpl extends BaseDao<UserInfo> implements UserInfoDao {
     public List<UserInfo> showAllUser(){
         return executeQuery("select * from user_info");
     }
+
+  @Override
+  public List<UserInfo> deleteUser(UserInfo userInfo) {
+    return executeQuery("delete");
+  }
+
 }
