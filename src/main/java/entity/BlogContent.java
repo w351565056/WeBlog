@@ -1,10 +1,11 @@
 package entity;
 
+//import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class BlogContent {
-    private BigDecimal BLOG_ID;
+    private BigDecimal  BLOG_ID;
     private BigDecimal USER_ID;
     private String BLOG_TEXT;
     private String BLOG_IMG;

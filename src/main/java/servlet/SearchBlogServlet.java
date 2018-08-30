@@ -14,28 +14,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/ShowContentServlet")
-public class ShowContentServlet extends HttpServlet {
+@WebServlet("/SearchBlogServlet")
+public class SearchBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       try {
-           //again2
-           request.setCharacterEncoding("UTF-8");
-           response.setCharacterEncoding("UTF-8");
-           BlogContentDao showContentDao = new BlogContentDaoImpl();
-           List<BlogContent> list = showContentDao.ShowContent();
-           JSONArray json =JSONArray.fromObject(list);
-           PrintWriter out =response.getWriter();
-           out.print(json);
-           out.flush();
-           out.close();
-       }catch (Exception e) {
-           e.printStackTrace();
-       }finally {
+            try {
+                String keyword = "'微博'";
+                BlogContentDao blogContentDao = new BlogContentDaoImpl();
+                List<BlogContent> searchresult = blogContentDao.ShowContent(keyword);
+                JSONArray json =JSONArray.fromObject(searchresult);
+                PrintWriter out =response.getWriter();
+                out.print(json);
+                out.flush();
+                out.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
 
-       }
+            }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request,response);
     }
 }

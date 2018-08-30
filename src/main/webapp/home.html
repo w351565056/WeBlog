@@ -48,8 +48,22 @@
             // }).bind("mouseout",function () {
             //     $("#home_to_top").children().show();
             // })
-
         });
+
+        $(function () {
+            $("search_blog_keyword button").click(function () {
+                $.ajax({
+                    url:"/SearchBlogServlet",
+                    type:"post",
+                    dataType:"json",
+                    data:{"keyword":"微博"},
+                    success:function (list){
+                        alert(list);
+                    }
+                });
+            })
+
+        })
     </script>
 </head>
 <body>
@@ -58,21 +72,21 @@
         <div id="home_content_left">
             <div id="home_nav">
                 <ul id="home_nav_ul">
-                    <a href="#"><li class="home_show"><p class="brand_name">全部</p><img class="hide_pic" src="images/home_nav1.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">原创</p><img class="hide_pic" src="images/home_nav2.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">图片</p><img class="hide_pic" src="images/home_nav3.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/home_nav4.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/home_nav5.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">全部</p><img class="hide_pic" src="images/Home/home_nav1.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">原创</p><img class="hide_pic" src="images/Home/home_nav2.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">图片</p><img class="hide_pic" src="images/Home/home_nav3.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/Home/home_nav4.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/Home/home_nav5.png"></li></a>
                 </ul>
             </div>
-
+            <div id="search_blog_keyword"><input name="keyword" type="text" value=""> <button value="tijiao"></button></div>
             <!--<iframe id="home_blog_content_show" src="blogcontent.html"></iframe>-->
             <div id="home_blog_content_show"></div>
         </div>
         <div id="home_content_right">
             <div id="home_my_info">
                 <div id="home_my_background_img">
-                    <img src="./images/example_myZone.jpg">
+                    <img src="images/Home/example_myZone.jpg">
                 </div>
                 <div id="home_username">MMMM<span>Lv.4</span></div>
                 <div id="home_info_decoration">
@@ -106,7 +120,7 @@
             </div>
         </div>
     </div>
-    <div id="home_to_top"><img src="images/t_top.png"></div>
+    <div id="home_to_top"><img src="images/Home/to_top.png"></div>
 </body>
 
 </html>
