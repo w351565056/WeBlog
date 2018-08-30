@@ -22,17 +22,17 @@ public class UserInfo implements Serializable {
     private Date MODIFY_DATE_TIME;
     private String QQ;
     public UserInfo(){}
-    public UserInfo(String USER_NAME,String PHONE_NO,String TRUE_NAME,String GENDER,String EMAIL,String ADDRESS,String BLOOD_TYPE,String QQ){
-    this.USER_NAME=USER_NAME;
-    this.PHONE_NO=PHONE_NO;
-    this.TRUE_NAME=TRUE_NAME;
-    this.GENDER=GENDER;
-    this.EMAIL=EMAIL;
-    this.ADDRESS=ADDRESS;
-    this.BLOOD_TYPE=BLOOD_TYPE;
-//    this.BIRTHDAY=BIRTHDAY;
-////    this.CREATE_DATE_TIME=CREATE_DATE_TIME;
-    this.QQ=QQ;
+    //更新个人信息
+    public UserInfo(String USER_NAME,String PHONE_NO,String TRUE_NAME,String GENDER,String EMAIL,String ADDRESS,String BLOOD_TYPE,Date BIRTHDAY,String QQ){
+        this.USER_NAME=USER_NAME;
+        this.PHONE_NO=PHONE_NO;
+        this.TRUE_NAME=TRUE_NAME;
+        this.GENDER=GENDER;
+        this.EMAIL=EMAIL;
+        this.ADDRESS=ADDRESS;
+        this.BLOOD_TYPE=BLOOD_TYPE;
+        this.BIRTHDAY=BIRTHDAY;
+        this.QQ=QQ;
 }
     public String getQQ() {
         return QQ;

@@ -5,4 +5,7 @@ import entity.UserRel;
 import util.BaseDao;
 
 public class UserRelDapImpl extends BaseDao<UserRel> implements UserRelDao {
+    //显示粉丝
+
+    //显示关注
 }

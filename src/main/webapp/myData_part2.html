@@ -3,77 +3,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>part2</title>
+    <title>更改个人信息</title>
     <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css"href="css/myData.css">
     <link rel="stylesheet"type="text/css"href="layui/css/layui.css">
     <script src="js/jquery.validate.js" type="text/javascript"></script>
     <script src="js/jquery.validate.regex.js" type="text/javascript"></script>
-<script>
-    var cities = new Array(33);
-    cities[0] = new Array("武汉市","黄冈市","襄阳市","荆州市");
-    cities[1] = new Array('长沙市', '株洲市','湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市', '湘西土家族苗族自治州');
-    cities[2] = new Array('石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市');
-    cities[3] = new Array("郑州","开封","洛阳","南阳","漯河","许昌","三门峡","平顶山","周口","驻马店","新乡","鹤壁","焦作","濮阳","安阳","商丘","信阳","济源");
-    cities[4] = new Array("东城","西城","朝阳","丰台","石景山","海淀","门头沟","房山","通州","顺义","昌平","大兴","怀柔","平谷","密云","延庆");
-    cities[5] = new Array('黄浦区','卢湾区', '徐汇区','长宁区','静安区','普陀区','闸北区','虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '浦东新区', '金山区', '松江区', '青浦区', '南汇区', '奉贤区');
-    cities[6] = new Array('和平区','河东区', '河西区', '南开区', '河北区', '红桥区', '塘沽区', '汉沽区', '大港区', '东丽区', '西青区', '津南区', '北辰区', '武清区', '宝坻区');
-    cities[7] = new Array('万州区','涪陵区','渝中区','大渡口区','江北区','沙坪坝区','九龙坡区','南岸区','北碚区','万盛区','双桥区','渝北区','巴南区','黔江区','长寿区','江津区','合川区','永川区','南川区');
-    cities[8] = new Array('成都市','自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市', '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州');
-    cities[9] = new Array('贵阳市','六盘水市', '遵义市', '安顺市', '铜仁地区', '黔西南布依族苗族自治州', '毕节地区', '黔东南苗族侗族自治州', '黔南布依族苗族自治州');
-    cities[10] = new Array('昆明市',' 曲靖市','玉溪市','保山市','昭通市','丽江市','思茅市','临沧市');
-    cities[11] = new Array('拉萨市','昌都地区', '山南地区', '日喀则地市', '那曲地区', '阿里地区', '林芝地区');
-    cities[12] = new Array('广州市','韶关市','深圳市','珠海市','汕头市','佛山市','江门市','湛江市','茂名市','肇庆市','惠州市','梅州市','汕尾市','河源市','阳江市','清远市','东莞市','中山市','潮州市','揭阳市','云浮市');
-    cities[13] = new Array('南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市');
-    cities[14] = new Array('乌鲁木齐市', '克拉玛依市', '吐鲁番地区', '哈密地区', '昌吉回族自治州 ', '博尔塔拉蒙古自治州 ', '巴音郭楞蒙古自治州 ', '阿克苏地区', '克孜勒苏柯尔克孜自治州 ', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区', '石河子市', '阿拉尔市', '图木舒克市', '五家渠市');
-    cities[15] = new Array('西安市','铜川市','宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市');
-    cities[16] = new Array('兰州市','嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治州', '甘南藏族自治州');
-    cities[17] = new Array('西宁市' ,'海东地区', '海北藏族自治州', '黄南藏族自治州', '海南藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州');
-    cities[18] = new Array('太原市','大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市' );
-    cities[19] = new Array('呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟', '阿拉善盟');
-    cities[20] = new Array('南京市', '无锡市', '徐州市', '常州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市');
-    cities[21] = new Array('杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市');
-    cities[22] = new Array('合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市','阜阳市','宿州市', '巢湖市', '六安市', '亳州市', '池州', '宣城市');
-    cities[23] = new Array('福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市');
-    cities[24] = new Array('哈尔滨市','齐齐哈尔市','鸡西市','鹤岗市','双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市', '大兴安岭地区');
-    cities[25] = new Array('长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州');
-    cities[26] = new Array('沈阳市' ,'大连市' ,'鞍山市' ,'抚顺市' ,'本溪市' ,'丹东市' ,'锦州市' ,'营口市' ,'阜新市' ,'辽阳市' ,'盘锦市' ,'铁岭市' ,'朝阳市' ,'葫芦岛市');
-    cities[27] = new Array('济南市','青岛市','淄博市','枣庄市','东营市','烟台市','潍坊市','济宁市','泰安市','威海市','日照市','莱芜市','临沂市','德州市','聊城市','滨州市','菏泽市');
-    cities[28] = new Array('南昌市','景德镇市','萍乡市','九江市','新余市','鹰潭市','赣州市','吉安市','宜春市','抚州市','上饶市');
-    cities[29] = new Array('海口市','三亚市','五指山市', '琼海市', '儋州市', '文昌市', '万宁市', '东方市');
-    cities[30] = new Array('台北市', '高雄市', '基隆市', '台中市', '台南市', '新竹市', '嘉义市');
-    cities[31] = new Array('澳门');
-    cities[32] = new Array('中西区', '湾仔区', '东区', '南区', '油尖旺区', '深水埗区', '九龙城区', '黄大仙区', '观塘区', '荃湾区', '葵青区', '沙田区', '西贡区', '大埔区', '北区', '元朗区', '屯门区', '离岛区');
-    cities[33] = new Array('银川市','石嘴山市','吴忠市','固原市','中卫市');
-    function changeCity(val){
-        //7.获取第二个下拉列表
-        var cityEle = document.getElementById("city");
-        //9.清空第二个下拉列表的option内容
-        cityEle.options.length=0;
-        //2.遍历二维数组中的省份
-        for(var i=0;i<cities.length;i++){
-            //注意，比较的是角标
-            if(val==i){
-                //3.遍历用户选择的省份下的城市
-                for(var j=0;j<cities[i].length;j++){
-                    //4.创建城市的文本节点
-                    var textNode = document.createTextNode(cities[i][j]);
-                    //5.创建option元素节点
-                    var opEle = document.createElement("option");
-                    //6.将城市的文本节点添加到option元素节点
-                    opEle.appendChild(textNode);
-                    //8.将option元素节点添加到第二个下拉列表中去
-                    cityEle.appendChild(opEle);
-                }
+    <script>
+        var arr_province = ["请选择省","北京","上海","天津","重庆","深圳","广东","湖北","湖南","河北","河南","四川","贵州","云南","西藏","广西","新疆",
+            "陕西","甘肃","青海","山西","内蒙古","江苏","浙江","安徽","福建","黑龙江","吉林","辽宁","山东","江西","海南","台湾","澳门","香港","宁夏"];
+        var arr_city =[
+            ["请选择城市"],
+            ["东城区","西城区","朝阳区","宣武区","昌平区","大兴区","丰台区","海淀区"],
+            ['宝山区','长宁区','丰贤区', '虹口区','黄浦区','青浦区','南汇区','徐汇区','卢湾区'],
+            ['和平区', '河西区', '南开区', '河北区', '河东区', '红桥区', '塘古区', '开发区'],
+            ['俞中区', '南岸区', '江北区', '沙坪坝区', '九龙坡区', '渝北区', '大渡口区', '北碚区'],
+            ['福田区', '罗湖区', '盐田区', '宝安区', '龙岗区', '南山区', '深圳周边'],
+            ['广州市','惠州市','汕头市','珠海市','佛山市','中山市','东莞市'],
+            ["武汉市","黄冈市","襄阳市","荆州市"],
+            ['长沙市', '株洲市','湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市'],
+            ['石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市'],
+            ["郑州","开封","洛阳","南阳","漯河","许昌","三门峡","平顶山","周口","驻马店","新乡","鹤壁","焦作","濮阳","安阳","商丘","信阳","济源"],
+            ["东城","西城","朝阳","丰台","石景山","海淀","门头沟","房山","通州","顺义","昌平","大兴","怀柔","平谷","密云","延庆"],
+            ['黄浦区','卢湾区', '徐汇区','长宁区','静安区','普陀区','闸北区','虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '浦东新区', '金山区', '松江区', '青浦区', '南汇区', '奉贤区'],
+            ['和平区','河东区', '河西区', '南开区', '河北区', '红桥区', '塘沽区', '汉沽区', '大港区', '东丽区', '西青区', '津南区', '北辰区', '武清区', '宝坻区'],
+            ['万州区','涪陵区','渝中区','大渡口区','江北区','沙坪坝区','九龙坡区','南岸区','北碚区','万盛区','双桥区','渝北区','巴南区','黔江区','长寿区','江津区','合川区','永川区','南川区'],
+            ['成都市','自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市', '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州'],
+            ['贵阳市','六盘水市', '遵义市', '安顺市', '铜仁地区', '黔西南布依族苗族自治州', '毕节地区', '黔东南苗族侗族自治州', '黔南布依族苗族自治州'],
+            ['昆明市',' 曲靖市','玉溪市','保山市','昭通市','丽江市','思茅市','临沧市'],
+            ['拉萨市','昌都地区', '山南地区', '日喀则地市', '那曲地区', '阿里地区', '林芝地区'],
+            ['南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市'],
+            ['乌鲁木齐市', '克拉玛依市', '吐鲁番地区', '哈密地区', '昌吉回族自治州 ', '博尔塔拉蒙古自治州 ', '巴音郭楞蒙古自治州 ', '阿克苏地区', '克孜勒苏柯尔克孜自治州 ', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区', '石河子市', '阿拉尔市', '图木舒克市', '五家渠市'],
+            ['西安市','铜川市','宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
+            ['兰州市','嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治州', '甘南藏族自治州'],
+            ['西宁市' ,'海东地区', '海北藏族自治州', '黄南藏族自治州', '海南藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州'],
+            ['太原市','大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市' ],
+            ['呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟', '阿拉善盟'],
+            ['南京市', '无锡市', '徐州市', '常州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市'],
+            ['杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市'],
+            ['合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市','阜阳市','宿州市', '巢湖市', '六安市', '亳州市', '池州', '宣城市'],
+            ['福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市'],
+            ['哈尔滨市','齐齐哈尔市','鸡西市','鹤岗市','双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市', '大兴安岭地区'],
+            ['长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州'],
+            ['沈阳市' ,'大连市' ,'鞍山市' ,'抚顺市' ,'本溪市' ,'丹东市' ,'锦州市' ,'营口市' ,'阜新市' ,'辽阳市' ,'盘锦市' ,'铁岭市' ,'朝阳市' ,'葫芦岛市'],
+            ['济南市','青岛市','淄博市','枣庄市','东营市','烟台市','潍坊市','济宁市','泰安市','威海市','日照市','莱芜市','临沂市','德州市','聊城市','滨州市','菏泽市'],
+            ['南昌市','景德镇市','萍乡市','九江市','新余市','鹰潭市','赣州市','吉安市','宜春市','抚州市','上饶市'],
+            ['海口市','三亚市','五指山市', '琼海市', '儋州市', '文昌市', '万宁市', '东方市'],
+            ['台北市', '高雄市', '基隆市', '台中市', '台南市', '新竹市', '嘉义市'],
+            ['澳门'],
+            ['中西区', '湾仔区', '东区', '南区', '油尖旺区', '深水埗区', '九龙城区', '黄大仙区', '观塘区', '荃湾区', '葵青区', '沙田区', '西贡区', '大埔区', '北区', '元朗区', '屯门区', '离岛区'],
+            ['银川市','石嘴山市','吴忠市','固原市','中卫市']
+        ]
+        //网页加载完成，初始化菜单
+        window.onload = init;//传入函数地址
+        function init(){
+            //首先获取对象
+            var province = document.form1.province;
+            var city = document.form1.city;
+            //指定省份中<option>标记的个数
+            province.length = arr_province.length;
+            //循环将数组中的数据写入<option>标记中
+            for(var i=0;i<arr_province.length;i++){
+                province.options[i].text = arr_province[i];
+                province.options[i].value = arr_province[i];
+            }
+            //修改省份列表的默认选择项
+            var index = 0;
+            province.selectedIndex = index;
+            //指定城市中<option>标记的个数
+            city.length = arr_city[index].length;
+            //循环将数组中的数据写入<option>标记中
+            for (var j = 0; j<arr_city[index].length;j++) {
+                city.options[j].text = arr_city[index][j];
+                city.options[j].value = arr_city[index][j];
             }
         }
-    }
+        function  changeSelect(index){
+            //选择对象
+            var city = document.form1.city;
+            //修改省份列表的选择项
+            province.selectedIndex = index;
+            //指定城市中<option>标记的个数
+            city.length = arr_city[index].length;
+            //循环将数组中的数据写入<option>标记中
+            for (var j = 0; j<arr_city[index].length;j++) {
+                city.options[j].text = arr_city[index][j];
+                city.options[j].value = arr_city[index][j];
+            }
+        }
+        function  changeSelect(index){
+            //选择对象
+            var city = document.form1.city;
+            //修改省份列表的选择项
+            province.selectedIndex = index;
+            //指定城市中<option>标记的个数
+            city.length = arr_city[index].length;
+            //循环将数组中的数据写入<option>标记中
+            for (var j = 0; j<arr_city[index].length;j++) {
+                city.options[j].text = arr_city[index][j];
+                city.options[j].value = arr_city[index][j];
+            }
+        }
     $(function () {
         $("#formPart2").validate({
             rules:{
+                onclick:true,
                 telNo: {
+                    required: true,
                     maxlength:11,
-                    minlength:11,
+                    maxlength:11,
                     isphoneNum:true
                 },
                 email:{
@@ -86,9 +124,10 @@
             },
             messages:{
                 telNo:{
+                    required:"*请输入手机号",
                     maxlength:"*请填写11位的手机号",
                     minlength:"*请填写11位的手机号",
-                    isphoneNum:"*请填写正确的手机号码"
+                    isphoneNum:"请填写正确的手机号码"
                 },
                 email:{
                     regex:"*请正确输入邮箱"
@@ -98,17 +137,21 @@
                 }
             }
         })
+        $("#button").click(function () {
+
+
         $.ajax({
             url:"/UpdateUserServlet",
             type:"post",
             data:{"USER_NAME":$("input[name='username']").val(),
                 "TRUE_NAME":$("input[name='truename']").val(),
-                "PHONE_NO":$("input[name='tel']").val(),
-                "ADDRESS":$("select[name='province']").find("option:selected").text(),
+                "PHONE_NO":$("input[name='telNo']").val(),
+                "ADDRESS":$("select[name='province']").val()+$("select[name='city']").val(),
                 "GENDER":$("input[name='gender']").val(),
                 "BIRTHDAY":$("select[name='Date_Year']").val()+$("select[name='birthday_m']").val()+$("select[name='birthday_d']").val(),
                 "BLOOD_TYPE":$("select[name='blood']").val(),
                 "EMAIL":$("input[name='email']").val(),
+                "QQ":$("input[name='QQ']").val(),
                 "QQ":$("input[name='QQ']").val()},
             dataType:"text",
             success:function (result) {
@@ -117,13 +160,12 @@
                 }
             }
         })
+        })
     })
-
-
 </script>
 </head>
 <body>
-<form id="formPart2"action="">
+<form name="form1"action="">
 <div class="myData">
  <div class="myData_body">
      <div class="basicInfo">基本信息
@@ -150,57 +192,15 @@
         <div class="addr">
             <div class="base_part1"><span class="W_error">*</span>所在地</div>
         <div class="base_part2">
-            <span>
-                            <select name="province"onchange="changeCity(this.value)">
-                                <option>--请选择--</option>
-                                <option value="0">湖北</option>
-                                <option value="1">湖南</option>
-                                <option value="2">河北</option>
-                                <option value="3">河南</option>
-                                <option value="4">北京</option>
-                                <option value="5">上海</option>
-                                <option value="6">天津</option>
-                                <option value="7">重庆</option>
-                                <option value="8">四川</option>
-                                <option value="9">贵州</option>
-                                <option value="10">云南</option>
-                                <option value="11">西藏</option>
-                                <option value="12">广东</option>
-                                <option value="13">广西</option>
-                                <option value="14">新疆</option>
-                                <option value="15">陕西</option>
-                                <option value="16">甘肃</option>
-                                <option value="17">青海</option>
-                                <option value="18">山西</option>
-                                <option value="19">内蒙古</option>
-                                <option value="20">江苏</option>
-                                <option value="21">浙江</option>
-                                <option value="22">安徽</option>
-                                <option value="23">福建</option>
-                                <option value="24">黑龙江</option>
-                                <option value="25">吉林</option>
-                                <option value="26">辽宁</option>
-                                <option value="27">山东</option>
-                                <option value="28">江西</option>
-                                <option value="29">海南</option>
-                                <option value="30">台湾</option>
-                                <option value="31">澳门</option>
-                                <option value="32">香港</option>
-                                <option value="33">宁夏</option>
-                            </select>
-                            </span>
-                         <span>
-                            <select node-type="city" name="city" id="city" init_value="1">
-
-                            </select>&nbsp;
-                        </span>
+                 <select name="province" id="province" onchange="changeSelect(this.selectedIndex)"></select>
+                  <select  name="city" id="city" ></select>&nbsp;
         </div>
     </div>
         <div class="sex">
             <div class="base_part1"><span class="W_error">*</span>性别</div>
         <div class="base_part2">&nbsp;
-            <span class="rsp"><label for="man_radio"><input id="man_radio" name="gender" type="radio" value="m" class="W_radio">男</label></span>
-            <span class="rsp"><label for="woman_radio"><input id="woman_radio" name="gender" type="radio" value="f" class="W_radio" checked="checked">女</label></span>
+            <span class="rsp"><label for="man_radio"><input id="man_radio" name="gender" type="radio" value="男" class="W_radio">男</label></span>
+            <span class="rsp"><label for="woman_radio"><input id="woman_radio" name="gender" type="radio" value="女" class="W_radio" checked="checked">女</label></span>
         </div>
     </div>
         <div class="birthday"><div class="base_part1">生日</div>

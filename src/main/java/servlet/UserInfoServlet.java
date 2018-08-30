@@ -21,6 +21,7 @@ import java.util.List;
 public class UserInfoServlet extends HttpServlet {
     UserInfoDao dao = new UserInfoDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //查询个人信息
         List<UserInfo> list = dao.showAllUser(3);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
@@ -30,7 +31,6 @@ public class UserInfoServlet extends HttpServlet {
         out.flush();
         out.close();
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request,response);
     }
