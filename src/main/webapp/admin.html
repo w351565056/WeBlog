@@ -6,6 +6,132 @@
   <script src="layui/layui.js"></script>
   <script src="js/jquery-3.3.1.js"></script>
   <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+  <script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+      var element = layui.element;
+
+      //…
+    });
+    $(function () {
+      hideright();
+      // hideShowLeft();
+
+      function hideright(){
+        $("#t2").hide();
+        $("#t3").hide();
+        $("#t4").hide();
+        $("#t5").hide();
+
+        $("#dt1").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t1").show();
+        });
+        $("#dt2").click(function () {
+          $("#t1").hide();
+          $("#t3").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t2").show()
+        });
+        $("#dt3").click(function () {
+          $("#t1").hide();
+          $("#t2").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t3").show();
+        });
+        $("#dt4").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t1").hide();
+          $("#t5").hide();
+          $("#t4").show();
+        })
+
+        $("#dt5").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t1").hide();
+          $("#t4").hide();
+          $("#t5").show();
+        })
+      }
+
+      function hideShowLeft() {
+        $("#show_right").hide();
+        $("#hide_left").click(function () {
+          $("#show_right").show();
+          $("#menu_left").hide();
+          $("#hide_left").hide();
+        });
+        $("#show_right").click(function () {
+          $("#menu_left").show();
+          $("#hide_left").show();
+          $("#show_right").hide();
+        });
+      }
+
+    });
+
+
+  </script>
+  <script>
+    $(function () {
+      $.ajax({
+        url:"/UserInfoServlet",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+
+          //查询user_info 表的数据
+          for(var i = 0 ; i < result.length;i++){
+            var $node = $('<tr>\n' +
+              '        <td>'+ result[i].HEAD_IMG+'</td>\n' +
+              '        <td>'+ result[i].USER_ID+'</td>\n' +
+              '        <td>'+ result[i].USER_NAME+'</td>\n' +
+              '        <td>'+ result[i].USER_PASS+'</td>\n' +
+              '        <td>'+ result[i].TRUE_NAME+'</td>\n' +
+              '        <td>'+ result[i].GENDER+'</td>\n' +
+              '        <td>'+ result[i].BLOOD_TYPE+'</td>\n' +
+              '        <td>'+ result[i].PHONE_NO+'</td>\n' +
+              '        <td>'+ result[i].EMAIL+'</td>\n' +
+              '        <td>'+ result[i].BIRTHDAY+'</td>\n' +
+              '        <td>'+ result[i].QQ+'</td>\n' +
+              '        <td>'+ result[i].CREATE_DATE_TIME+'</td>\n' +
+              '        <td>'+ result[i].MODIFY_DATE_TIME+'</td>\n' +
+              '        <td>\n' +
+              '            <button class="layui-btn layui-btn-warm change">修改</button>\n' +
+              '            <button class="layui-btn layui-btn-danger delete">删除</button>\n' +
+              '        </td>\n' +
+              '      </tr>');
+            $('#tbody1').append($node);
+          }
+        }
+      });
+
+      //  点击删除按钮 获取 user_id
+      $('#tbody1').on('click',' td button:eq(1)',function () {
+        var text = '确认是否删除该用户';
+        var str = '<div style="padding: 20px 100px;">'+ text +'</div>';
+        layer.confirm(str,{btn:['确认','取消'],tittle:'提示'},function () {
+          $(this).closest('tr').remove();
+        });
+      //   layer.confirm('删除后数据将无法恢复，确认？',
+      //     function()
+      //     {
+      //       //这里是你点击确认后，要执行的事件
+      //       $(this).closest('tr').remove();
+      //     });
+      // });
+
+
+    })
+
+  </script>
 </head>
 <body>
 <ul  class="layui-nav" lay-filter="" style="background-color: #75c3f1">
@@ -56,31 +182,32 @@
         <th>手机号码</th>
         <th>邮箱</th>
         <th>生日</th>
+        <th>QQ</th>
         <th>创建时间</th>
         <th>锁定状态</th>
         <th>操作</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            <button class="layui-btn layui-btn-warm change">修改</button>
-            <button class="layui-btn layui-btn-danger delete">删除</button>
-        </td>
-      </tr>
-
+      <tbody id="tbody1">
+      <!--<tr>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td>-->
+            <!--<button class="layui-btn layui-btn-warm change">修改</button>-->
+            <!--<button class="layui-btn layui-btn-danger delete">删除</button>-->
+        <!--</td>-->
+      <!--</tr>-->
       </tbody>
     </table>
 
@@ -134,7 +261,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><div style="width:150px;overflow: hidden;white-space: nowrap;overflow: hidden"><a>啊是大第四u要大陆富豪四度繁华和覅u</a></div><i data-method="notice" class="layui-icon layui-icon-more"></i></td>
+        <td><div style="width:150px;overflow: hidden;white-space: nowrap;"><a>啊是大第四u要大陆富豪四度繁华和覅u</a></div><i data-method="notice" class="layui-icon layui-icon-more"></i></td>
         <td></td>
         <td></td>
         <td>
@@ -154,79 +281,7 @@
 
 
 
-<script>
-  //注意：导航 依赖 element 模块，否则无法进行功能性操作
-  layui.use('element', function () {
-    var element = layui.element;
 
-    //…
-  });
-  $(function () {
-    hideright();
-    // hideShowLeft();
-
-    function hideright(){
-      $("#t2").hide();
-      $("#t3").hide();
-      $("#t4").hide();
-      $("#t5").hide();
-
-      $("#dt1").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t1").show();
-      });
-      $("#dt2").click(function () {
-        $("#t1").hide();
-        $("#t3").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t2").show()
-      });
-      $("#dt3").click(function () {
-        $("#t1").hide();
-        $("#t2").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t3").show();
-      });
-      $("#dt4").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t1").hide();
-        $("#t5").hide();
-        $("#t4").show();
-      })
-
-      $("#dt5").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t1").hide();
-        $("#t4").hide();
-        $("#t5").show();
-      })
-    }
-
-    function hideShowLeft() {
-      $("#show_right").hide();
-      $("#hide_left").click(function () {
-        $("#show_right").show();
-        $("#menu_left").hide();
-        $("#hide_left").hide();
-      });
-      $("#show_right").click(function () {
-        $("#menu_left").show();
-        $("#hide_left").show();
-        $("#show_right").hide();
-      });
-    }
-
-  });
-
-
-</script>
 <script>
   layui.use('layer', function(){
     var $ = layui.jquery, layer = layui.layer;
@@ -315,7 +370,7 @@
     });
 
     //button
-    $(".change").on('click',function () {
+    $("#tbody1").on('click','.change',function () {
       var text = '修改成功';
       layer.open({
         type:1,
@@ -329,18 +384,18 @@
     });
 
 
-    $(".delete").on('click',function () {
-      var text = '确认是否删除该用户';
-      layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:['是','否'],
-        btnAlign:'c',
-        yes:function () {
-          layer.closeAll();
-        }
-      });
-    });
+    // $("#tbody1").on('click','.delete',function () {
+    //   var text = '确认是否删除该用户';
+    //   layer.open({
+    //     type:1,
+    //     content: '<div style="padding: 20px 100px;">'+ text +'</div>',
+    //     btn:['是','否'],
+    //     btnAlign:'c',
+    //     yes:function () {
+    //       layer.closeAll();
+    //     }
+    //   });
+    // });
 
 
     $(".cancel").on('click',function () {
