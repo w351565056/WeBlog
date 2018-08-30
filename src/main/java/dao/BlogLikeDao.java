@@ -1,5 +1,7 @@
 package dao;
 
-public interface BlogLikeDao {
+import entity.BlogLike;
 
+public interface BlogLikeDao {
+    void addBlogLike(BlogLike blogLike);
 }
