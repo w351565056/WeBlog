@@ -15,6 +15,7 @@ import java.io.IOException;
 public class insertBlogLikeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BlogLikeDao insertBlogLike = new BlogLikeDaoImpl();
+        int i =0;
 
     }
 
