@@ -24,7 +24,7 @@ a {
     text-decoration: none
 }
 body{
-    background-image: url("../images/timg.jpg");
+    background-image: url("../images/Home/timg.jpg");
     background-size:cover;
     background-repeat: repeat-y;
 
@@ -84,7 +84,7 @@ body{
     height: 60px;
     display: table-cell;
     text-align: center;
-    background-image: url("../images/backgroundimg.png");
+    background-image: url("../images/Home/backgroundimg.png");
     background-size: cover;
 }
 #home_my_background_img img{
@@ -176,7 +176,7 @@ body{
     display: inline;
     width: 16px;
     height: 16px;
-    background-image: url("../images/fresh.png");
+    background-image: url("../images/Home/fresh.png");
 }
 #home_refresh{
     float: right;
@@ -188,5 +188,13 @@ body{
     bottom: 120px;
 }
 #home_to_top:hover{
-    background-image: url("../images/to_top.png");
+    background-image: url("../images/Home/to_top.png");
  }
+#search_blog_keyword input{
+    width: 100px;
+    height: 50px;
+}
+#search_blog_keyword button{
+    width: 50px;
+    height: 50px;
+}
