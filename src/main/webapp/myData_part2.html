@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>part2</title>
     <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css"href="css/mydata.css">
+    <link rel="stylesheet" type="text/css"href="css/myData.css">
     <link rel="stylesheet"type="text/css"href="layui/css/layui.css">
     <script src="js/jquery.validate.js" type="text/javascript"></script>
     <script src="js/jquery.validate.regex.js" type="text/javascript"></script>
@@ -98,29 +98,60 @@
                 }
             }
         })
+        $.ajax({
+            url:"/UpdateUserServlet",
+            type:"post",
+            data:{"USER_NAME":$("input[name='username']").val(),
+                "TRUE_NAME":$("input[name='truename']").val(),
+                "PHONE_NO":$("input[name='tel']").val(),
+                "ADDRESS":$("select[name='province']").find("option:selected").text(),
+                "GENDER":$("input[name='gender']").val(),
+                "BIRTHDAY":$("select[name='Date_Year']").val()+$("select[name='birthday_m']").val()+$("select[name='birthday_d']").val(),
+                "BLOOD_TYPE":$("select[name='blood']").val(),
+                "EMAIL":$("input[name='email']").val(),
+                "QQ":$("input[name='QQ']").val()},
+            dataType:"text",
+            success:function (result) {
+                if(result=="1"){
+                    alert("成功");
+                }
+            }
+        })
     })
 
 
 </script>
 </head>
 <body>
-<form id="formPart2"action="myData_part1.html">
+<form id="formPart2"action="">
 <div class="myData">
  <div class="myData_body">
-     <div class="basicInfo">基本信息 <li class="spacer"></li><div><button id="button"class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">保存</button></div></div>
+     <div class="basicInfo">基本信息
+         <li class="spacer"></li>
+         <div><button id="button"class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">保存</button></div>
+     </div>
     <div class="myData_base">
-        <div class="name2"><div class="base_part1">真实姓名</div><div class="base_part2">&nbsp; <input type="text"name="username"placeholder="请输入真实姓名"></div></div>
-        <div class="account"><div class="base_part1"><span class="W_error">*</span>用户名</div><div class="base_part2">&nbsp; <input type="text"name="username"placeholder="梦鸢1996"></div>
-        <div class="base_part2_name">&nbsp;
+        <div class="name2">
+            <div class="base_part1">真实姓名</div>
+            <div class="base_part2">&nbsp;<input type="text"name="truename"placeholder="请输入真实姓名"></div>
+        </div>
+        <div class="account">
+            <div class="base_part1"><span class="W_error">*</span>用户名</div>
+            <div class="base_part2">&nbsp;<input type="text"name="username"placeholder="梦鸢1996"></div>
+            <div class="base_part2_name">&nbsp;
                 <p>用户你好，微博允许普通用户一年修改一次昵称，请谨慎提交，橙V、蓝V认证用户修改次数请见详细规则，<a href=""><span>查看详细规则>></span></a></p>
                 <p>微博年费会员最多可修改5次/年，<a href="#"><span>立即开通会员>></span></a></p>
+            </div>
         </div>
+        <div class="telNo2">
+            <div class="base_part1">电话号码</div>
+            <div class="base_part2">&nbsp; <input type="text"name="telNo"placeholder="请输入真实电话号码"></div>
         </div>
-        <div class="telNo2"><div class="base_part1">电话号码</div><div class="base_part2">&nbsp; <input type="text"name="telNo"placeholder="请输入真实电话号码"></div></div>
-        <div class="addr"><div class="base_part1"><span class="W_error">*</span>所在地</div>
+        <div class="addr">
+            <div class="base_part1"><span class="W_error">*</span>所在地</div>
         <div class="base_part2">
             <span>
-                            <select onchange="changeCity(this.value)">
+                            <select name="province"onchange="changeCity(this.value)">
                                 <option>--请选择--</option>
                                 <option value="0">湖北</option>
                                 <option value="1">湖南</option>
@@ -165,7 +196,8 @@
                         </span>
         </div>
     </div>
-        <div class="sex"><div class="base_part1"><span class="W_error">*</span>性别</div>
+        <div class="sex">
+            <div class="base_part1"><span class="W_error">*</span>性别</div>
         <div class="base_part2">&nbsp;
             <span class="rsp"><label for="man_radio"><input id="man_radio" name="gender" type="radio" value="m" class="W_radio">男</label></span>
             <span class="rsp"><label for="woman_radio"><input id="woman_radio" name="gender" type="radio" value="f" class="W_radio" checked="checked">女</label></span>
@@ -346,19 +378,24 @@
             </select>日
         </div>
     </div>
-        <div class="bloodType"><div class="base_part1">血型</div>
-        <div class="base_part2">&nbsp;
-            <select name="blood"init_value="">
+        <div class="bloodType">
+            <div class="base_part1">血型</div>
+           <div class="base_part2">&nbsp;<select name="blood"init_value="">
                 <option selected="" value=""> </option>
                 <option value="A">A型</option>
                 <option value="B">B型</option>
                 <option value="AB">AB型</option>
                 <option value="O">O型</option>
-            </select>
-        </div>
+            </select></div>
     </div>
-        <div class="email"><div class="base_part1">邮箱</div><div class="base_part2">&nbsp; <input type="text"name="email"placeholder="请输入邮箱地址"></div></div>
-        <div class="QQ"><div class="base_part1">QQ</div><div class="base_part2">&nbsp; <input type="text"name="QQ"placeholder="请输入QQ号"></div></div>
+        <div class="email">
+            <div class="base_part1">邮箱</div>
+            <div class="base_part2">&nbsp; <input type="text"name="email"placeholder="请输入邮箱地址"></div>
+        </div>
+        <div class="QQ">
+            <div class="base_part1">QQ</div>
+            <div class="base_part2">&nbsp; <input type="text"name="QQ"placeholder="请输入QQ号"></div>
+        </div>
     </div>
  </div>
 </div>

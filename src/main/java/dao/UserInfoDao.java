@@ -5,5 +5,6 @@ import entity.UserInfo;
 import java.util.List;
 
 public interface UserInfoDao {
-   List<UserInfo> showAllUser();
+   List<UserInfo> showAllUser(int i);
+   int UpdateAllUser(UserInfo userInfo);
 }

@@ -1,5 +1,5 @@
 .myData{width: 600px;height: 800px;}
-.myData_body{width: 560px;height: 600px;border:solid #c3b9ad 1px;}
+.myData_body{width: 560px;height: 600px;margin: auto}
 .basicInfo{width: 552px;height: 50px;font-weight: 900;line-height :50px;}
 .myData_baseView{width: 550px;height: 650px;position: relative;}
 .myData_base{width: 550px;height: 650px;}
@@ -16,8 +16,8 @@
 .email{width: 560px;height: 30px;margin-top: 20px;}
 .QQ{width: 560px;height: 30px;margin-top: 20px;}
 span{margin-left: 10px;}
-.base_part1{width: 60px;height: 30px;font-size:12px;float:left;text-align: right}
-.base_part2{width: 493px;height: 30px;font-size:12px;float:right;text-align: left}
+.base_part1{width: 60px;height: 30px;font-size:13px;float:left;text-align: right}
+.base_part2{width: 493px;height: 30px;font-size:13px;margin-top:-2px;float:right;text-align: left}
 .base_part2_name{width: 480px;height: 80px;margin-top:-20px;margin-right:5px;line-height:24px;float:right;font-size:12px;text-align: left;}
 .base_part2_name span{color: #5a73db;font-size:10px;}
 
@@ -39,7 +39,7 @@ span{margin-left: 10px;}
     top:-10px
 }
 .span{color: #007DDB;position:relative;top:-25px;left:5px}
-.span2{font-size:12px;float:left;text-align: left;margin-left:65px;margin-top: -25px}
+.span2{font-size:13px;float:left;text-align: left;margin-left:70px;margin-top: -25px}
 .W_error{color: #ff0000;}
 body {
     overflow-x : hidden;
