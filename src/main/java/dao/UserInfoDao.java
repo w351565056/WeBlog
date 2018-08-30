@@ -10,5 +10,5 @@ public interface UserInfoDao {
    //查询所有用户
 
   //删除用户
-  List<UserInfo> deleteUser(UserInfo userInfo);
+  List<UserInfo> deleteUser(BigDecimal userInfo);
 }
