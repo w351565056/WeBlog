@@ -24,7 +24,7 @@ a {
     text-decoration: none
 }
 body{
-    background-image: url("../images/Home/timg.jpg");
+    background-image: url("../images/myZone/backgroundimg.jpg");
     background-size:cover;
     background-repeat: repeat-y;
 
@@ -44,7 +44,7 @@ body{
 }
 #home_content_left{
     width: 700px;
-    height: 500px;
+    height: 100px;
     float: left;
 }
 #home_content_right{
@@ -57,6 +57,8 @@ body{
     width: 674px;
     padding-top: 10px;
     height: 45px;
+    background: white;
+    border-radius: 5px;
 }
 #home_nav_ul{
     margin: auto;
@@ -101,6 +103,7 @@ body{
     font-size: 20px;
     line-height: 75px;
     font-weight: 700;
+    background: white;
 }
 #home_username span{
     background: gold;
@@ -111,6 +114,7 @@ body{
 #home_info_decoration{
     width: 230px;
     height: 45px;
+    background: white;
 }
 #home_info_decoration div{
     width: 76px;
@@ -135,6 +139,8 @@ body{
     position: relative;
     top: 15px;
     box-shadow: #9F9F9F 1px 2px 1px 1px;
+    background: white;
+    border-radius: 5px;
 }
 #home_blog_decoration span{
     width: 115px;
@@ -162,6 +168,8 @@ body{
     position: relative;
     top: 40px;
     box-shadow: #9F9F9F 1px 2px 1px 1px;
+    background: white;
+    border-radius: 5px;
 }
 #home_hot_topic li{
     margin-top: 5px;
@@ -187,14 +195,4 @@ body{
     right: 50px;
     bottom: 120px;
 }
-#home_to_top:hover{
-    background-image: url("../images/Home/to_top.png");
- }
-#search_blog_keyword input{
-    width: 100px;
-    height: 50px;
-}
-#search_blog_keyword button{
-    width: 50px;
-    height: 50px;
-}
+

@@ -2,6 +2,7 @@ package entity;
 
 //import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class BlogContent {

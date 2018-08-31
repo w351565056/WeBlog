@@ -20,7 +20,7 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
 
     @Override
     public List<BlogContent> ShowContent(String str) {
-        return executeQuery("select * from BLOG_CONTENT  where BLOG_TEXT like %?%",new Object[]{str});
+        return executeQuery("select * from BLOG_CONTENT  where BLOG_TEXT like ?",new Object[]{str});
     }
 
     @Override
