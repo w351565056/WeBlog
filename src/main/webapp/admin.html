@@ -89,19 +89,26 @@
         success: function (result) {
 
           //查询user_info 表的数据
+          //问题：不能显示从数据库获取的日期 就写死了默认值
           for (var i = 0; i < result.length; i++) {
+            // alert( (new Date()).format("yyyy-MM-dd hh:mm:ss.S"));
+            // alert(format.replace('yyyy-MM-dd',result[i].BIRTHDAY));
+            // var ddd = new Date.format("yyyy-MM-dd");
+            // ddd = result[3].BIRTHDAY;
+            // alert(ddd.result[i].BIRTHDAY);
             var $node = $('<tr>\n' +
-              '        <td>' + result[i].HEAD_IMG + '</td>\n' +
+              '        <td><img src="' + result[i].HEAD_IMG + '" style="width: 100px;"></td>\n' +
               '        <td>' + result[i].USER_ID + '</td>\n' +
-              '        <td>' + result[i].USER_NAME + '</td>\n' +
-              '        <td>' + result[i].USER_PASS + '</td>\n' +
-              '        <td>' + result[i].TRUE_NAME + '</td>\n' +
-              '        <td>' + result[i].GENDER + '</td>\n' +
-              '        <td>' + result[i].BLOOD_TYPE + '</td>\n' +
-              '        <td>' + result[i].PHONE_NO + '</td>\n' +
-              '        <td>' + result[i].EMAIL + '</td>\n' +
-              '        <td>' + result[i].BIRTHDAY + '</td>\n' +
-              '        <td>' + result[i].QQ + '</td>\n' +
+              '        <td><input type="text" style="border: none;width:90px;" value="' + result[i].PHONE_NO + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_NAME + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_PASS + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].TRUE_NAME + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].GENDER + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].BLOOD_TYPE + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:140px;" value="' + result[i].EMAIL + '"></td>\n' +
+              '        <td><input type="text" style="border: none;" value="' + result[i].ADDRESS + '"></td>\n' +
+              '        <td><input type="datetime" style="border: none;width:90px;" Value="' + result[i].BIRTHDAY + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].QQ + '"></td>\n' +
               '        <td>' + result[i].CREATE_DATE_TIME + '</td>\n' +
               '        <td>' + result[i].MODIFY_DATE_TIME + '</td>\n' +
               '        <td>\n' +
@@ -115,22 +122,105 @@
       });
 
       //  点击删除按钮 获取 user_id
+      //待改内容：先删除再弹窗了，sql语句没删到数据库
       $('#tbody1').on('click', '.delete', function () {
-        $.ajax({
-          url:'/UserInfoServlet',
-          type:'post',
-          date:{'USER_ID':$('#tbody1').children().eq(1).value()},
-          dataType:'json',
-          success:function () {
-                alert("111");
+        var $node = $(this);
+        var text = "确定删除该用户？";
+
+        layer.open({
+          type: 1,
+          content: '<div style="padding: 20px 100px;">' + text + '</div>',
+          btn: ['确定', '取消'],
+          btnAlign: 'c',
+          yes: function () {
+            $.ajax({
+              url: '/DeleteUserServlet',
+              type: 'post',
+              data: {
+                'USER_ID': $node.closest('tr').children().eq(1).text()
+              },
+              dataType: 'json',
+              success: function () {
+                $node.closest('tr').remove();
+                layer.msg("修改成功！", {
+                  icon: 6,
+                  time: 1000
+                });
+              }
+            });
+            layer.closeAll();
           }
         });
-        if(layer.confirm("是否删除？")){
-          $(this).closest('tr').remove();
-        }
+
+
       });
 
-
+      // 点击修改获取 user_id 传值 更新表
+      $('#tbody1').on('click', '.change', function () {
+        var text = '确定修改该用户？';
+        var $node = $(this);
+        layer.open({
+          type: 1,
+          content: '<div style="padding: 20px 100px;">' + text + '</div>',
+          btn: ['确定', '取消'],
+          btnAlign: 'c',
+          yes: function () {
+            //  ajax 获取user_id 提交表单数据 更新于数据库
+            $.ajax({
+              url: '/UpdataUserServlet',
+              type: 'post',
+              data: {
+                'USER_ID': $node.closest('tr').children().eq(1).text(),
+                'USER_NAME': $node.closest('tr').children().eq(2).children().val(),
+                'USER_PASS': $node.closest('tr').children().eq(3).children().val(),
+                'TRUE_NAME': $node.closest('tr').children().eq(4).children().val(),
+                'GENDER': $node.closest('tr').children().eq(5).children().val(),
+                'BLOOD_TYPE': $node.closest('tr').children().eq(6).children().val(),
+                'PHONE_NO': $node.closest('tr').children().eq(7).children().val(),
+                'EMAIL': $node.closest('tr').children().eq(8).children().val(),
+                'ADDRESS': $node.closest('tr').children().eq(9).children().val(),
+                'BIRTHDAY': $node.closest('tr').children().eq(10).children().val(),
+                'QQ': $node.closest('tr').children().eq(11).children().val()
+              },
+              dataType: 'json',
+              success: function () {
+                layer.msg("修改成功！", {
+                  icon: 6,
+                  time: 1000
+                });
+              }
+            });
+            layer.closeAll();
+          }
+        });
+      });
+      //添加用户
+      $(".add").click(function () {
+        $.ajax({
+          url: '/AddUserServlet',
+          type: 'post',
+          data: {
+            'PHONE_NO':$(this).closest('tr').children().eq(2).children().val(),
+            'USER_NAME':$(this).closest('tr').children().eq(3).children().val(),
+            'USER_PASS': $(this).closest('tr').children().eq(4).children().val(),
+            'TRUE_NAME': $(this).closest('tr').children().eq(5).children().val(),
+            'GENDER': $(this).closest('tr').children().eq(6).children().val(),
+            'BLOOD_TYPE':$(this).closest('tr').children().eq(7).children().val(),
+            'EMAIL': $(this).closest('tr').children().eq(8).children().val(),
+            'ADDRESS': $(this).closest('tr').children().eq(9).children().val(),
+            'BIRTHDAY': $(this).closest('tr').children().eq(10).children().val(),
+            'QQ': $(this).closest('tr').children().eq(11).children().val(),
+          },
+          dataType: 'json',
+          success: function () {
+            layer.msg("修改成功！", {
+              icon: 6,
+              time: 1000
+            });
+            window.location.reload();
+          }
+        });
+      });
     })
 
   </script>
@@ -144,7 +234,6 @@
     <a href="javascript:;">用户管理</a>
     <dl class="layui-nav-child"> <!-- 二级菜单 -->
       <dd id="dt1"><a href="javascript:;">查询用户信息</a></dd>
-      <dd id="dt2"><a href="javascript:;">添加新用户</a></dd>
       <dd id="dt3"><a href="javascript:;">查询被举报用户</a></dd>
     </dl>
   </li>
@@ -169,20 +258,67 @@
   <li class="layui-nav-item"><a href="">退出</a></li>
 </ul>
 
-<!--查询用户信息-->
-<div class="">
-  <table class="layui-table" id="t1">
+
+<div  id="t1">
+  <!--添加新用户-->
+  <div id="">
+    <table class="layui-table" >
+      <thead>
+      <tr>
+        <th>用户头像</th>
+        <th>用户ID</th>
+        <th>手机号码(必填)</th>
+        <th>用户名(必填)</th>
+        <th>密码</th>
+        <th>真实姓名</th>
+        <th>性别</th>
+        <th>血型</th>
+        <th>邮箱(必填)</th>
+        <th>地址</th>
+        <th>生日</th>
+        <th>QQ</th>
+        <th>创建时间</th>
+        <th>锁定状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody id="tbody2">
+      <tr>
+        <td><i class="layui-icon layui-icon-face-smile"></i></td>
+        <td></td>
+        <td><input type="text" style="border: none;width:90px" value="17811781887"></td>
+        <td><input type="text" style="border: none;width:90px" value="考克斯"></td>
+        <td><input type="text" style="border: none;width:90px" value="123456"></td>
+        <td><input type="text" style="border: none;width:90px" value="李狗蛋"></td>
+        <td><input type="text" style="border: none;width:90px" value="男"></td>
+        <td><input type="text" style="border: none;width:90px" value="O"></td>
+        <td><input type="text" style="border: none;width:90px" value="1@qq.com"></td>
+        <td><input type="text" style="border: none;width:90px" value="天津西青"></td>
+        <td><input type="dateTime" class="layui-input" id="test18" placeholder="yyyy/MM/dd"></td>
+        <td><input type="text" style="border: none;width:90px" value="3123131"></td>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="layui-btn layui-btn-warm add">添加</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--查询用户信息-->
+  <table class="layui-table">
     <thead>
     <tr>
       <th>用户头像</th>
       <th>用户ID</th>
+      <th>手机号码</th>
       <th>用户名</th>
       <th>密码</th>
       <th>真实姓名</th>
       <th>性别</th>
       <th>血型</th>
-      <th>手机号码</th>
       <th>邮箱</th>
+      <th>地址</th>
       <th>生日</th>
       <th>QQ</th>
       <th>创建时间</th>
@@ -191,33 +327,54 @@
     </tr>
     </thead>
     <tbody id="tbody1">
-    <!--<tr>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td></td>-->
-    <!--<td>-->
-    <!--<button class="layui-btn layui-btn-warm change">修改</button>-->
-    <!--<button class="layui-btn layui-btn-danger delete">删除</button>-->
-    <!--</td>-->
-    <!--</tr>-->
     </tbody>
   </table>
 
-  <!--添加新用户-->
-  <div class="layui-col-md10" id="t2">
-    <iframe></iframe>
-  </div>
-
+  <!--&lt;!&ndash;添加新用户&ndash;&gt;-->
+  <!--<div id="t2">-->
+  <!--<table class="layui-table" >-->
+    <!--<thead>-->
+    <!--<tr>-->
+      <!--<th>用户头像</th>-->
+      <!--<th>用户ID</th>-->
+      <!--<th>手机号码</th>-->
+      <!--<th>用户名</th>-->
+      <!--<th>密码</th>-->
+      <!--<th>真实姓名</th>-->
+      <!--<th>性别</th>-->
+      <!--<th>血型</th>-->
+      <!--<th>邮箱</th>-->
+      <!--<th>地址</th>-->
+      <!--<th>生日</th>-->
+      <!--<th>QQ</th>-->
+      <!--<th>创建时间</th>-->
+      <!--<th>锁定状态</th>-->
+      <!--<th>操作</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody id="tbody2">-->
+    <!--<tr>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td>-->
+        <!--<button class="layui-btn layui-btn-warm change">添加</button>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
 
   <!--查询被举报用户-->
   <table class="layui-table" id="t3">
@@ -285,6 +442,27 @@
 
 
 <script>
+  layui.use('laydate',function () {
+    var laydate = layui.laydate;
+    laydate.render({
+      elem: '#test18',
+      format:'yyyy/MM/dd'
+      ,mark: {
+        '0/10/14': '生日'
+        ,'0/12/31': '跨年' //每年的日期
+        ,'0/0/10': '工资' //每月某天
+        ,'0/0/15': '月中'
+        ,'2017/8/15': '' //如果为空字符，则默认显示数字+徽章
+        ,'2099/10/14': '呵呵'
+      }
+      ,done: function(value, date){
+        if(date.year === 2017 && date.month === 8 && date.date === 15){ //点击2017年8月15日，弹出提示语
+          layer.msg('这一天是：中国人民抗日战争胜利72周年');
+        }
+      }
+    });
+  });
+
   layui.use('layer', function () {
     var $ = layui.jquery, layer = layui.layer;
 
@@ -382,29 +560,33 @@
     });
 
     //button
-    $("#tbody1").on('click', '.change', function () {
-      var text = '修改成功';
-      layer.open({
-        type: 1,
-        content: '<div style="padding: 20px 100px;">' + text + '</div>',
-        btn: '确定',
-        btnAlign: 'c',
-        yes: function () {
-          layer.closeAll();
-        }
-      });
-    });
-
-
-    // $("#tbody1").on('click','.delete',function () {
-    //   var text = '确认是否删除该用户';
+    // $("#tbody1").on('click', '.change', function () {
+    //   var text = '确定修改？';
+    //   var $node = $(this);
+    //
     //   layer.open({
-    //     type:1,
-    //     content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-    //     btn:['是','否'],
-    //     btnAlign:'c',
-    //     yes:function () {
-    //       layer.closeAll();
+    //     type: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text + '</div>',
+    //     btn: ['确定', '取消'],
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //     //  ajax 获取user_id 提交表单数据 更新于数据库
+    //
+    //     }
+    //   });
+    // });
+
+
+    // $("#tbody1").on('click', '.delete', function () {
+    //   var text = '确认是否删除该用户';
+    //   var $node = $(this);
+    //   layer.open({
+    //     type: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text + '</div>',
+    //     btn: ['是', '否'],
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //       $(this).closest('tr').remove();
     //     }
     //   });
     // });
