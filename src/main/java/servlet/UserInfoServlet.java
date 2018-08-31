@@ -22,7 +22,7 @@ public class UserInfoServlet extends HttpServlet {
     UserInfoDao dao = new UserInfoDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //查询个人信息
-        List<UserInfo> list = dao.showAllUser(3);
+        List<UserInfo> list = dao.showAllUser(100002);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);

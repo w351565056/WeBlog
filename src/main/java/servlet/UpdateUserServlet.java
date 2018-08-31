@@ -26,13 +26,13 @@ public class UpdateUserServlet extends HttpServlet {
          String EMAIL=request.getParameter("EMAIL");
          String ADDRESS=request.getParameter("ADDRESS");
          String BLOOD_TYPE=request.getParameter("BLOOD_TYPE");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date BIRTHDAY =null;
-        try {
-            BIRTHDAY=sdf.parse(request.getParameter("BIRTHDAY"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date BIRTHDAY =null;
+//        try {
+//            BIRTHDAY=sdf.parse(request.getParameter("BIRTHDAY"));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 //        Date CREATE_DATE_TIME=null;
 //        try {
 //            CREATE_DATE_TIME =sdf.parse(request.getParameter("CRESTE_DATE_TIME"));
@@ -40,7 +40,7 @@ public class UpdateUserServlet extends HttpServlet {
 //            e.printStackTrace();
 //        }
         String QQ=request.getParameter("QQ");
-         UserInfo userBean=new UserInfo(USER_NAME,PHONE_NO,TRUE_NAME,GENDER,EMAIL,ADDRESS,BLOOD_TYPE,BIRTHDAY,QQ);
+         UserInfo userBean=new UserInfo(USER_NAME,PHONE_NO,TRUE_NAME,GENDER,EMAIL,ADDRESS,BLOOD_TYPE,QQ);
          UserInfoDao dao = new UserInfoDaoImpl();
          int re=dao.UpdateAllUser(userBean);
          PrintWriter out=response.getWriter();
@@ -49,7 +49,6 @@ public class UpdateUserServlet extends HttpServlet {
          out.close();
 
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request,response);
     }

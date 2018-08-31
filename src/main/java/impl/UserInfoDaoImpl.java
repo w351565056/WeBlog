@@ -14,7 +14,7 @@ public class UserInfoDaoImpl extends BaseDao<UserInfo> implements UserInfoDao {
     }
     //更新个人信息
     public int UpdateAllUser(UserInfo userInfo){
-        return executeUpdate("update USER_INFO set user_name=?,true_name=?,phone_no=?,gender=?,email=?,address=?,blood_type=?,birthday=?,qq=?where user_id=3",
+        return executeUpdate("update USER_INFO set user_name=?,true_name=?,phone_no=?,gender=?,email=?,address=?,blood_type=?,birthday=?,qq=?where user_id=100002",
                 new Object[]{userInfo.getUSER_NAME(),userInfo.getTRUE_NAME(),userInfo.getPHONE_NO(),userInfo.getGENDER(),userInfo.getEMAIL(),userInfo.getADDRESS(),userInfo.getBLOOD_TYPE(),userInfo.getBIRTHDAY(),userInfo.getQQ()});
     }
 }
