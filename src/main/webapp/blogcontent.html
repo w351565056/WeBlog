@@ -36,13 +36,13 @@
                                     data:{"blog_id":blogid},
                                     dataType:"json",
                                     success:function (result) {
-                                        alert(result);
                                         var num = result;
                                         new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
                                     }
                                 })
                                 for (var j=0;j<img.length;j++){
-                                    new_main.children().eq(2).children().eq(2).children().eq(j).attr("src",img[j]);
+                                    var $node = ('<img src="'+img[j]+'" alt="" width="110px" height="110px" style="margin: 2px">')
+                                    new_main.children().eq(2).children().eq(2).append($node);
                                 }
                             }
                         }}
@@ -97,9 +97,6 @@
         <div class="blogcontent_username"><a href=""></a></div>
         <div class="blogcontent_word"><p></p></div>
         <div class="blogcontent_photo">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
         </div>
         <div class="blogcontent_bottom">
             <div class="blogcontent_button">
@@ -132,6 +129,7 @@
             </li>
         </ul>
     </div>
+    <div class="blogcontent_util"></div>
 </div>
 
 </body>
