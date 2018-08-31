@@ -1,19 +1,33 @@
 package servlet;
 
+import dao.BlogContentDao;
+import entity.BlogContent;
+import impl.BlogContentDaoImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet("/InsertBlogServlet")
 public class InsertBlogServlet extends HttpServlet {
+    BlogContentDao dao = new BlogContentDaoImpl();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String blogcontent = request.getParameter("blogcontent");
+        String imgpath = request.getParameter("imgpath");
+        BlogContent blog = new BlogContent();
+        blog.setBLOG_TEXT(blogcontent);
+        blog.setBLOG_IMG(imgpath);
+        blog.setUSER_ID(new BigDecimal(100003));
+        dao.InsertBlog(blog);
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doPost(request,response);
+        this.doPost(request, response);
     }
 }

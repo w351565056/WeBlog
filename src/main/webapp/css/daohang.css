@@ -22,7 +22,7 @@ body {
 }
 
 .logo a {
-    background: url("../images/logo.jpg") 0 0 no-repeat;
+    background: url("../images/Home/logo.jpg") 0 0 no-repeat;
     width: 206px;
     height: 56px;
     position: relative;

@@ -4,7 +4,6 @@ import dao.BlogContentDao;
 import entity.BlogContent;
 import util.BaseDao;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogContentDao {
@@ -20,7 +19,7 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
 
     @Override
     public List<BlogContent> ShowContent(String str) {
-        return executeQuery("select * from BLOG_CONTENT  where BLOG_TEXT like %?%",new Object[]{str});
+        return executeQuery("select * from BLOG_CONTENT  where BLOG_TEXT like ?",new Object[]{str});
     }
 
     @Override
