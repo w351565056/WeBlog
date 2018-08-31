@@ -24,9 +24,7 @@ public class ShowContentServlet extends HttpServlet {
            request.setCharacterEncoding("UTF-8");
            response.setCharacterEncoding("UTF-8");
            BlogContentDao showContentDao = new BlogContentDaoImpl();
-           String num= request.getParameter("num");
-           int i =Integer.parseInt(num);
-           List<BlogContent> list = showContentDao.ShowContent(i);
+           List<BlogContent> list = showContentDao.ShowContent();
            JsonConfig jsonConfig = new JsonConfig();
            jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
            JSONArray array = JSONArray.fromObject(list,jsonConfig);
