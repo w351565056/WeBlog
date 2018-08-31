@@ -12,7 +12,8 @@ li{
 }
 .blogcontent_main{
     width: 674px;
-    /*height: 347px;*/
+    margin-bottom: 15px;
+    height: 347px;
     clear: both;
 }
 .blogcontent_head{
@@ -89,7 +90,7 @@ li{
     width: 500px;
     height: 24px;
     padding: 10px 30px 10px 30px;
-    background-color: black;
+    background-color: white;
 }
 .blogcontent_pinglun{
     display: none;
