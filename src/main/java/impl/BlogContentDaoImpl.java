@@ -15,12 +15,12 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
     }
     @Override
     public List<BlogContent> ShowContent() {
-        return executeQuery("select * from BLOG_CONTENT");
+        return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.USER_ID = USER_INFO.USER_ID");
     }
 
     @Override
-    public List<BlogContent> ShowContent(String str, int i) {
-        return null;
+    public List<BlogContent> ShowContent(String str) {
+        return executeQuery("select * from BLOG_CONTENT  where BLOG_TEXT like ?",new Object[]{str});
     }
 
     @Override
