@@ -213,9 +213,10 @@ body {
     line-height: 50px;
     cursor: pointer;
 }
-.register_body_right a{
+.register_body_right #a1{
     color: #01AAED;
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+    margin-left: 10px;
 }
 .register_for_body1{
    /* display: none;*/
@@ -267,6 +268,7 @@ body {
 .register_forget a{
     color: #2D93CA;
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+    margin-left: 10px;
 }
 .register_for_body2{
     display: none;
@@ -390,3 +392,73 @@ body {
     background-image: url("../images/register/backgroundimg.jpg");
     background-size: 1366px 1440px;
 }
+.error{
+    color: red;
+}
+#username1-error{
+    position: relative;
+    top: 60px;
+    left: -250px;
+}
+#password1-error{
+    position: relative;
+    top: 60px;
+    left: -250px;
+
+}
+#re_password-error{
+    position: relative;
+    top: 60px;
+    left: -250px;
+}
+#phone_no1-error{
+    position: relative;
+    top: 60px;
+    left: -250px;
+}
+#validate_slip{
+    position:absolute;
+    width: 304px;
+    height:180px;
+    z-index: 1;
+    left: 48px;
+    bottom: 120px;
+    display: none;
+
+}
+#validate_slip_img{
+    width: 304px;
+    height: 120px;
+    background-color: white;
+    position: relative;
+}
+#validate_slip_hua{
+    width: 304px;
+    height: 40px;
+    position: relative;
+    top: 20px;
+    background-color: red;
+}
+
+
+.container {
+    width: 310px;
+    margin: 100px auto;
+}
+
+#msg {
+    width: 100%;
+    line-height: 40px;
+    font-size: 14px;
+    text-align: center;
+    background-color: #5FB878;
+}
+a:link,a:visited,a:hover,a:active {
+    margin-left: 100px;
+    color: #0366D6;
+}
+/*
+#captcha canvas{
+    opacity: 0;
+}
+*/
