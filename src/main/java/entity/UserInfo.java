@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserInfo implements Serializable {
+
     private BigDecimal USER_ID;
     private String USER_NAME;
     private String USER_PASS;
@@ -34,6 +35,22 @@ public class UserInfo implements Serializable {
         //this.BIRTHDAY=BIRTHDAY;
         this.QQ=QQ;
 }
+    public UserInfo(String USER_NAME){
+        this.USER_NAME=USER_NAME;
+    }
+
+    public UserInfo(String USER_NAME,String USER_PASS){
+        this.USER_NAME=USER_NAME;
+        this.USER_PASS=USER_PASS;
+
+    }
+
+    public UserInfo(String USER_NAME,String USER_PASS,String PHONE_NO){
+        this.USER_NAME=USER_NAME;
+        this.USER_PASS=USER_PASS;
+        this.PHONE_NO=PHONE_NO;
+    }
+
     public String getQQ() {
         return QQ;
     }

@@ -1,10 +1,14 @@
 package entity;
 
+//import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class BlogContent {
-    private BigDecimal BLOG_ID;
+    private  String USER_NAME;
+    private  String HEAD_IMG;
+    private BigDecimal  BLOG_ID;
     private BigDecimal USER_ID;
     private String BLOG_TEXT;
     private String BLOG_IMG;
@@ -12,6 +16,21 @@ public class BlogContent {
     private BigDecimal REPORT;
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
+    public String getUSER_NAME() {
+        return USER_NAME;
+    }
+
+    public void setUSER_NAME(String USER_NAME) {
+        this.USER_NAME = USER_NAME;
+    }
+
+    public String getHEAD_IMG() {
+        return HEAD_IMG;
+    }
+
+    public void setHEAD_IMG(String HEAD_IMG) {
+        this.HEAD_IMG = HEAD_IMG;
+    }
 
     public BigDecimal getBLOG_ID() {
         return BLOG_ID;

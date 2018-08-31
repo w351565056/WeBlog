@@ -7,8 +7,20 @@
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="layer/mobile/need/layer.css">
     <script type="text/javascript" src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/nav_home.js"></script>
     <script>
             $(document).ready(function(){
+                $.ajax({
+                    url:"/getSessionServlet",
+                    type:"post",
+                    dataType:"json",
+                    success:function (result) {
+                        // var username=result.get(0).USER_NAME;
+                       // $("#home_username")[0].innerHTML=username;
+                        $("#home_username").text(result.USER_NAME)
+                        // alert(result[0].username);
+                    }
+                })
 
                 $(".hide_pic").hide();
                 brandPicTurn();
@@ -16,18 +28,16 @@
         function brandPicTurn(){
             $(".home_show").hover(
                 function(){
-                    $(this).children(".brand_name").hide("fast");
-                    $(this).children(".hide_pic").show(300);
+                    $(this).children(".brand_name").hide();
+                    $(this).children(".hide_pic").show(200);
                 }
                 , function(){
-                    $(this).children(".hide_pic").hide("fast");
-                    $(this).children(".brand_name").show(300);
+                    $(this).children(".hide_pic").hide();
+                    $(this).children(".brand_name").show(200);
                 }
             );
         }
-            $(document).ready(function(){
-                $('#home_blog_content_show').load('blogcontent.html');
-            });
+
             $(document).ready(function(){
                 $('#header_111').load('daohang.html');
             });
@@ -48,8 +58,9 @@
             // }).bind("mouseout",function () {
             //     $("#home_to_top").children().show();
             // })
-
         });
+
+
     </script>
 </head>
 <body>
@@ -58,21 +69,20 @@
         <div id="home_content_left">
             <div id="home_nav">
                 <ul id="home_nav_ul">
-                    <a href="#"><li class="home_show"><p class="brand_name">全部</p><img class="hide_pic" src="images/home_nav1.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">原创</p><img class="hide_pic" src="images/home_nav2.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">图片</p><img class="hide_pic" src="images/home_nav3.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/home_nav4.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/home_nav5.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">全部</p><img class="hide_pic" src="images/Home/home_nav1.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">原创</p><img class="hide_pic" src="images/Home/home_nav2.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">图片</p><img class="hide_pic" src="images/Home/home_nav3.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/Home/home_nav4.png"></li></a>
+                    <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/Home/home_nav5.png"></li></a>
                 </ul>
             </div>
-
             <!--<iframe id="home_blog_content_show" src="blogcontent.html"></iframe>-->
-            <div id="home_blog_content_show"></div>
+
         </div>
         <div id="home_content_right">
             <div id="home_my_info">
                 <div id="home_my_background_img">
-                    <img src="./images/example_myZone.jpg">
+                    <img src="images/Home/example_myZone.jpg">
                 </div>
                 <div id="home_username">MMMM<span>Lv.4</span></div>
                 <div id="home_info_decoration">
@@ -106,7 +116,8 @@
             </div>
         </div>
     </div>
-    <div id="home_to_top"><img src="images/t_top.png"></div>
+    <div id="home_blog_content_show"></div>
+    <div id="home_to_top"><img src="images/Home/to_top.png"></div>
 </body>
 
 </html>

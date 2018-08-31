@@ -6,17 +6,234 @@
   <script src="layui/layui.js"></script>
   <script src="js/jquery-3.3.1.js"></script>
   <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+  <script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+      var element = layui.element;
+
+      //…
+    });
+    $(function () {
+      hideright();
+
+      // hideShowLeft();
+
+      function hideright() {
+        $("#t2").hide();
+        $("#t3").hide();
+        $("#t4").hide();
+        $("#t5").hide();
+
+        $("#dt1").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t1").show();
+        });
+        $("#dt2").click(function () {
+          $("#t1").hide();
+          $("#t3").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t2").show()
+        });
+        $("#dt3").click(function () {
+          $("#t1").hide();
+          $("#t2").hide();
+          $("#t4").hide();
+          $("#t5").hide();
+          $("#t3").show();
+        });
+        $("#dt4").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t1").hide();
+          $("#t5").hide();
+          $("#t4").show();
+        })
+
+        $("#dt5").click(function () {
+          $("#t2").hide();
+          $("#t3").hide();
+          $("#t1").hide();
+          $("#t4").hide();
+          $("#t5").show();
+        })
+      }
+
+      function hideShowLeft() {
+        $("#show_right").hide();
+        $("#hide_left").click(function () {
+          $("#show_right").show();
+          $("#menu_left").hide();
+          $("#hide_left").hide();
+        });
+        $("#show_right").click(function () {
+          $("#menu_left").show();
+          $("#hide_left").show();
+          $("#show_right").hide();
+        });
+      }
+
+    });
+
+
+  </script>
+  <script>
+    $(function () {
+      $.ajax({
+        url: "/UserInfoServlet",
+        type: "post",
+        dataType: "json",
+        success: function (result) {
+
+          //查询user_info 表的数据
+          //问题：不能显示从数据库获取的日期 就写死了默认值
+          for (var i = 0; i < result.length; i++) {
+            // alert( (new Date()).format("yyyy-MM-dd hh:mm:ss.S"));
+            // alert(format.replace('yyyy-MM-dd',result[i].BIRTHDAY));
+            // var ddd = new Date.format("yyyy-MM-dd");
+            // ddd = result[3].BIRTHDAY;
+            // alert(ddd.result[i].BIRTHDAY);
+            var $node = $('<tr>\n' +
+              '        <td><img src="' + result[i].HEAD_IMG + '" style="width: 100px;"></td>\n' +
+              '        <td>' + result[i].USER_ID + '</td>\n' +
+              '        <td><input type="text" style="border: none;width:90px;" value="' + result[i].PHONE_NO + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_NAME + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_PASS + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].TRUE_NAME + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].GENDER + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].BLOOD_TYPE + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:140px;" value="' + result[i].EMAIL + '"></td>\n' +
+              '        <td><input type="text" style="border: none;" value="' + result[i].ADDRESS + '"></td>\n' +
+              '        <td><input type="datetime" style="border: none;width:90px;" Value="' + result[i].BIRTHDAY + '"></td>\n' +
+              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].QQ + '"></td>\n' +
+              '        <td>' + result[i].CREATE_DATE_TIME + '</td>\n' +
+              '        <td>' + result[i].MODIFY_DATE_TIME + '</td>\n' +
+              '        <td>\n' +
+              '            <button class="layui-btn layui-btn-warm change">修改</button>\n' +
+              '            <button class="layui-btn layui-btn-danger delete">删除</button>\n' +
+              '        </td>\n' +
+              '      </tr>');
+            $('#tbody1').append($node);
+          }
+        }
+      });
+
+      //  点击删除按钮 获取 user_id
+      //待改内容：先删除再弹窗了，sql语句没删到数据库
+      $('#tbody1').on('click', '.delete', function () {
+        var $node = $(this);
+        var text = "确定删除该用户？";
+
+        layer.open({
+          type: 1,
+          content: '<div style="padding: 20px 100px;">' + text + '</div>',
+          btn: ['确定', '取消'],
+          btnAlign: 'c',
+          yes: function () {
+            $.ajax({
+              url: '/DeleteUserServlet',
+              type: 'post',
+              data: {
+                'USER_ID': $node.closest('tr').children().eq(1).text()
+              },
+              dataType: 'json',
+              success: function () {
+                $node.closest('tr').remove();
+                layer.msg("修改成功！", {
+                  icon: 6,
+                  time: 1000
+                });
+              }
+            });
+            layer.closeAll();
+          }
+        });
+
+
+      });
+
+      // 点击修改获取 user_id 传值 更新表
+      $('#tbody1').on('click', '.change', function () {
+        var text = '确定修改该用户？';
+        var $node = $(this);
+        layer.open({
+          type: 1,
+          content: '<div style="padding: 20px 100px;">' + text + '</div>',
+          btn: ['确定', '取消'],
+          btnAlign: 'c',
+          yes: function () {
+            //  ajax 获取user_id 提交表单数据 更新于数据库
+            $.ajax({
+              url: '/UpdataUserServlet',
+              type: 'post',
+              data: {
+                'USER_ID': $node.closest('tr').children().eq(1).text(),
+                'USER_NAME': $node.closest('tr').children().eq(2).children().val(),
+                'USER_PASS': $node.closest('tr').children().eq(3).children().val(),
+                'TRUE_NAME': $node.closest('tr').children().eq(4).children().val(),
+                'GENDER': $node.closest('tr').children().eq(5).children().val(),
+                'BLOOD_TYPE': $node.closest('tr').children().eq(6).children().val(),
+                'PHONE_NO': $node.closest('tr').children().eq(7).children().val(),
+                'EMAIL': $node.closest('tr').children().eq(8).children().val(),
+                'ADDRESS': $node.closest('tr').children().eq(9).children().val(),
+                'BIRTHDAY': $node.closest('tr').children().eq(10).children().val(),
+                'QQ': $node.closest('tr').children().eq(11).children().val()
+              },
+              dataType: 'json',
+              success: function () {
+                layer.msg("修改成功！", {
+                  icon: 6,
+                  time: 1000
+                });
+              }
+            });
+            layer.closeAll();
+          }
+        });
+      });
+      //添加用户
+      $(".add").click(function () {
+        $.ajax({
+          url: '/AddUserServlet',
+          type: 'post',
+          data: {
+            'PHONE_NO':$(this).closest('tr').children().eq(2).children().val(),
+            'USER_NAME':$(this).closest('tr').children().eq(3).children().val(),
+            'USER_PASS': $(this).closest('tr').children().eq(4).children().val(),
+            'TRUE_NAME': $(this).closest('tr').children().eq(5).children().val(),
+            'GENDER': $(this).closest('tr').children().eq(6).children().val(),
+            'BLOOD_TYPE':$(this).closest('tr').children().eq(7).children().val(),
+            'EMAIL': $(this).closest('tr').children().eq(8).children().val(),
+            'ADDRESS': $(this).closest('tr').children().eq(9).children().val(),
+            'BIRTHDAY': $(this).closest('tr').children().eq(10).children().val(),
+            'QQ': $(this).closest('tr').children().eq(11).children().val(),
+          },
+          dataType: 'json',
+          success: function () {
+            layer.msg("修改成功！", {
+              icon: 6,
+              time: 1000
+            });
+            window.location.reload();
+          }
+        });
+      });
+    })
+
+  </script>
 </head>
 <body>
-<ul  class="layui-nav" lay-filter="" style="background-color: #75c3f1">
-  <li class="layui-nav-item"><a name="top" href=""><img src="images/logo.jpg" width="100px"></a></li>
+<ul class="layui-nav" lay-filter="" style="background-color: #75c3f1">
+  <li class="layui-nav-item"><a name="top" href=""><img src="images/Home/logo.jpg" width="100px"></a></li>
   <!--<li class="layui-nav-item layui-this"><a href="">产品</a></li>-->
   <!--<li class="layui-nav-item"><a href="">大数据</a></li>-->
   <li class="layui-nav-item layui-this">
     <a href="javascript:;">用户管理</a>
     <dl class="layui-nav-child"> <!-- 二级菜单 -->
       <dd id="dt1"><a href="javascript:;">查询用户信息</a></dd>
-      <dd id="dt2"><a href="javascript:;">添加新用户</a></dd>
       <dd id="dt3"><a href="javascript:;">查询被举报用户</a></dd>
     </dl>
   </li>
@@ -41,348 +258,380 @@
   <li class="layui-nav-item"><a href="">退出</a></li>
 </ul>
 
-  <!--查询用户信息-->
-  <div class="">
-    <table class="layui-table" id="t1">
+
+<div  id="t1">
+  <!--添加新用户-->
+  <div id="">
+    <table class="layui-table" >
       <thead>
       <tr>
         <th>用户头像</th>
         <th>用户ID</th>
-        <th>用户名</th>
+        <th>手机号码(必填)</th>
+        <th>用户名(必填)</th>
         <th>密码</th>
         <th>真实姓名</th>
         <th>性别</th>
         <th>血型</th>
-        <th>手机号码</th>
-        <th>邮箱</th>
+        <th>邮箱(必填)</th>
+        <th>地址</th>
         <th>生日</th>
+        <th>QQ</th>
         <th>创建时间</th>
         <th>锁定状态</th>
         <th>操作</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody id="tbody2">
       <tr>
+        <td><i class="layui-icon layui-icon-face-smile"></i></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" style="border: none;width:90px" value="17811781887"></td>
+        <td><input type="text" style="border: none;width:90px" value="考克斯"></td>
+        <td><input type="text" style="border: none;width:90px" value="123456"></td>
+        <td><input type="text" style="border: none;width:90px" value="李狗蛋"></td>
+        <td><input type="text" style="border: none;width:90px" value="男"></td>
+        <td><input type="text" style="border: none;width:90px" value="O"></td>
+        <td><input type="text" style="border: none;width:90px" value="1@qq.com"></td>
+        <td><input type="text" style="border: none;width:90px" value="天津西青"></td>
+        <td><input type="dateTime" class="layui-input" id="test18" placeholder="yyyy/MM/dd"></td>
+        <td><input type="text" style="border: none;width:90px" value="3123131"></td>
         <td></td>
         <td></td>
         <td>
-            <button class="layui-btn layui-btn-warm change">修改</button>
-            <button class="layui-btn layui-btn-danger delete">删除</button>
+          <button class="layui-btn layui-btn-warm add">添加</button>
         </td>
       </tr>
-
-      </tbody>
-    </table>
-
-    <!--添加新用户-->
-    <div class="layui-col-md10" id="t2">
-      <iframe></iframe>
-    </div>
-
-
-    <!--查询被举报用户-->
-    <table class="layui-table" id="t3">
-      <thead>
-      <tr>
-        <th>用户头像</th>
-        <th>用户ID</th>
-        <th>用户名</th>
-        <th>举报数</th>
-        <th>锁定状态</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button class="layui-btn layui-btn-warm cancel">取消举报</button>
-          <button class="layui-btn layui-btn-danger lock">锁定账号</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <!--审核微博-->
-    <table class="layui-table" id="t4">
-      <thead>
-      <tr>
-        <th>用户头像</th>
-        <th>用户ID</th>
-        <th>用户名</th>
-        <th>微博内容</th>
-        <th>举报数</th>
-        <th>锁定状态</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td style="width:120px;overflow: hidden;word-break:break-all;word-wrap:break-word;"><a>啊是大第四u要大陆富豪四度繁华和覅u</a><i data-method="notice" class="layui-icon layui-icon-more"></i></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button class="layui-btn layui-btn-warm cancel">取消举报</button>
-          <button class="layui-btn layui-btn-danger delete_Bl">删除</button>
-
-        </td>
-      </tr>
-
       </tbody>
     </table>
   </div>
+  <!--查询用户信息-->
+  <table class="layui-table">
+    <thead>
+    <tr>
+      <th>用户头像</th>
+      <th>用户ID</th>
+      <th>手机号码</th>
+      <th>用户名</th>
+      <th>密码</th>
+      <th>真实姓名</th>
+      <th>性别</th>
+      <th>血型</th>
+      <th>邮箱</th>
+      <th>地址</th>
+      <th>生日</th>
+      <th>QQ</th>
+      <th>创建时间</th>
+      <th>锁定状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="tbody1">
+    </tbody>
+  </table>
+
+  <!--&lt;!&ndash;添加新用户&ndash;&gt;-->
+  <!--<div id="t2">-->
+  <!--<table class="layui-table" >-->
+    <!--<thead>-->
+    <!--<tr>-->
+      <!--<th>用户头像</th>-->
+      <!--<th>用户ID</th>-->
+      <!--<th>手机号码</th>-->
+      <!--<th>用户名</th>-->
+      <!--<th>密码</th>-->
+      <!--<th>真实姓名</th>-->
+      <!--<th>性别</th>-->
+      <!--<th>血型</th>-->
+      <!--<th>邮箱</th>-->
+      <!--<th>地址</th>-->
+      <!--<th>生日</th>-->
+      <!--<th>QQ</th>-->
+      <!--<th>创建时间</th>-->
+      <!--<th>锁定状态</th>-->
+      <!--<th>操作</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody id="tbody2">-->
+    <!--<tr>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td><input type="text" style="border: none;width:90px"></td>-->
+      <!--<td>-->
+        <!--<button class="layui-btn layui-btn-warm change">添加</button>-->
+      <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+
+  <!--查询被举报用户-->
+  <table class="layui-table" id="t3">
+    <thead>
+    <tr>
+      <th>用户头像</th>
+      <th>用户ID</th>
+      <th>用户名</th>
+      <th>举报数</th>
+      <th>锁定状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button class="layui-btn layui-btn-warm cancel">取消举报</button>
+        <button class="layui-btn layui-btn-danger lock">锁定账号</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <!--审核微博-->
+  <table class="layui-table" id="t4">
+    <thead>
+    <tr>
+      <th>用户头像</th>
+      <th>用户ID</th>
+      <th>用户名</th>
+      <th>微博内容</th>
+      <th>举报数</th>
+      <th>锁定状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <div style="width:150px;overflow: hidden;white-space: nowrap;"><a>啊是大第四u要大陆富豪四度繁华和覅u</a></div>
+        <i data-method="notice" class="layui-icon layui-icon-more"></i></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button class="layui-btn layui-btn-warm cancel">取消举报</button>
+        <button class="layui-btn layui-btn-danger delete_Bl">删除</button>
+
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
 </div>
-<a class="layui-btn" href="#top" style="background-color: #75c3f1;position: fixed;bottom: 0;right: 0" >
+</div>
+<a class="layui-btn" href="#top" style="background-color: #75c3f1;position: fixed;bottom: 0;right: 0">
   <i class="layui-icon layui-icon-up"></i>
 </a>
 
 
-
 <script>
-  //注意：导航 依赖 element 模块，否则无法进行功能性操作
-  layui.use('element', function () {
-    var element = layui.element;
-
-    //…
-  });
-  $(function () {
-    hideright();
-    // hideShowLeft();
-
-    function hideright(){
-      $("#t2").hide();
-      $("#t3").hide();
-      $("#t4").hide();
-      $("#t5").hide();
-
-      $("#dt1").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t1").show();
-      });
-      $("#dt2").click(function () {
-        $("#t1").hide();
-        $("#t3").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t2").show()
-      });
-      $("#dt3").click(function () {
-        $("#t1").hide();
-        $("#t2").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-        $("#t3").show();
-      });
-      $("#dt4").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t1").hide();
-        $("#t5").hide();
-        $("#t4").show();
-      })
-
-      $("#dt5").click(function () {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t1").hide();
-        $("#t4").hide();
-        $("#t5").show();
-      })
-    }
-
-    function hideShowLeft() {
-      $("#show_right").hide();
-      $("#hide_left").click(function () {
-        $("#show_right").show();
-        $("#menu_left").hide();
-        $("#hide_left").hide();
-      });
-      $("#show_right").click(function () {
-        $("#menu_left").show();
-        $("#hide_left").show();
-        $("#show_right").hide();
-      });
-    }
-
+  layui.use('laydate',function () {
+    var laydate = layui.laydate;
+    laydate.render({
+      elem: '#test18',
+      format:'yyyy/MM/dd'
+      ,mark: {
+        '0/10/14': '生日'
+        ,'0/12/31': '跨年' //每年的日期
+        ,'0/0/10': '工资' //每月某天
+        ,'0/0/15': '月中'
+        ,'2017/8/15': '' //如果为空字符，则默认显示数字+徽章
+        ,'2099/10/14': '呵呵'
+      }
+      ,done: function(value, date){
+        if(date.year === 2017 && date.month === 8 && date.date === 15){ //点击2017年8月15日，弹出提示语
+          layer.msg('这一天是：中国人民抗日战争胜利72周年');
+        }
+      }
+    });
   });
 
-
-</script>
-<script>
-  layui.use('layer', function(){
+  layui.use('layer', function () {
     var $ = layui.jquery, layer = layui.layer;
 
     //触发事件
     var active = {
-      setTop: function(){
+      setTop: function () {
         var that = this;
         //多窗口模式，层叠置顶
         layer.open({
           type: 2 //此处以iframe举例
-          ,title: '当你选择该窗体时，即会在最顶端'
-          ,area: ['390px', '260px']
-          ,shade: 0
-          ,maxmin: true
-          ,offset: [ //为了演示，随机坐标
-            Math.random()*($(window).height()-300)
-            ,Math.random()*($(window).width()-390)
+          , title: '当你选择该窗体时，即会在最顶端'
+          , area: ['390px', '260px']
+          , shade: 0
+          , maxmin: true
+          , offset: [ //为了演示，随机坐标
+            Math.random() * ($(window).height() - 300)
+            , Math.random() * ($(window).width() - 390)
           ]
-          ,content: '//layer.layui.com/test/settop.html'
-          ,btn: ['继续弹出', '全部关闭'] //只是为了演示
-          ,yes: function(){
+          , content: '//layer.layui.com/test/settop.html'
+          , btn: ['继续弹出', '全部关闭'] //只是为了演示
+          , yes: function () {
             $(that).click();
           }
-          ,btn2: function(){
+          , btn2: function () {
             layer.closeAll();
           }
 
-          ,zIndex: layer.zIndex //重点1
-          ,success: function(layero){
+          , zIndex: layer.zIndex //重点1
+          , success: function (layero) {
             layer.setTop(layero); //重点2
           }
         });
       }
-      ,confirmTrans: function(){
+      , confirmTrans: function () {
         //配置一个透明的询问框
         layer.msg('修改成功', {
           time: 20000, //20s后自动关闭
           btn: ['确定']
         });
       }
-      ,notice: function(){
+      , notice: function () {
         //示范一个公告层
         layer.open({
           type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '300px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['火速围观', '残忍拒绝']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br>layer ≠ layui<br><br>layer只是作为Layui的一个弹层模块，由于其用户基数较大，所以常常会有人以为layui是layerui<br><br>layer虽然已被 Layui 收编为内置的弹层模块，但仍然会作为一个独立组件全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^</div>'
-          ,success: function(layero){
+          ,
+          title: false //不显示标题栏
+          ,
+          closeBtn: false
+          ,
+          area: '300px;'
+          ,
+          shade: 0.8
+          ,
+          id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,
+          btn: ['火速围观', '残忍拒绝']
+          ,
+          btnAlign: 'c'
+          ,
+          moveType: 1 //拖拽模式，0或者1
+          ,
+          content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br>layer ≠ layui<br><br>layer只是作为Layui的一个弹层模块，由于其用户基数较大，所以常常会有人以为layui是layerui<br><br>layer虽然已被 Layui 收编为内置的弹层模块，但仍然会作为一个独立组件全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^</div>'
+          ,
+          success: function (layero) {
             var btn = layero.find('.layui-layer-btn');
             btn.find('.layui-layer-btn0').attr({
               href: 'http://www.layui.com/'
-              ,target: '_blank'
+              , target: '_blank'
             });
           }
         });
       }
-      ,offset: function(othis){
+      , offset: function (othis) {
         var type = othis.data('type')
-          ,text = othis.text();
+          , text = othis.text();
 
         layer.open({
           type: 1
-          ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-          ,id: 'layerDemo'+type //防止重复弹出
-          ,content: '<div style="padding: 20px 100px;">'+ text +'</div>'
-          ,btn: '关闭全部'
-          ,btnAlign: 'c' //按钮居中
-          ,shade: 0 //不显示遮罩
-          ,yes: function(){
+          , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+          , id: 'layerDemo' + type //防止重复弹出
+          , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+          , btn: '关闭全部'
+          , btnAlign: 'c' //按钮居中
+          , shade: 0 //不显示遮罩
+          , yes: function () {
             layer.closeAll();
           }
         });
       }
     };
 
-    $('#layerDemo .layui-btn').on('click', function(){
+    $('#layerDemo .layui-btn').on('click', function () {
       var othis = $(this), method = othis.data('method');
       active[method] ? active[method].call(this, othis) : '';
     });
 
     //button
-    $(".change").on('click',function () {
-      var text = '修改成功';
-      layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:'确定',
-        btnAlign:'c',
-        yes:function () {
-          layer.closeAll();
-        }
-      });
-    });
+    // $("#tbody1").on('click', '.change', function () {
+    //   var text = '确定修改？';
+    //   var $node = $(this);
+    //
+    //   layer.open({
+    //     type: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text + '</div>',
+    //     btn: ['确定', '取消'],
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //     //  ajax 获取user_id 提交表单数据 更新于数据库
+    //
+    //     }
+    //   });
+    // });
 
 
-    $(".delete").on('click',function () {
-      var text = '确认是否删除该用户';
-      layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:['是','否'],
-        btnAlign:'c',
-        yes:function () {
-          layer.closeAll();
-        }
-      });
-    });
+    // $("#tbody1").on('click', '.delete', function () {
+    //   var text = '确认是否删除该用户';
+    //   var $node = $(this);
+    //   layer.open({
+    //     type: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text + '</div>',
+    //     btn: ['是', '否'],
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //       $(this).closest('tr').remove();
+    //     }
+    //   });
+    // });
 
 
-    $(".cancel").on('click',function () {
+    $(".cancel").on('click', function () {
       var text = '确认是否取消举报';
       layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:['是','否'],
-        btnAlign:'c',
-        yes:function () {
+        type: 1,
+        content: '<div style="padding: 20px 100px;">' + text + '</div>',
+        btn: ['是', '否'],
+        btnAlign: 'c',
+        yes: function () {
           layer.closeAll();
         }
       });
     });
 
-    $(".lock").on('click',function () {
+    $(".lock").on('click', function () {
       var text = '确认是否锁定账号';
       layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:['是','否'],
-        btnAlign:'c',
-        yes:function () {
+        type: 1,
+        content: '<div style="padding: 20px 100px;">' + text + '</div>',
+        btn: ['是', '否'],
+        btnAlign: 'c',
+        yes: function () {
           layer.closeAll();
         }
       });
     });
 
-    $(".delete_Bl").on('click',function () {
+    $(".delete_Bl").on('click', function () {
       var text = '确认是否删除该条微博';
       layer.open({
-        type:1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:['是','否'],
-        btnAlign:'c',
-        yes:function () {
+        type: 1,
+        content: '<div style="padding: 20px 100px;">' + text + '</div>',
+        btn: ['是', '否'],
+        btnAlign: 'c',
+        yes: function () {
           layer.closeAll();
         }
       });
     });
 
-    $(".layui-icon-more ").on('click',function () {
+    $(".layui-icon-more ").on('click', function () {
       var text = ' 忽然发现自己的爱情观很土气，忍不住笑了起来。\n' +
         '    对我而言，爱一个人就是满心满意要跟他一起“过日子”，天地鸿蒙荒凉，我们不能妄想把自己扩充为六合八方的空间，只希望彼此的火烬把属于两人的一世时间填满。 \n' +
         '    客居岁月，暮色里归来，看见有人当街亲热，竟也视若无睹，但每看到一对人手牵手提着一把青菜一条鱼从菜场走出来，一颗心就忍不住恻恻地痛了起来，一蔬一饭里的天长地久原是如此味永难言啊！相拥的那一对也许今晚就分手，但一鼎一镬里却有其朝朝暮暮的恩情啊！\n' +
@@ -417,15 +666,15 @@
         '    当然，这世上也有人无法生育，那么，就让共同作育的学生，共同经营的事业，共同爱过的子侄晚辈，共同谱成的生活之歌，共同写完的生命之书来作他们的孩子。\n' +
         '    也许还有更多更多可以说的，正如此刻，爱情对我的意义是终夜守在一盏灯旁，听轰声退潮再复涨潮，看淡紫的天光愈来愈明亮，凝视两人共同凝视过的长窗外的水波，在矛盾的凄凉和欢喜里，在知足感恩和渴切不足里细细体会一条河的韵律，并且写一篇叫《爱情观》的文章。';
       layer.open({
-        type:1,
+        type: 1,
         title: false, //不显示标题栏
         closeBtn: false,
         area: '1000px;',
         moveType: 1,
-        content: '<div style="padding: 20px 100px;">'+ text +'</div>',
-        btn:'返回',
-        btnAlign:'c',
-        yes:function () {
+        content: '<div style="padding: 20px 100px;">' + text + '</div>',
+        btn: '返回',
+        btnAlign: 'c',
+        yes: function () {
           layer.closeAll();
         }
       });

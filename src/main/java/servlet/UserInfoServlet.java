@@ -21,6 +21,9 @@ import java.util.List;
 public class UserInfoServlet extends HttpServlet {
     UserInfoDao dao = new UserInfoDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<UserInfo> list = dao.showAllUser();
+        JsonConfig jsonConfig = new JsonConfig();//建立配置文件
+        jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());//设置javaBean中的日期格式
         //查询个人信息
         List<UserInfo> list = dao.showAllUser(100002);
         JsonConfig jsonConfig = new JsonConfig();
