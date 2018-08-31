@@ -25,6 +25,7 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
 
     @Override
     public List<BlogContent> ShowContent(int i) {
+
         return null;
     }
 }
