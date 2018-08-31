@@ -13,13 +13,6 @@ public class BlogDiscuss {
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
 
-    public BlogDiscuss(String blog_id,String user_id,String text) {
-
-    }
-
-    public BlogDiscuss() {
-
-    }
 
     public BigDecimal getDISCUSS_ID() {
         return DISCUSS_ID;

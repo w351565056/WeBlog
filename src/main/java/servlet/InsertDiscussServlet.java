@@ -14,15 +14,18 @@ import java.math.BigDecimal;
 
 @WebServlet("/InsertDiscussServlet")
 public class InsertDiscussServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String did = request.getParameter("discussId");
         String bid = request.getParameter("blogId");
         String uid = request.getParameter("userId");
         String text = request.getParameter("discussText");
 
+        BigDecimal d_id = new BigDecimal(did);
         BigDecimal b_id = new BigDecimal(bid);
         BigDecimal u_id = new BigDecimal(uid);
 
         BlogDiscuss blogDiscuss = new BlogDiscuss();
+        blogDiscuss.setDISCUSS_ID(d_id);
         blogDiscuss.setBLOG_ID(b_id);
         blogDiscuss.setUSER_ID(u_id);
         blogDiscuss.setDISCUSS_TEXT(text);
@@ -30,10 +33,7 @@ public class InsertDiscussServlet extends HttpServlet {
         BlogDiscussDaoImpl bddi = new BlogDiscussDaoImpl();
         int ret = bddi.insertDiscuss(blogDiscuss);
 
-        PrintWriter out = null;
-
-        out = response.getWriter();
-
+        PrintWriter out = response.getWriter();
 
         out.print(ret);
         out.flush();

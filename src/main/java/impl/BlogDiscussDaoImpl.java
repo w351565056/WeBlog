@@ -18,8 +18,8 @@ public class BlogDiscussDaoImpl extends BaseDao implements BlogDiscussDao {
 
     @Override
     public int insertDiscuss(BlogDiscuss blogDiscuss) {
-        return executeUpdate("INSERT INTO BLOG_DISCUSS(BLOG_ID,USER_ID,DISCUSS_TEXT) VALUES (?,?,?)",new Object[]{
-               blogDiscuss.getBLOG_ID(),blogDiscuss.getUSER_ID(),blogDiscuss.getDISCUSS_TEXT()
+        return executeUpdate("INSERT INTO BLOG_DISCUSS (DISCUSS_ID,BLOG_ID,USER_ID,DISCUSS_TEXT) VALUES (?,?,?,?);",new Object[]{
+               blogDiscuss.getDISCUSS_ID(),blogDiscuss.getBLOG_ID(),blogDiscuss.getUSER_ID(),blogDiscuss.getDISCUSS_TEXT()
         });
     }
 }
