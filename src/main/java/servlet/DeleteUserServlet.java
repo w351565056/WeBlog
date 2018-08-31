@@ -24,6 +24,10 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       BigDecimal userid = new BigDecimal(request.getParameter("USER_ID"));
       List<UserInfo> list = dao.deleteUser(userid);
+
+
+
+
       JsonConfig jsonConfig = new JsonConfig();
       jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
       JSONArray array = JSONArray.fromObject(list,jsonConfig);
