@@ -4,7 +4,6 @@ import dao.BlogContentDao;
 import entity.BlogContent;
 import util.BaseDao;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogContentDao {
