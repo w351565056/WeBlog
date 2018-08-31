@@ -17,7 +17,7 @@
 .email{width: 560px;height: 50px;}
 .QQ{width: 560px;height: 50px;}
 span{margin-left: 10px;}
-.base_part1{width: 60px;height: 40px;text-align:right;display: inline-block;position:relative;top:5px}
+.base_part1{width: 60px;height: 40px;text-align:right;color: #919191;display: inline-block;position:relative;top:5px}
 .base_part2{width: 490px;height: 40px;text-align:left;display: inline-block;position:relative;left:12px;top:5px}
 .baseView_name{width: 480px;height: 80px;text-align: left;}
 .baseView_name span{color: #5a73db;font-size:10px;}

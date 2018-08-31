@@ -8,4 +8,8 @@ public interface UserInfoDao {
    List<UserInfo> showAllUser(int i);
    //更新个人信息
    int UpdateAllUser(UserInfo userInfo);
+   //显示粉丝
+   List<UserInfo> FansQuery(int i);
+   //显示关注
+   List<UserInfo> AttentionQuery(int i);
 }

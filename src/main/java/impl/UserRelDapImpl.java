@@ -1,11 +1,13 @@
 package impl;
 
 import dao.UserRelDao;
+import entity.UserInfo;
 import entity.UserRel;
 import util.BaseDao;
 
-public class UserRelDapImpl extends BaseDao<UserRel> implements UserRelDao {
-    //显示粉丝
+import java.util.List;
 
-    //显示关注
+public class UserRelDapImpl extends BaseDao<UserRel> implements UserRelDao {
+
+
 }
