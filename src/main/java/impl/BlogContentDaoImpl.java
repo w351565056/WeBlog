@@ -18,8 +18,10 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
     }
 
     @Override
-    public List<BlogContent> ShowContent() {
-        return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.USER_ID = USER_INFO.USER_ID");
+    public List<BlogContent>
+    ShowContent() {
+       // return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.USER_ID = USER_INFO.USER_ID");
+        return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.USER_ID = USER_INFO.USER_ID order by BLOG_CONTENT.BLOG_ID desc");
     }
 
 

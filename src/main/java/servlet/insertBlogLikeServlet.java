@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.List;
 
 @WebServlet("/insertBlogLikeServlet")
 public class insertBlogLikeServlet extends HttpServlet {
@@ -21,7 +20,7 @@ public class insertBlogLikeServlet extends HttpServlet {
             BlogLikeDao insertBlogLike = new BlogLikeDaoImpl();
             BigDecimal like_id=new BigDecimal( request.getParameter("like_id"));
             BigDecimal blog_id=new BigDecimal( request.getParameter("blog_id"));
-            BigDecimal user_id = new BigDecimal(100004);
+            BigDecimal user_id = new BigDecimal(25);
             BlogLike blogLike = new BlogLike();
             blogLike.setBLOG_ID(blog_id);
             blogLike.setUSER_ID(user_id);
@@ -40,6 +39,6 @@ public class insertBlogLikeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        this.doPost(request,response);
     }
 }

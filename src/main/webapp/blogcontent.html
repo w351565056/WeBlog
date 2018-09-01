@@ -7,19 +7,59 @@
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.all.js"></script>
+    <script src="js/jquery.sinaEmotion.js"></script>
     <script>
         $(function () {
+            //--------------收藏
+            $(".blogcontent_button_a").eq(0).click(function (e) {
+                e.preventDefault();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
+                }else{
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
+                }
+            })
+            //-------------------转发
+            // $("body").on("click",".forward",function () {
+            //
+            // })
+            //-----------------------评论
+            $(".blogcontent_button_a").eq(2).click(function (e) {
+                e.preventDefault();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
+                }else{
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
+                }
+            })
+            //-----------------------点赞
+            $(".blogcontent_button_a").eq(3).click(function (e) {
+                e.preventDefault();
+                alert("dianza")
+                var str = $(this).find('img').attr("src");
+                if (str=="images/nolike.png"){
+                    $(this).find('img').attr('src','images/like.png');
+                }else{
+                    $(this).find('img').attr('src','images/nolike.png');
+                }
+            })
+
+            var old_main = $(".blogcontent_main").detach();
+            load();//ajax异步提交，下面的方法被提前执行，故表情没有出现
+            $('#result').parseEmotion();
             function load(){
                 $.ajax({
                     url:"/ShowContentServlet",
                     type:"post",
+                    async:false,
                     dataType:"json",
                     success:function (result) {
                         var re =result;
                         for (var i=0;i<result.length;i++){
                             var blogid = result[i].BLOG_ID;
                             var new_main = old_main.clone(true);
-                            $("body").append(new_main);
+                            new_main.attr("id",blogid);
+                            $("#result").append(new_main);//微博唯一标识
                             $(".blogcontent_shoucang").hide();
                             if (re[i].BLOG_IMG==""){
                                 new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
@@ -36,8 +76,8 @@
                                     data:{"blog_id":blogid},
                                     dataType:"json",
                                     success:function (result) {
-                                        var num = result;
-                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                        // var num = result;
+                                        // new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
                                     }
                                 })
                                 for (var j=0;j<img.length;j++){
@@ -45,50 +85,18 @@
                                     new_main.children().eq(2).children().eq(2).append($node);
                                 }
                             }
-                        }}
+                        }
+
+                    }
                 })
             }
-            //--------------收藏
-            $(".blogcontent_button_a").eq(0).click(function (e) {
-                e.preventDefault();
-                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
-                }else{
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
-                }
-            })
-            //-------------------转发
-            $(".blogcontent_button_a").eq(1).click(function (e) {
-                e.preventDefault();
 
-            })
-            //-----------------------评论
-            $(".blogcontent_button_a").eq(2).click(function (e) {
-                e.preventDefault();
-                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
-                }else{
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
-                }
-            })
-            //-----------------------点赞
-            $(".blogcontent_button_a").eq(3).click(function (e) {
-                e.preventDefault();
-                var str = $(this).find('img').attr("src");
-                if (str=="images/nolike.png"){
-                    $(this).find('img').attr('src','images/like.png');
-                }else{
-                    $(this).find('img').attr('src','images/nolike.png');
-                }
-            })
-            var old_main = $(".blogcontent_main").detach();
-            load();
         })
     </script>
 </head>
 <body style="background: #999999">
-
-<div class="blogcontent_main">
+<div id="result">
+<div id="blogcontent_main" class="blogcontent_main">
     <div class="blogcontent_head">
         <img src="" alt="">
     </div>
@@ -100,10 +108,10 @@
         </div>
         <div class="blogcontent_bottom">
             <div class="blogcontent_button">
-                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">收藏(3)</a></span>
-                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">转发(6)</a></span>
-                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">评论(1)</a></span>
-                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
+                <span class="blogcontent_button_span"><a  class="blogcontent_button_a">收藏(3)</a></span>
+                <span class="blogcontent_button_span"><a  class="forward blogcontent_button_a">转发(6)</a></span>
+                <span class="blogcontent_button_span"><a  class="blogcontent_button_a">评论(1)</a></span>
+                <span class="blogcontent_button_span"><a  class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
             </div>
         </div>
     </div>
@@ -131,6 +139,6 @@
     </div>
     <div class="blogcontent_util"></div>
 </div>
-
+</div>
 </body>
 </html>
