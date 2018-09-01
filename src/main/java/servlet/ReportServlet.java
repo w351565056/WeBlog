@@ -26,7 +26,7 @@ public class ReportServlet extends HttpServlet {
         BlogContent blogContent = new BlogContent();
         blogContent.setBLOG_ID(b_id);
 
-        blogReportDao.AddBlogReport(blogContent);
+        int ret = blogReportDao.AddBlogReport(blogContent);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
