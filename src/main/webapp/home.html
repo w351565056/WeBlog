@@ -74,6 +74,18 @@
 
                 }
             })
+            $(function () {
+                $.ajax({
+                    url: "/HomeShowMyInfoServlet",
+                    type: "post",
+                    dataType: "json",
+                    success:function (info) {
+                        alert( info);
+                        // + info[1].ANUM + info[2].FNUM + info[3].USER_ID
+                    }
+                    }
+                )
+            })
 
 
         });
@@ -130,7 +142,7 @@
             </div>
         </div>
     </div>
-    <!--<div id="home_blog_content_show"></div>-->
+    <div id="home_blog_content_show"></div>
     <div class="home_to_top"><img src="images/Home/to_top.png"></div>
 </body>
 

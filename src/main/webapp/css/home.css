@@ -181,7 +181,9 @@ body{
     display: inline-block;
     width: 180px;
 }
-
+.home_topic a{
+   height: 17px;
+}
 .home_topic span{
 
     text-align: center;
