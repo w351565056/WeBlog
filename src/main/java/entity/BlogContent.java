@@ -20,6 +20,7 @@ public class BlogContent {
     private BigDecimal NUMM;
     private String TOP;
 
+
     public BigDecimal getRON() {
         return RON;
     }
