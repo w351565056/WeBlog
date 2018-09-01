@@ -9,22 +9,6 @@
     <script type="text/javascript" src="layer/layer.js"></script>
     <script type="text/javascript" src="js/nav_home.js"></script>
     <script>
-            $(document).ready(function(){
-                $.ajax({
-                    url:"/getSessionServlet",
-                    type:"post",
-                    dataType:"json",
-                    success:function (result) {
-                        // var username=result.get(0).USER_NAME;
-                       // $("#home_username")[0].innerHTML=username;
-                        $("#home_username").text(result.USER_NAME)
-                        // alert(result[0].username);
-                    }
-                })
-
-                $(".hide_pic").hide();
-                brandPicTurn();
-            });
         function brandPicTurn(){
             $(".home_show").hover(
                 function(){
@@ -37,14 +21,25 @@
                 }
             );
         }
-
-            $(document).ready(function(){
-                $('#header_111').load('daohang.html');
-            });
         $(function () {
+            $('#header_111').load('daohang.html');
             $("#home_to_top").click(function () {
                $("html,body").animate({scrollTop:0},500)
             });
+            $.ajax({
+                url:"/getSessionServlet",
+                type:"post",
+                dataType:"json",
+                success:function (result) {
+                    // var username=result.get(0).USER_NAME;
+                    // $("#home_username")[0].innerHTML=username;
+                    $("#home_username").text(result.USER_NAME)
+                    // alert(result[0].username);
+                }
+            })
+
+            $(".hide_pic").hide();
+            brandPicTurn();
             // $("#home_to_top").hover(
             //     function () {
             //         $("#home_to_top").children().hide();
