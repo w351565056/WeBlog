@@ -35,18 +35,19 @@
                                 new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
                                 new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
                                 new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
-                                // $.ajax({
-                                //     url:"/ShowBlogLikeServlet",
-                                //     type:"post",
-                                //     data:{"blog_id":blogid},
-                                //     dataType:"json",
-                                //     success:function (result) {
-                                //         var num = result;
-                                //         new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
-                                //     }
-                                // })
+                                $.ajax({
+                                    url:"/ShowBlogLikeServlet",
+                                    type:"post",
+                                    data:{"blog_id":blogid},
+                                    dataType:"json",
+                                    success:function (result) {
+                                        var num = result;
+                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                    }
+                                })
                                 for (var j=0;j<img.length;j++){
-                                    new_main.children().eq(2).children().eq(2).children().eq(j).attr("src",img[j]);
+                                    var $node = ('<img src="'+img[j]+'" alt="" width="110px" height="110px" style="margin: 2px">')
+                                    new_main.children().eq(2).children().eq(2).append($node);
                                 }
                             }
                         }
@@ -57,10 +58,10 @@
             //--------------收藏
             $(".blogcontent_button_a").eq(0).click(function (e) {
                 e.preventDefault();
-                if ( $(".blogcontent_shoucang").is(':hidden')){
-                    $(".blogcontent_shoucang").show();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
                 }else{
-                    $(".blogcontent_shoucang").hide();
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
                 }
             })
             //-------------------转发
@@ -71,10 +72,10 @@
             //-----------------------评论
             $(".blogcontent_button_a").eq(2).click(function (e) {
                 e.preventDefault();
-                if ( $(".blogcontent_pinglun").is(':hidden')){
-                    $(".blogcontent_pinglun").show();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
                 }else{
-                    $(".blogcontent_pinglun").hide();
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
                 }
             })
             //-----------------------点赞
@@ -102,9 +103,6 @@
         <div class="blogcontent_username"><a href=""></a></div>
         <div class="blogcontent_word"><p></p></div>
         <div class="blogcontent_photo">
-            <img src="" alt="" width="80px" height="120px">
-            <img src="" alt="" width="80px" height="120px">
-            <img src="" alt="" width="80px" height="120px">
         </div>
         <div class="blogcontent_bottom">
             <div class="blogcontent_button">
@@ -137,6 +135,7 @@
             </li>
         </ul>
     </div>
+    <div class="blogcontent_util"></div>
 </div>
 </div>
 </body>
