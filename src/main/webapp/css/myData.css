@@ -1,48 +1,41 @@
-.myData{width: 600px;height: 800px;}
-.myData_body{width: 560px;height: 600px;border:solid #c3b9ad 1px;}
-.basicInfo{width: 552px;height: 50px;font-weight: 900;line-height :50px;}
-.myData_baseView{width: 550px;height: 650px;position: relative;}
+.myData{width: 600px;height: 600px;font-size: 13px;}
+.myData_body{width: 560px;height: 600px;margin: auto}
+.basicInfo{width: 560px;height: 50px;font-size: 15px;font-weight:900;font-family: "黑体"}
+.info{position:relative;top:19px;}
+.myData_baseView{width: 560px;height: 600px;}
 .myData_base{width: 550px;height: 650px;}
-.account{width: 560px;height: 30px;margin-top: 20px;}
-.name1{width: 560px;height: 30px;margin-top: 20px;}
-.telNo1{width: 560px;height: 30px;margin-top: 20px;}
-.name2{width: 560px;height: 30px;margin-top: 20px;}
-.telNo2{width: 560px;height: 30px;margin-top: 88px;}
-.addr{width: 560px;height: 30px;margin-top: 20px;}
-.sex{width: 560px;height: 30px;margin-top: 20px;}
-.birthday{width: 560px;height: 30px;margin-top: 20px;}
-.bloodType{width: 560px;height: 30px;margin-top: 20px;}
-.regisdterTime{width: 560px;height: 30px;margin-top: 20px;}
-.email{width: 560px;height: 30px;margin-top: 20px;}
-.QQ{width: 560px;height: 30px;margin-top: 20px;}
+.account{width: 560px;height: 50px;}
+.visual{display:inline-block;position:relative;left:400px;top:-33px;background-color:gray}
+.baseView_name{width: 560px;height: 50px;position:relative;left:67px;top:-8px;line-height:25px}
+.base_name{width: 560px;height: 50px;}
+.base_telNo{width: 560px;height: 50px;}
+.add{width: 560px;height: 50px;}
+.sex{width: 560px;height: 50px;}
+.birthday{width: 560px;height: 50px;}
+.bloodType{width: 560px;height: 50px;}
+.regTime{width: 560px;height: 50px;}
+.email{width: 560px;height: 50px;}
+.QQ{width: 560px;height: 50px;}
 span{margin-left: 10px;}
-.base_part1{width: 60px;height: 30px;font-size:12px;float:left;text-align: right}
-.base_part2{width: 493px;height: 30px;font-size:12px;float:right;text-align: left}
-.base_part2_name{width: 480px;height: 80px;margin-top:-20px;margin-right:5px;line-height:24px;float:right;font-size:12px;text-align: left;}
-.base_part2_name span{color: #5a73db;font-size:10px;}
+.base_part1{width: 60px;height: 40px;text-align:right;color: #919191;display: inline-block;position:relative;top:5px}
+.base_part2{width: 490px;height: 40px;text-align:left;display: inline-block;position:relative;left:12px;top:5px}
+.baseView_name{width: 480px;height: 80px;text-align: left;}
+.baseView_name span{color: #5a73db;font-size:10px;}
 
-#button{background-color: #47bedb;font-size:12px;margin-top:-14px;line-height: 25px;height:25px;float: right}
+#button{background-color: #47bedb;font-size:12px;position:relative;left:510px;top:-5px;}
 .spacer{
-    width:455px;
+    width:438px;
     height: 1px;
     background-color:#bbb2b2;
-    margin-top:-25px;
-    margin-left:55px;
+    position:relative;
+    top:10px;
+    left:75px
 }
-.spacer1{
-    width:3px;
-    height:12px;
-    background-color: #7d867b;
-    transform:rotate(20deg);
-    position: relative;
-    left:10px;
-    top:-10px
-}
-.span{color: #007DDB;position:relative;top:-25px;left:5px}
-.span2{font-size:12px;float:left;text-align: left;margin-left:65px;margin-top: -25px}
+.span{color: #007DDB;position:relative;right: 8px;}
+.span2{font-size:13px;position:relative;right: 15px;}
 .W_error{color: #ff0000;}
 body {
     overflow-x : hidden;
-overflow-y : hidden;
+    overflow-y : hidden;
 }
 .error{color:red}

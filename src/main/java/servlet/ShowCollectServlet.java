@@ -1,8 +1,8 @@
 package servlet;
 
-import dao.UserInfoDao;
-import entity.UserInfo;
-import impl.UserInfoDaoImpl;
+import dao.BlogCollectDao;
+import entity.BlogCollectQuery;
+import impl.BlogCollectDaoImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
@@ -14,25 +14,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/UserInfoServlet")
-public class UserInfoServlet extends HttpServlet {
-    UserInfoDao dao = new UserInfoDaoImpl();
+@WebServlet("/ShowCollectServlet")
+public class ShowCollectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        //查询个人信息
-        List<UserInfo> list = dao.showAllUser(100002);
+        BigDecimal blogid = new BigDecimal(request.getParameter("blog_id"));
+        BlogCollectQuery blogCollectQuery =new BlogCollectQuery();
+        blogCollectQuery.setBLOG_ID(blogid);
+        BlogCollectDao showBlogCollect = new BlogCollectDaoImpl();
+        List<BlogCollectQuery>  list= showBlogCollect.ShowCollectBlog(blogCollectQuery);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);
-        PrintWriter out =response.getWriter();
+//        response.getWriter().print(array);
+        PrintWriter out = response.getWriter();
         out.print(array);
         out.flush();
         out.close();
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doPost(request,response);
+        doPost(request,response);
     }
 }
