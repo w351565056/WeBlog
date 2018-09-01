@@ -23,12 +23,12 @@ public class showCollectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BigDecimal showcol = new BigDecimal(request.getParameter("userid"));
         BlogCollectDao blogCollectDao = new BlogCollectDaoImpl();
-        List<BlogCollect> blogCollects = blogCollectDao.showcollect(showcol);
+//        List<BlogCollect> blogCollects = blogCollectDao.showcollect(showcol);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
-        JSONArray array = JSONArray.fromObject(blogCollects,jsonConfig);
+//        JSONArray array = JSONArray.fromObject(blogCollects,jsonConfig);
         PrintWriter out = response.getWriter();
-        out.print(array);
+//        out.print(array);
         out.flush();
         out.close();
     }
