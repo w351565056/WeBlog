@@ -17,15 +17,12 @@
               for(var i=0;i<result.length;i++){
                       var cloneNode=ModNode.clone(true);
                       var Node = cloneNode.children();
-                      Node.attr("src",result[i].HEAD_IMG)
-                      Node.children().eq(1).children().html(result[i].USER_NAME);
-                      Node.children().eq(3).children().eq(1).html(result[i].ADDRESS);
-                      Node.children().eq(4).children().eq(1).html(result[i].INTRO);
-                      $(".unit2_header").append(cloneNode);
+                      //Node.eq(0).children().attr("src",result[i].HEAD_IMG)
+                      Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
+                      Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
+                      Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
+                      $(".attention").append(cloneNode);
 
-                    $(".attention_name").text(result[i].USER_NAME);
-                    $(".info:eq(0)").text(result[i].ADDRESS);
-                    $(".info:eq(1)").text(result[i].INTRO);
                 }
             }
         })
@@ -38,7 +35,7 @@
     <div class="attention_unit border_bottom">
         <a><img src="images/myZone/attention_img.jpg" class="attention_img"></a>
         <div class="attention_info">
-            <a class="a_attention_name"><div class="attention_name"></div></a>
+            <a class="a_attention_name name"><div class="attention_name"></div></a>
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-sexm"></use>
             </svg>
@@ -60,7 +57,7 @@
             </div>
             <div class="attention_row">
                 <span class="info">简介</span>
-                <span>躲在一颗糖里呦</span>
+                <span></span>
             </div>
             <div class="attention_row">
                 通过<a class="a_attention">微博搜索</a> 关注

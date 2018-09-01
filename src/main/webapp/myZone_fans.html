@@ -5,6 +5,44 @@
     <title>Title</title>
     <link rel="stylesheet" href="css/myZone.css">
     <script src="//at.alicdn.com/t/font_786622_igfdgk6diqe.js" type="text/javascript"></script>
+    <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            var ModNode=$(".attention_unit").detach();
+            $.ajax({
+                url:"/ShowFansServlet",
+                type:"post",
+                dataType:"json",
+                success:function (result) {
+                    for(var i=0;i<result.length;i++){
+                        var cloneNode=ModNode.clone(true);
+                        var Node = cloneNode.children();
+                            // Node.eq(0).attr("src",result[i].HEAD_IMG)
+                            Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
+                            Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
+                            Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
+                            // Node.eq(1).children().eq(2).children().eq(1).text(result[result.length-1])
+                            $(".attention").append(cloneNode);
+                    }
+                }
+            })
+            // $.ajax({
+            //     url:"/getCountFansServlet",
+            //     type:"post",
+            //     dataType:"json",
+            //     success:function (result) {
+            //         for(var i=0;i<result.length;i++){
+            //             // Node.eq(0).attr("src",result[i].HEAD_IMG)
+            //             // Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
+            //             // Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
+            //             // Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
+            //              Node2.eq(1).children().eq(2).children().eq(1).text(result[i].count (*));
+            //
+            //         }
+            //     }
+            // })
+        })
+    </script>
 </head>
 <body>
 
@@ -15,17 +53,17 @@
         <a><img src="images/myZone/attention_img.jpg" class="attention_img"></a>
         <div class="attention_info">
             <a class="a_attention_name">
-                <div class="attention_name">微博达人</div>
+                <div class="attention_name"></div>
             </a>
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-sexm"></use>
             </svg>
             <div class="attention_row">
                 <span>关注</span>
-                <span><a class="a_attention">64</a></span>
+                <span><a class="a_attention atten">64</a></span>
                 <div class="attention_row_unit">
                     <span>粉丝</span>
-                    <span><a class="a_attention">22891</a></span>
+                    <span><a class="a_attention fans">22891</a></span>
                 </div>
                 <div class="attention_row_unit">
                     <span>微博</span>
@@ -34,11 +72,11 @@
             </div>
             <div class="attention_row">
                 <span class="info">地址</span>
-                <span>上海</span>
+                <span></span>
             </div>
             <div class="attention_row">
                 <span class="info">简介</span>
-                <span>躲在一颗糖里呦</span>
+                <span></span>
             </div>
             <div class="attention_row">
                 通过<a class="a_attention">微博搜索</a> 关注
