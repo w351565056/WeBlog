@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.List;
 
 @WebServlet("/insertBlogLikeServlet")
 public class insertBlogLikeServlet extends HttpServlet {
@@ -40,6 +39,6 @@ public class insertBlogLikeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        this.doPost(request,response);
     }
 }

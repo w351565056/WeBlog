@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class JsonDateValueProcessor implements JsonValueProcessor {
 
-    private String format ="yyyy/MM/dd";
+    private String format ="yyyy-MM-dd";
 
     public Object processArrayValue(Object value, JsonConfig config) {
         return process(value);

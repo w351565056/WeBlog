@@ -1,8 +1,9 @@
 package servlet;
 
-import dao.UserInfoDao;
-import entity.UserInfo;
-import impl.UserInfoDaoImpl;
+import dao.UserRelDao;
+import entity.UserRel;
+import entity.getCount;
+import impl.UserRelDapImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
@@ -17,21 +18,20 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/UserInfoServlet")
-public class UserInfoServlet extends HttpServlet {
-    UserInfoDao dao = new UserInfoDaoImpl();
+@WebServlet( "/getCountFansServlet")
+public class getCountFansServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        //查询个人信息
-        List<UserInfo> list = dao.showAllUser(100002);
+        UserRelDao dao =new UserRelDapImpl();
+        List<getCount> list=dao.getCountFans(50);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);
-        PrintWriter out =response.getWriter();
+        PrintWriter out=response.getWriter();
         out.print(array);
         out.flush();
         out.close();
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request,response);
     }

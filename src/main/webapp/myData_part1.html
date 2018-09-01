@@ -2,31 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>part1</title>
+    <title>显示个人信息</title>
     <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css"href="css/myData.css">
     <link rel="stylesheet"type="text/css"href="layui/css/layui.css">
-
+<script>
+    $(function () {
+            $.ajax({
+                url:"/UserInfoServlet",
+                type:"post",
+                DataType:"json",
+                success:function (result) {
+                    var j=JSON.parse(result)
+                    $(".base_part2").eq(0).text(j[0].TRUE_NAME);
+                    $(".base_part2").eq(1).text(j[0].USER_NAME);
+                    $(".base_part2").eq(2).text(j[0].PHONE_NO);
+                    $(".base_part2").eq(3).text(j[0].ADDRESS);
+                    $(".base_part2").eq(4).text(j[0].GENDER);
+                   //$(".base_part2").eq(5).text(j[0].BIRTHDAY);
+                    $(".base_part2").eq(6).text(j[0].BLOOD_TYPE);
+                    $(".base_part2").eq(7).text(j[0].CREATE_DATE_TIME);
+                    $(".base_part2").eq(8).text(j[0].EMAIL);
+                }
+            })
+    })
+</script>
 </head>
 <body>
 <form id="formPart1"action="myData_part2.html">
     <div class="myData">
         <div class="myData_body">
-            <div class="basicInfo">基本信息 <li class="spacer"></li><div><button id="button"	class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">编辑</button></div></div>
+            <div class="basicInfo"><span class="info">基本信息</span><li class="spacer"></li><div><button id="button"class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">编辑</button></div></div>
             <div class="myData_baseView">
-                <div class="account"><div class="base_part1">用户名</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">梦鸢</span></div></div>
-                <div class="name1"><div class="base_part1">真实姓名</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">梦鸢</span></div></div>
-                <div class="telNo1"><div class="base_part1">电话号码</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">自己的真实姓名</span></div></div>
-                <div class="addr"><div class="base_part1">所在地</div><div class="base_part2">&nbsp;&nbsp; 四川 成都</div></div>
-                <div class="sex"><div class="base_part1">性别</div><div class="base_part2">&nbsp;&nbsp; 女</div></div>
-                <div class="birthday"><div class="base_part1">生日</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">1996-05-06</span></div></div>
-                <div class="bloodType"><div class="base_part1">血型</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">自己的血型,可以被更多同血型的人找到</span></div></div>
-                <div class="regisdterTime"><div class="base_part1">注册日期</div><div class="base_part2">&nbsp; &nbsp;2018-08-15</div></div>
-                <div class="email"><div class="base_part1">邮箱</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的邮箱信息</span></div></div>
-                <div class="QQ"><div class="base_part1">QQ</div><div class="base_part2">&nbsp;<li class="spacer1"></li><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的QQ信息</span></div></div>
+                <div class="base_name">
+                    <div class="base_part1">真实姓名</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">自己的真实姓名</span></div>
+                </div>
+                <div class="account">
+                    <div class="base_part1">昵称</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">专属自己的昵称哦！</span></div>
+                </div>
+
+                <div class="base_telNo">
+                    <div class="base_part1">电话号码</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">自己的电话号码方便联系哦！</span></div>
+                </div>
+                <div class="add">
+                    <div class="base_part1">所在地</div>
+                    <div class="base_part2">山西 打通</div>
+                </div>
+                <div class="sex">
+                    <div class="base_part1">性别</div>
+                    <div class="base_part2">女</div>
+                </div>
+                <div class="birthday">
+                    <div class="base_part1">生日</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">1996-8-25</span></div>
+                </div>
+                <div class="bloodType">
+                    <div class="base_part1">血型</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">自己的血型,可以被更多同血型的人找到哦</span></div></div>
+                <div class="regTime">
+                    <div class="base_part1">注册时间</div>
+                    <div class="base_part2">1996-06-18</div>
+                </div>
+                <div class="email">
+                    <div class="base_part1">邮箱</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的邮箱信息</span></div></div>
+                <div class="QQ">
+                    <div class="base_part1">QQ</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的QQ信息</span>
+                    </div>
+                </div>
             </div>
         </div>
-     </div>
+    </div>
 </form>
 </body>
 </html>

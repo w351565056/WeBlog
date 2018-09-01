@@ -9,7 +9,9 @@
     <script type="text/javascript" src="layer/layer.js"></script>
     <script type="text/javascript" src="js/nav_home.js"></script>
     <script>
-            $(document).ready(function(){
+        var pagenu = 1;
+
+        $(document).ready(function(){
                 $.ajax({
                     url:"/getSessionServlet",
                     type:"post",
@@ -20,44 +22,60 @@
                         $("#home_username").text(result.USER_NAME)
                         // alert(result[0].username);
                     }
-                })
+                })//home_nav 悬浮效果
 
-                $(".hide_pic").hide();
-                brandPicTurn();
-            });
-        function brandPicTurn(){
-            $(".home_show").hover(
-                function(){
-                    $(this).children(".brand_name").hide();
-                    $(this).children(".hide_pic").show(200);
-                }
-                , function(){
-                    $(this).children(".hide_pic").hide();
-                    $(this).children(".brand_name").show(200);
-                }
-            );
-        }
+            $(".hide_pic").hide();
+            brandPicTurn();
+            function brandPicTurn(){
+                $(".home_show").hover(
+                    function(){
+                        $(this).children(".brand_name").hide();
+                        $(this).children(".hide_pic").show(200);
+                        },
+                    function(){
+                        $(this).children(".hide_pic").hide();
+                        $(this).children(".brand_name").show(200);
+                    }
+                );
+            }
+            //引用导航条
+            $('#header_111').load('daohang.html');
 
-            $(document).ready(function(){
-                $('#header_111').load('daohang.html');
-            });
-        $(function () {
             $("#home_to_top").click(function () {
                $("html,body").animate({scrollTop:0},500)
             });
-            // $("#home_to_top").hover(
-            //     function () {
-            //         $("#home_to_top").children().hide();
-            //         // $("#home_to_top").children().css("background-image","url(\"../images/to_top.png\")");
-            //     },function () {
-            //         $("#home_to_top").children().show();
-            //     }
-            // )
-            // bind("mouseover",function () {
-            //     $("#img_to_top").children().hide();
-            // }).bind("mouseout",function () {
-            //     $("#home_to_top").children().show();
-            // })
+            //超级话题展示
+            $(function () {
+                load();
+                $(".home_refresh span").click(function () {
+                    $(".home_topic").children().empty();
+                    pagenu++
+                    load();
+                });
+                function load() {
+                    $.ajax({
+                        url: "/showTopicServlet",
+                        type: "post",
+                        dataType: "json",
+                        data: {"pagenum": pagenu},
+                        success: function (list1) {
+                            if(list1.length ==0){
+                                pagenu = 1;
+                                load();
+                            }else{
+                            for (var i = 0; i < list1.length; i++) {
+                                var $node = $('<a href="#"><li>'+ list1[i].TOP +'</li><span>热度 ' + list1[i].NUMM + '亿</span></a>');
+                                    $(".home_topic").append($node);
+                                    // alert(list1[i].TOP + list1[i].NUMM)
+                                }
+                            }
+                        }
+                    });
+
+                }
+            })
+
+
         });
 
 
@@ -76,22 +94,22 @@
                     <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/Home/home_nav5.png"></li></a>
                 </ul>
             </div>
-            <!--<iframe id="home_blog_content_show" src="blogcontent.html"></iframe>-->
+
 
         </div>
-        <div id="home_content_right">
-            <div id="home_my_info">
-                <div id="home_my_background_img">
+        <div class="home_content_right">
+            <div class="home_my_info">
+                <div class="home_my_background_img">
                     <img src="images/Home/example_myZone.jpg">
                 </div>
-                <div id="home_username">MMMM<span>Lv.4</span></div>
-                <div id="home_info_decoration">
-                    <div id="home_my_focus"><a href="#"><p class="one">9</p></a><p class="two">关注</p></div>
-                    <div id="home_my_fun"><a href="#"><p class="one">15</p></a><p class="two">粉丝</p></div>
-                    <div id="home_my_blog_count"><a href="#"><p class="one">8</p></a><p class="two">微博</p></div>
+                <div class="home_username">MMMM<div></div></div>
+                <div class="home_info_decoration">
+                    <div class="home_my_focus"><a href="#"><p class="one">9</p></a><p class="two">关注</p></div>
+                    <div class="home_my_fun"><a href="#"><p class="one">15</p></a><p class="two">粉丝</p></div>
+                    <div class="home_my_blog_count"><a href="#"><p class="one">8</p></a><p class="two">微博</p></div>
                 </div>
             </div>
-            <div id="home_blog_decoration">
+            <div class="home_blog_decoration">
                 <div>
                     <a href="#"><span class="home_blog_one">我的收藏</span></a><a href="#"><span class="home_blog_two">10</span></a>
                 </div>
@@ -99,25 +117,21 @@
                     <a href="#"><span class="home_blog_one">我的赞</span></a><a href="#"><span class="home_blog_two">15</span></a>
                 </div>
             </div>
-            <div id="home_hot_topic">
-                <div id="home_topic_title">
-                    <span>热门话题</span><div id="home_refresh"><a href="#">换一换</a></div><div id="test"></div>
+            <div class="home_hot_topic">
+                <div class="home_topic_title">
+                    <span>热门话题</span><div class="home_refresh"><span>换一换</span></div><div id="test"></div>
                     <!--<span id="home_refresh"><a href="#">换一换</a></span>-->
                 </div>
-                <div id="home_topic">
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
-                    <a href="#"><li>#AAAAAAAAAAAAA#</li></a>
+                <div class="home_topic">
+
+
 
                 </div>
             </div>
         </div>
     </div>
-    <div id="home_blog_content_show"></div>
-    <div id="home_to_top"><img src="images/Home/to_top.png"></div>
+    <!--<div id="home_blog_content_show"></div>-->
+    <div class="home_to_top"><img src="images/Home/to_top.png"></div>
 </body>
 
 </html>
