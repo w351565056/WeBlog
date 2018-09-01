@@ -21,8 +21,8 @@ import java.util.List;
 public class ShowOneContentServlet extends HttpServlet {
     BlogContentDao dao = new BlogContentDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int forward=Integer.parseInt(request.getParameter("forward"));
-        List<BlogContent> list = dao.ShowContentByBlogId(forward);
+        int blogid=Integer.parseInt(request.getParameter("blogid"));
+        List<BlogContent> list = dao.ShowContentByBlogId(blogid);
         JsonConfig jsonConfig = new JsonConfig();//建立配置文件
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());//设置javaBean中的日期格式
         JSONArray array = JSONArray.fromObject(list,jsonConfig);

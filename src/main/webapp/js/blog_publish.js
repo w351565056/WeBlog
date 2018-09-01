@@ -226,12 +226,12 @@ $(function () {
         // alert(blogid);alert(userna);alert(forward);
 
         openBlogPublish();
-        if(forward!=0){ //如果被转发的微博还有转发，则需要拼接用户输入和被转发的微博内容
+        if(forward!=0){ //如果被转发的微博还有转发，则需要拼接用户输入和该微博内容
             $.ajax({
                 url:"/ShowOneContentServlet",
                 type:"post",
                 async:false,
-                data:{"forward":forward},
+                data:{"blogid":blogid},
                 dataType:"json",
                 success:function (result) {
                     forwardblogcontent="//@"+userna+":"+result[0].BLOG_TEXT;
@@ -239,7 +239,8 @@ $(function () {
             })
             $(".blogtext").focus();
             $(".blogtext").val(forwardblogcontent);
-
+        }else {
+            forward=blogid;//否则forward等于当前微博id
         }
         $('.emo').bind({
             click: function (event) {

@@ -18,8 +18,18 @@
         </div>
         <div class="blogcontent_sanjiao"></div>
         <div class="blogcontent_body">
-            <div class="blogcontent_username"><a href=""></a></div>
-            <div class="blogcontent_word"><p></p></div>
+            <div class="blogcontent_username"><a href="" style="font-size: 14px"></a></div>
+            <div class="blogcontent_word">
+                <p></p>
+                <div class="forwardcontent">
+                    <div class="forwardcontent_body">
+                        <div class="forwardcontent_name"></div>
+                        <div class="forwardcontent_word"></div>
+                        <div class="forwardcontent_photo">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="blogcontent_photo">
             </div>
             <div class="blogcontent_bottom">
@@ -77,21 +87,51 @@
                     for (var i=0;i<result.length;i++){
                         var blogid = result[i].BLOG_ID;
                         var new_main = old_main.clone(true);
+                        var $blogcontent_word=new_main.children().eq(2).children().eq(1).children();
                         $("#result").append(new_main);
                         new_main.attr("blogid",blogid);
                         new_main.attr("userid",result[i].USER_ID);
                         new_main.attr("userna",result[i].USER_NAME);
                         new_main.attr("forward",result[i].BLOG_FORWARD);
                         $(".blogcontent_shoucang").hide();
-                        if (re[i].BLOG_IMG==""){
+                        if (re[i].BLOG_IMG==""){//无图片
                             new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
                             new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
-                            new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
-                        }else {
+                            if(result[i].BLOG_FORWARD=="0"){//不包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                            }else {//包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                                $blogcontent_word.eq(1).css("display","block")
+                                $.ajax({
+                                    url:"/ShowOneContentServlet",
+                                    type:"post",
+                                    async:false,
+                                    data:{"blogid":result[i].BLOG_FORWARD},
+                                    dataType:"json",
+                                    success:function (result_f) {
+                                        $blogcontent_word.find($(".forwardcontent_name")).text("@"+result_f[0].USER_NAME)
+                                        $blogcontent_word.find($(".forwardcontent_word")).text(result_f[0].BLOG_TEXT)
+                                        if(result_f[0].BLOG_IMG!=""){//源微博包含图片
+                                            var img_f=JSON.parse(result_f[0].BLOG_IMG);
+                                            for (var f=0;f<img_f.length;f++){
+                                                var $node = ('<img src="'+img_f[f]+'" alt="" width="110px" height="110px" style="margin: 2px">');
+                                                $blogcontent_word.find($(".forwardcontent_photo")).append($node);
+                                            }
+                                        }
+                                    }
+                                })
+
+                            }
+                        }else {//有图片
                             var img = JSON.parse(re[i].BLOG_IMG);
                             new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
-                            new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
-                            new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
+                            new_main.children().eq(2).children().eq(0).children().eq(0).text(result[i].USER_NAME);
+                            if(result[i].BLOG_FORWARD=="0"){//不包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                            }else {//包含转发
+                                $blogcontent_word.eq(0).text("含图片的转发");//图片应该为超链接
+                                $blogcontent_word.eq(1).css("display","block")
+                            }
                             $.ajax({
                                 url:"/ShowBlogLikeServlet",
                                 type:"post",

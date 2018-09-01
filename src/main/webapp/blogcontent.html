@@ -18,7 +18,7 @@
                 }else{
                     $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
                 }
-            })
+            });
             //-------------------转发
             // $("body").on("click",".forward",function () {
             //
@@ -31,7 +31,7 @@
                 }else{
                     $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
                 }
-            })
+            });
             //-----------------------点赞
             $(".blogcontent_button_a").eq(3).click(function (e) {
                 e.preventDefault();
@@ -42,8 +42,11 @@
                 }else{
                     $(this).find('img').attr('src','images/nolike.png');
                 }
-            })
-
+            });
+            function sleep(n) { //n表示的毫秒数
+                var start = new Date().getTime();
+                while (true) if (new Date().getTime() - start > n) break;
+            }
             var old_main = $(".blogcontent_main").detach();
             load();//ajax异步提交，下面的方法被提前执行，故表情没有出现
             $('#result').parseEmotion();
@@ -51,7 +54,7 @@
                 $.ajax({
                     url:"/ShowContentServlet",
                     type:"post",
-                    async:false,
+                    async:true,
                     dataType:"json",
                     success:function (result) {
                         var re =result;
