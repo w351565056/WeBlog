@@ -9,6 +9,26 @@ public class BlogCollect {
     private BigDecimal BLOG_ID;
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
+    private BigDecimal NUMCOL;
+    private BigDecimal USERID;
+
+    public BigDecimal getNUMCOL() {
+        return NUMCOL;
+    }
+
+    public void setNUMCOL(BigDecimal NUMCOL) {
+        this.NUMCOL = NUMCOL;
+    }
+
+    public BigDecimal getUSERID() {
+        return USERID;
+    }
+
+    public void setUSERID(BigDecimal USERID) {
+        this.USERID = USERID;
+    }
+
+
 
     public BigDecimal getCOLLECT_ID() {
         return COLLECT_ID;
