@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bar {
+            margin-top: 10px;
+            height: 10px;
+            max-width: 370px;
+            background: green;
+        }
+    </style>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <!--<script src="js/jquery.fileupload-process.js"></script>-->
+    <!--<script src="js/jquery.fileupload-validate.js"></script>-->
+    <script>
+        $(function () {
+            $('.fileupload').fileupload({
+                url: "/uploadFile",
+                Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
+                dataType: 'json',//服务器返回的数据类型
+                // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
+
+                //add函数为选择文件后执行的操作
+                add: function (e, data) {
+                    //获取图片路径并显示预览
+                    var url = getUrl(data.files[0]);
+                    var $img = $("<img>").attr("src", url).css("width","50px")
+                    $("#image").append($img);
+                    //绑定上传提交事件
+                    $("button").click(function () {
+                        data.submit();
+                    });
+                },
+                //done函数为上传成功后执行的操作
+                done: function (e, ret) {
+                    if (ret.result.errno == 0) {
+                        // 显示上传成功，并循环输出上传内容预览。
+                        $(".preview").append("<div>上传成功:" + ret.result.data + "</div>");
+                        $.each(ret.result.data, function (index, fileSrc) {
+                            $(".preview").append("<div style='margin-top:10px;'><embed src=" +
+                                fileSrc + " allowscriptaccess='always' " +
+                                "allowfullscreen='true' wmode='opaque' width='280' height='200'>" +
+                                "</embed></div>");
+                        });
+                    } else {
+                        alert("上传失败");
+                    }
+
+                },
+
+                //此方法控制进度条
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                },
+
+                //dropZone: $('#dropzone') //此为拖拽文件控制，暂未开发。
+            });
+        });
+        //获取图片地址
+        function getUrl(file) {
+            var url = null;
+            if (window.createObjectURL != undefined) {
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) {
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) {
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
+</head>
+<body>
+
+
+<div style="width:700px;padding:20px;">
+    <input id="fileupload" class="fileupload" type="file" name="files" multiple="multiple">
+    <div id="image">预览：</div>
+    <!--<div id="dropzone" class="fade well">Drop files here</div>-->
+    <button>上传</button>
+    <div id="progress" class="progress">
+        <div class="bar" style="width: 0%;"></div>
+    </div>
+    <!-- 预览框： -->
+    <div class="preview" style="margin-top:20px;"></div>
+</div>
+</body>
+</html>

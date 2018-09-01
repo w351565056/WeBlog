@@ -1,11 +1,11 @@
 package servlet;
 
 import dao.BlogCollectDao;
-import dao.BlogContentDao;
 import entity.BlogCollect;
 import impl.BlogCollectDaoImpl;
-import impl.BlogContentDaoImpl;
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+import util.JsonDateValueProcessor;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,25 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
-@WebServlet("/collectBlogServlet")
-public class collectBlogServlet extends HttpServlet {
+@WebServlet("/showCollectServlet")
+public class showCollectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            BigDecimal colid = new BigDecimal("58");
-            BigDecimal colusergid = new BigDecimal("18");
-            BigDecimal colblogid = new BigDecimal("9");
-            BlogCollectDao blogCollectDao = new BlogCollectDaoImpl();
-//            List<BlogCollect> blogCollects =
-            blogCollectDao.collectblog(colid,colusergid,colblogid);
-//            PrintWriter out = response.getWriter();
-//            out.print(blogCollects);
-//            out.flush();
-//            out.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        BigDecimal showcol = new BigDecimal(request.getParameter("userid"));
+        BlogCollectDao blogCollectDao = new BlogCollectDaoImpl();
+        List<BlogCollect> blogCollects = blogCollectDao.showcollect(showcol);
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
+        JSONArray array = JSONArray.fromObject(blogCollects,jsonConfig);
+        PrintWriter out = response.getWriter();
+        out.print(array);
+        out.flush();
+        out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

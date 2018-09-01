@@ -13,8 +13,6 @@ li{
 .blogcontent_main{
     width: 674px;
     margin-bottom: 15px;
-    height: 347px;
-    clear: both;
 }
 .blogcontent_head{
     width: 64px;
@@ -35,7 +33,6 @@ li{
 }
 .blogcontent_body{
     width: 500px;
-    height: 289px;
     padding: 3px 32px 28px 28px;
     float: right;
     box-shadow: 5px 5px 5px darkgray;
@@ -48,19 +45,15 @@ li{
 }
 .blogcontent_word{
     width: 480px;
-    height: 100px;
     padding-left: 20px;
     margin-bottom: 22px;
 }
 .blogcontent_word p{
     width: 480px;
-    height: 100px;
     overflow:hidden;
-
 }
 .blogcontent_photo{
-    width: 480px;
-    height: 80px;
+    width: 400px;
     padding-left: 20px;
     margin-bottom: 22px;
 }
@@ -102,4 +95,7 @@ li{
 }
 .blogcontent_button_a img{
     vertical-align:middle;
+}
+.blogcontent_util{
+    clear: both;
 }

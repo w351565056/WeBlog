@@ -16,6 +16,35 @@ public class BlogContent {
     private BigDecimal REPORT;
     private Date CREATE_DATE_TIME;
     private Date MODIFY_DATE_TIME;
+    private BigDecimal RON;
+    private BigDecimal NUMM;
+    private String TOP;
+
+
+    public BigDecimal getRON() {
+        return RON;
+    }
+
+    public void setRON(BigDecimal RON) {
+        this.RON = RON;
+    }
+
+    public BigDecimal getNUMM() {
+        return NUMM;
+    }
+
+    public void setNUMM(BigDecimal NUMM) {
+        this.NUMM = NUMM;
+    }
+
+    public String getTOP() {
+        return TOP;
+    }
+
+    public void setTOP(String TOP) {
+        this.TOP = TOP;
+    }
+
     public String getUSER_NAME() {
         return USER_NAME;
     }

@@ -47,7 +47,7 @@ body{
     height: 100px;
     float: left;
 }
-#home_content_right{
+.home_content_right{
     width: 230px;
     height: inherit;
     float: left;
@@ -76,12 +76,12 @@ body{
 /*#home_nav_ul li:hover{*/
     /*color: #75c3f1;*/
 /*}*/
-#home_my_info{
+.home_my_info{
     width:230px;
     height: 165px;
     box-shadow: #9F9F9F 1px 2px 1px 1px;
 }
-#home_my_background_img{
+.home_my_background_img{
     width: 230px;
     height: 60px;
     display: table-cell;
@@ -89,14 +89,14 @@ body{
     background-image: url("../images/Home/backgroundimg.png");
     background-size: cover;
 }
-#home_my_background_img img{
+.home_my_background_img img{
     width: 70px;
     height: 70px;
     position: relative;
     border-radius: 50%;
     top: 25px;
 }
-#home_username{
+.home_username{
     width: 230px;
     height: 50px;
     text-align: center;
@@ -105,23 +105,25 @@ body{
     font-weight: 700;
     background: white;
 }
-#home_username span{
-    background: gold;
-    font-size: 10px;
-    border-radius: 10px;
-    text-align: center;
+.home_username  div{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/Home/sexm.png");
+    background-repeat: no-repeat;
+    margin-left: 5px;
 }
-#home_info_decoration{
+.home_info_decoration{
     width: 230px;
     height: 45px;
     background: white;
 }
-#home_info_decoration div{
+.home_info_decoration div{
     width: 76px;
     height: 45px;
     float: left;
 }
-#home_info_decoration div p{
+.home_info_decoration div p{
     width: 76px;
     text-align: center;
 }
@@ -135,14 +137,14 @@ body{
     font-size: 9px;
     color: #666666;
 }
-#home_blog_decoration{
+.home_blog_decoration{
     position: relative;
     top: 15px;
     box-shadow: #9F9F9F 1px 2px 1px 1px;
     background: white;
     border-radius: 5px;
 }
-#home_blog_decoration span{
+.home_blog_decoration span{
     width: 115px;
     height: 25px;
     font-size: 15px;
@@ -150,10 +152,10 @@ body{
     font-weight: 600;
     line-height: 25px;
 }
-#home_blog_decoration div{
+.home_blog_decoration div{
     height: 25px;
 }
-#home_blog_decoration span:hover{
+.home_blog_decoration span:hover{
     color: #75c3f1;
 }
 .home_blog_one{
@@ -162,7 +164,7 @@ body{
 .home_blog_two{
     float: right;
 }
-#home_hot_topic{
+.home_hot_topic{
     width: 230px;
     height: 150px;
     position: relative;
@@ -171,11 +173,23 @@ body{
     background: white;
     border-radius: 5px;
 }
-#home_hot_topic li{
+.home_hot_topic li{
     margin-top: 5px;
     text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    width: 180px;
 }
-#home_topic_title{
+
+.home_topic span{
+
+    text-align: center;
+    font-size: 10px;
+    display: inline-block;
+    width: 50px;
+}
+.home_topic_title{
     box-shadow: #9F9F9F 1px 1px 1px 1px ;
 }
 #test{
@@ -186,11 +200,11 @@ body{
     height: 16px;
     background-image: url("../images/Home/fresh.png");
 }
-#home_refresh{
+.home_refresh{
     float: right;
     margin-right: 15px;
 }
-#home_to_top{
+.home_to_top{
     position: fixed;
     right: 50px;
     bottom: 120px;

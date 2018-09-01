@@ -7,16 +7,11 @@
     <link rel="stylesheet" href="css/layer.css">
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/daohang.css">
-    <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
-    <script src="js/layer.js" type="text/javascript"></script>
-    <script src="js/jquery.ui.widget.js"></script>
-    <script src="js/jquery.iframe-transport.js"></script>
-    <script src="js/jquery.fileupload.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.sinaEmotion.css">
 
-    <script type="text/javascript" src="js/nav_home.js"></script>
 </head>
 <body>
-<div id="header">
+<div id="header" class="daohang_nav_a">
     <div class="logo">
         <a href="#"></a>
 
@@ -59,160 +54,14 @@
         <span class="layui-icon layui-icon-add-circle fabu" id="btn" title="说点儿什么吧"></span>
     </div>
 </div>
-<script>
-    $(function () {
-        var imgpath=new Array();
-        var index=0;
-        function openBlogPublish() {
-            layer.open({
-                type: 1,
-                area: ['480px', '240px'],
-                title: '有什么新鲜事想告诉大家',
-                shade: 0.3, //遮罩透明度,
-                offset: ['10px', '400px'],
-                closeBtn:1,
-                anim: 5,
-                content: '<div id="layer-body">' +
-                '<div class="layer-body-center">' +
-                '<textarea name="desc" placeholder="说点儿什么吧" class="blogtext layui-textarea text"></textarea>' +
-                '</div>' +
-                '<div class="layer-body-footer">' +
-                '<span class="layui-icon layui-icon-face-surprised smile"></span>' +
-                '<span class="img layui-icon layui-icon-picture pic"></span>' +
-                '<span class="layui-icon layui-icon-video vid"></span>' +
-                '<button class="publish layui-btn layui-btn-warm btn-fabu">发布</button>' +
-                '</div>' +
-                '</div>'
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/layer.js" type="text/javascript"></script>
+<script src="js/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/jquery.sinaEmotion.js"></script>
+<script type="text/javascript" src="js/nav_home.js"></script>
+<script type="text/javascript" src="js/blog_publish.js"></script>
 
-            })
-        }
-        function openImgUpload() {
-            layer.open({
-                type: 1,
-                title: false,
-                shade: 0, //遮罩透明度,
-                offset: ['240px', '440px'],
-                anim: 5,
-                content:'<div id="insert_img" class="insert_img">\n' +
-                '    <div id="title" class="title">本地上传</div>\n' +
-                '    <div id="titlesec" class="titlesec">共<span class="nownum">0</span>张，还能上传<span class="remainnum">9</span>张</div>\n' +
-                '    <div id="attention_button" class="attention_button ">\n' +
-                '        <a>\n' +
-                '            <span id="attention_add" class="attention_add">+</span>\n' +
-                '            <span id="attention_text" class="attention_text">标签</span>\n' +
-                '        </a>\n' +
-                '    </div>\n' +
-                '    <ul id="add_area" class="add_area">\n' +
-                '        <li id="add" class="add"><a id="add_a" class="add_a"></a></li>\n' +
-                '\n' +
-                '    </ul>\n' +
-                '    <input id="fileupload" class="fileupload" type="file" name="files" multiple="multiple" style="display: none">\n' +
-                '</div>'
-
-            })
-        }
-        function imgUpload() {
-            var num = 0;
-            $(".add").click(function () {
-                $("#fileupload").trigger("click");
-            })
-            $('.fileupload').fileupload({
-                url: "/uploadFile",
-                Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
-                dataType: 'json',//服务器返回的数据类型
-                singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
-
-                //add函数为选择文件后执行的操作
-                add: function (e, data) {
-                    num++;
-                    $(".nownum").text(num);
-                    $(".remainnum").text(9 - num);
-                    //获取图片路径并显示预览
-                    var url = getUrl(data.files[0]);
-                    var $img = $("<img>").attr("src", url).css({"width": "80px", "height": "120px","vertical-align":"unset"})
-                    $(".add:last-child").append($img);
-                    //预览之后解除选择图片的事件绑定
-                    $(".add").unbind();
-                    //增加新的操作
-                    // $(".add").hover(function () {
-                    //     $(this).css("background-color","#666666");
-                    // })
-                    $(".add").click(function () {
-                        $(this).remove();
-                        data=null;
-                        num--;
-                        $(".nownum").text(num);
-                        $(".remainnum").text(9 - num);
-                        if (num == 8) {
-                            var newadd = $('<li id="add" class="add"><a></a></li>');
-                            newadd.click(function () {
-                                $("#fileupload").trigger("click");
-                            })
-                            $(".add_area").append(newadd);
-                        }
-                    });
-
-                    if (num < 9) {
-                        //小于9张则加入新的添加图片按钮并赋予选择图片的事件
-                        var newadd = $('<li id="add" class="add"><a></a></li>');
-                        newadd.click(function () {
-                            $("#fileupload").trigger("click");
-                        })
-                        $(".add_area").append(newadd);
-                    }
-                    //绑定上传提交事件
-                    $(".publish").click(function () {
-                        data.submit();
-                    });
-                },
-                //done函数为上传成功后执行的操作
-                done: function (e, ret) {
-                    if (ret.result.errno == 0) {
-                        imgpath[index]=ret.result.data[0];
-                        index++;
-                        num--;
-                    } else {
-                        alert("上传失败");
-                    }if(num==0){//图片上传完毕
-                        var blogcontent=$(".blogtext").val();
-                        $.ajax({
-                            url:"/InsertBlogServlet",
-                            type:"post",
-                            // data: JSON.stringify(json),
-                            data:{"blogcontent":blogcontent,"imgpath":JSON.stringify(imgpath)},
-                            success:function () {
-                                alert("111");
-                                layer.closeAll();
-                            }
-                        })
-                    }
-                },
-            });
-
-        }
-        function getUrl(file) {
-            var url = null;
-            if (window.createObjectURL != undefined) {
-                url = window.createObjectURL(file);
-            } else if (window.URL != undefined) {
-                url = window.URL.createObjectURL(file);
-            } else if (window.webkitURL != undefined) {
-                url = window.webkitURL.createObjectURL(file);
-            }
-            return url;
-        }//获取图片地址
-
-        $("#btn").click(function () {
-            openBlogPublish();
-            $(".img").click(function () {
-                openImgUpload();
-                imgUpload();//为发布按钮绑定了上传图片的事件
-            })
-        })
-
-
-    })
-
-</script>
 </body>
 </html>

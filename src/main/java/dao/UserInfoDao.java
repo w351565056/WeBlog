@@ -1,4 +1,5 @@
 package dao;
+
 import entity.UserInfo;
 
 import java.math.BigDecimal;
