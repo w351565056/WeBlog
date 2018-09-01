@@ -2,15 +2,17 @@ package impl;
 
 import dao.BlogCollectDao;
 import entity.BlogCollect;
+import entity.BlogCollectQuery;
 import util.BaseDao;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class BlogCollectDaoImpl extends BaseDao<BlogCollect> implements BlogCollectDao {
-        public void collectblog(BlogCollect blogCollect){
-
-        }
+public class BlogCollectDaoImpl extends BaseDao<BlogCollectQuery> implements BlogCollectDao {
+    @Override
+    public List<BlogCollectQuery> ShowCollectBlog(BlogCollectQuery blogCollect) {
+        return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_COLLECT.* from USER_INFO,BLOG_COLLECT where BLOG_COLLECT.USER_ID = USER_INFO.USER_ID and BLOG_COLLECT.BLOG_ID= ?", new Object[]{blogCollect.getBLOG_ID()});
+    }
 
     @Override
     public List<BlogCollect> collectblog(BigDecimal colid, BigDecimal colusergid, BigDecimal colblogid) {

@@ -7,9 +7,9 @@
         <property name="user">scott</property>
         <property name="password">w351565056</property>
 
-        <property name="initialPoolSize">10</property>
-        <property name="maxPoolSize">20</property>
-        <property name="minPoolSize">10</property>
+        <property name="initialPoolSize">2</property>
+        <property name="maxPoolSize">5</property>
+        <property name="minPoolSize">2</property>
         <property name="maxIdleTime">10</property>
     </default-config>
 </c3p0-config>

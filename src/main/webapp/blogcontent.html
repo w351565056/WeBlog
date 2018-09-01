@@ -18,6 +18,7 @@
                         var re =result;
                         for (var i=0;i<result.length;i++){
                             var blogid = result[i].BLOG_ID;
+                            new_main.attr("id",blogid);
                             var new_main = old_main.clone(true);
                             $("body").append(new_main);
                             $(".blogcontent_shoucang").hide();
@@ -36,8 +37,7 @@
                                     data:{"blog_id":blogid},
                                     dataType:"json",
                                     success:function (result) {
-                                        var num = result;
-                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(result[i]);
                                     }
                                 })
                                 for (var j=0;j<img.length;j++){
