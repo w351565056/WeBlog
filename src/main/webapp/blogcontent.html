@@ -51,10 +51,10 @@
             //--------------收藏
             $(".blogcontent_button_a").eq(0).click(function (e) {
                 e.preventDefault();
-                if ( $(".blogcontent_shoucang").is(':hidden')){
-                    $(".blogcontent_shoucang").show();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
                 }else{
-                    $(".blogcontent_shoucang").hide();
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
                 }
             })
             //-------------------转发
@@ -65,10 +65,10 @@
             //-----------------------评论
             $(".blogcontent_button_a").eq(2).click(function (e) {
                 e.preventDefault();
-                if ( $(".blogcontent_pinglun").is(':hidden')){
-                    $(".blogcontent_pinglun").show();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
                 }else{
-                    $(".blogcontent_pinglun").hide();
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
                 }
             })
             //-----------------------点赞
