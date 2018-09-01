@@ -32,7 +32,6 @@ public class ShowContentServlet extends HttpServlet {
        }catch (Exception e) {
            e.printStackTrace();
        }finally {
-
        }
     }
 

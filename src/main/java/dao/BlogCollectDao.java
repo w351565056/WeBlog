@@ -1,12 +1,14 @@
 package dao;
 
 import entity.BlogCollect;
+import entity.BlogCollectQuery;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface BlogCollectDao {
-    void collectblog(BlogCollect blogCollect);
+    List<BlogCollectQuery> ShowCollectBlog(BlogCollectQuery blogCollect);
+
+
     List<BlogCollect> collectblog(BigDecimal colid, BigDecimal colusergid, BigDecimal colblogid);
-    List<BlogCollect> showcollect(BigDecimal userid);
 }

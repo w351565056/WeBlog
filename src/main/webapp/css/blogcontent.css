@@ -27,16 +27,26 @@ li{
 .blogcontent_sanjiao{
     width: 585px;
     height: 24px;
+    position: relative;
     float: right;
-    background-color: white;
-
+    background-image: url("../images/bgjl.png");
+    background-position: 0 0;
+}
+.blogcontent_sanjiao_q{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2px;
+    background-image:url("../images/bgjl.png") ;
+    background-position: -500px 0;
 }
 .blogcontent_body{
-    width: 500px;
+    width: 499px;
     padding: 3px 32px 28px 28px;
     float: right;
-    box-shadow: 5px 5px 5px darkgray;
+    box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
+    margin-right: 2px;
 }
 .blogcontent_username{
     width: 500px;
@@ -73,7 +83,8 @@ li{
     float: right;
     width: 560px;
     margin-bottom: 20px;
-    box-shadow: 5px 5px 5px darkgray;
+    margin-right:2px ;
+    box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
 }
 .blogcontent_shoucang ul li{
@@ -90,8 +101,9 @@ li{
     width: 560px;
     float: right;
     margin-bottom: 20px;
-    box-shadow: 5px 5px 5px darkgray;
+    box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
+    margin-right:2px ;
 }
 .blogcontent_button_a img{
     vertical-align:middle;
