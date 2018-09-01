@@ -12,7 +12,7 @@
 </head>
 <body style="background: #999999">
 <div id="result">
-    <div blogid="blogid" userid="userid" userna="userna" class="blogcontent_main" >
+    <div blogid="blogid"  userid="userid" userna="userna" forward="forward" class="blogcontent_main">
         <div class="blogcontent_head">
             <img src="" alt="">
         </div>
@@ -81,6 +81,7 @@
                         new_main.attr("blogid",blogid);
                         new_main.attr("userid",result[i].USER_ID);
                         new_main.attr("userna",result[i].USER_NAME);
+                        new_main.attr("forward",result[i].BLOG_FORWARD);
                         $(".blogcontent_shoucang").hide();
                         if (re[i].BLOG_IMG==""){
                             new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
