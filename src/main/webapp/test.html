@@ -9,8 +9,9 @@
             $.ajax({
                 url:"/ShowContentServlet",
                 type:"post",
-                dateType:"json",
+                dataType:"json",
                 success:function (result) {
+                    alert(result)
                     var re =JSON.parse(result);
                     var img = JSON.parse(re[0].BLOG_IMG);
                     alert(img[0]);

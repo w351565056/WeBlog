@@ -16,5 +16,4 @@ public interface UserInfoDao {
     List<UserInfo> deleteUser(BigDecimal userInfo);
     List<UserInfo> updataUser(BigDecimal USER_ID, String USER_NAME, String USER_PASS, String PHONE_NO, String TRUE_NAME, String GENDER, String EMAIL, String ADDRESS, String BLOOD_TYPE, Date BIRTHDAY, String QQ);
     List<UserInfo> addUser(String USER_NAME, String USER_PASS, String PHONE_NO, String TRUE_NAME, String GENDER, String EMAIL, String ADDRESS, String BLOOD_TYPE, Date BIRTHDAY, String QQ);
-
 }

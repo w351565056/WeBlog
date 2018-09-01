@@ -7,71 +7,73 @@
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.all.js"></script>
-    <script type="text/javascript" src="js/blogcontent.js"></script>
     <script>
         $(function () {
-            load();
             function load(){
                 $.ajax({
-                    url:"http://localhost:8080/ShowContentServlet",
+                    url:"/ShowContentServlet",
                     type:"post",
                     dataType:"json",
                     success:function (result) {
+                        var re =result;
                         for (var i=0;i<result.length;i++){
-                            var $node=('<div class="blogcontent_main"><div class="blogcontent_body_jubao"><a href=""><span>v举报</span></a></div><div class="blogcontent_head"><a href=""><img src="'+result[i].HEAD_IMG+'" alt="" style="width: 64px;height: 64px"></a></div><div class="blogcontent_body"><div class="blogcontent_body_main"><div class="blogcontent_body_name"><a href="">'+result[i].USER_NAME+'</a></div><div class="blogcontent_body_word">'+result[i].BLOG_TEXT+'</div><div class="blogcontent_body_photo"><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div></div><div class="blogcontent_body_bottom"><span class="blogcontent_body_bottom_shoucang">收藏(10)</span><span class="blogcontent_body_bottom_zhuanfa">转发(10)</span><span class="blogcontent_body_bottom_pinglun" id="'+result[i].BLOG_ID+'">评论(10)</span><span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span></div></div></div><div class="blogcontent_sanjiao"></div>');
-                            $('body').append($node);
-                            // $(".blogcontent_body_name a").eq(i).text(result[i].USER_ID);
-                            // $(".blogcontent_body_word").eq(i).text(result[i].BLOG_TEXT);
+                            var blogid = result[i].BLOG_ID;
+                            var new_main = old_main.clone(true);
+                            $("body").append(new_main);
+                            $(".blogcontent_shoucang").hide();
+                            if (re[i].BLOG_IMG==""){
+                                new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
+                                new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
+                                new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
+                            }else {
+                                var img = JSON.parse(re[i].BLOG_IMG);
+                                new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
+                                new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
+                                new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
+                                $.ajax({
+                                    url:"/ShowBlogLikeServlet",
+                                    type:"post",
+                                    data:{"blog_id":blogid},
+                                    dataType:"json",
+                                    success:function (result) {
+                                        var num = result;
+                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                    }
+                                })
+                                for (var j=0;j<img.length;j++){
+                                    var $node = ('<img src="'+img[j]+'" alt="" width="110px" height="110px" style="margin: 2px">')
+                                    new_main.children().eq(2).children().eq(2).append($node);
+                                }
+                            }
                         }}
                 })
             }
-            layui.use('layer', function(){
-                var $ = layui.jquery, layer = layui.layer;
+            //--------------收藏
+            $(".blogcontent_button_a").eq(0).click(function (e) {
+                e.preventDefault();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
+                }else{
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
+                }
             })
-            //----------------------------转发
-            $(".blogcontent_body_bottom_zhuanfa").click(function () {
-                layer.open({
-                    type: 1,
-                    title: false,
-                    closeBtn: 0,
-                    shadeClose: true,
-                    skin: 'layer-molv',
-                    content: '<div class="blogcontent_body_bottom_zf">\n' +
-                    '        <div><span>输入你要说的话</span></div>\n' +
-                    '        <textarea name="" id="" cols="30" rows="10"></textarea>\n' +
-                    '        <div><input type="submit" value="提交"></div>\n' +
-                    '    </div>'
-                });
+            //-------------------转发
+            $(".blogcontent_button_a").eq(1).click(function (e) {
+                e.preventDefault();
+
             })
-            //-------------------------------收藏
-            $("body").on('click','.blogcontent_body_bottom_shoucang',function () {
-                var $node=('<div class="blogcontent_body_bottom_sc_demo"><img src="images/ceshi.jpg" alt=""><div class="blogcontent_body_bottom_sc_demosp"><span class="blogcontent_body_bottom_sc_username">username:</span><span>收藏了此微博</span></div></div>');
-                $(this).parent().parent().parent().parent().append($node);
-                $(".blogcontent_body_bottom_sc_demo").animate({height:"200px"});
+            //-----------------------评论
+            $(".blogcontent_button_a").eq(2).click(function (e) {
+                e.preventDefault();
+                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
+                }else{
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
+                }
             })
-            //--------------------------------评论
-            $("body").on('click','.blogcontent_body_bottom_pinglun',function () {
-                var $node=('<div class="blogcontent_body_bottom_sc_demo"><div>评论</div><textarea name="" id="" class="area" cols="50" rows="2"></textarea><div><input type="submit" class="submit_pinglun"></div></div>');
-                $(this).parent().parent().parent().parent().append($node);
-                $(".blogcontent_body_bottom_sc_demo").animate({height:"200px"});
-            })
-            $("body").on('click','.submit_pinglun',function () {
-                //评论提交事件
-                // var text = "yyy";
-                // var blog_id = "1";
-                // var user_id = "100001";
-                $.ajax({
-                    url:'/InsertDiscussServlet',
-                    type:'post',
-                    data:{"discussId":"3","blogId":"15","userId": "50","discussText":"asfbfgassb"},
-                    dataType:'json',
-                    success:function () {
-                        alert("111");
-                    }
-                });
-            })
-            //-------------------------------点赞
-            $("body").on('click','.blogcontent_body_bottom_zan',function () {
+            //-----------------------点赞
+            $(".blogcontent_button_a").eq(3).click(function (e) {
+                e.preventDefault();
                 var str = $(this).find('img').attr("src");
                 if (str=="images/nolike.png"){
                     $(this).find('img').attr('src','images/like.png');
@@ -79,55 +81,56 @@
                     $(this).find('img').attr('src','images/nolike.png');
                 }
             })
+            var old_main = $(".blogcontent_main").detach();
+            load();
         })
     </script>
 </head>
 <body style="background: #999999">
 
-<!--<div class="blogcontent_main">-->
-<!--<div class="blogcontent_body_jubao">-->
-<!--<a href=""><span>v举报</span></a>-->
-<!--</div>-->
-<!--<div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>-->
-<!--<div class="blogcontent_body">-->
-<!--<div class="blogcontent_body_main">-->
-<!--<div class="blogcontent_body_name"><a href=""></a></div>-->
-<!--<div class="blogcontent_body_word"></div>-->
-<!--<div class="blogcontent_body_photo">-->
-<!--<img src="" alt=""><img src="" alt=""><img src="" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div>-->
-<!--</div>-->
-<!--<div class="blogcontent_body_bottom">-->
-<!--<span class="blogcontent_body_bottom_shoucang">收藏(10)</span>-->
-<!--<span class="blogcontent_body_bottom_zhuanfa">转发(10)</span>-->
-<!--<span class="blogcontent_body_bottom_pinglun">评论(10)</span>-->
-<!--<span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="blogcontent_sanjiao"></div>-->
-<!--</div>-->
-<!--<div class="blogcontent_main">-->
-<!--<div class="blogcontent_body_jubao">-->
-<!--<a href=""><span>v举报</span></a>-->
-<!--</div>-->
-<!--<div class="blogcontent_head"><a href=""><img src="" alt=""></a></div>-->
-<!--<div class="blogcontent_body">-->
-<!--<div class="blogcontent_body_main">-->
-<!--<div class="blogcontent_body_name"><a href=""></a></div>-->
-<!--<div class="blogcontent_body_word"></div>-->
-<!--<div class="blogcontent_body_photo">-->
-<!--<img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><img src="images/ceshi.jpg" alt=""><div style="display: inline-block"><span class="blogcontent_body_showall">展示全部》</span></div>-->
-<!--</div>-->
-<!--<div class="blogcontent_body_bottom">-->
-<!--<span class="blogcontent_body_bottom_shoucang">收藏(10)</span>-->
-<!--<span class="blogcontent_body_bottom_zhuanfa">转发(10)</span>-->
-<!--<span class="blogcontent_body_bottom_pinglun">评论(10)</span>-->
-<!--<span class="blogcontent_body_bottom_zan"><img src="images/nolike.png" alt="">(10)</span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="blogcontent_sanjiao"></div>-->
-<!--</div>-->
+<div class="blogcontent_main">
+    <div class="blogcontent_head">
+        <img src="" alt="">
+    </div>
+    <div class="blogcontent_sanjiao"></div>
+    <div class="blogcontent_body">
+        <div class="blogcontent_username"><a href=""></a></div>
+        <div class="blogcontent_word"><p></p></div>
+        <div class="blogcontent_photo">
+        </div>
+        <div class="blogcontent_bottom">
+            <div class="blogcontent_button">
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">收藏(3)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">转发(6)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">评论(1)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
+            </div>
+        </div>
+    </div>
+    <div class="blogcontent_shoucang">
+        <ul>
+            <li>
+                <div class="blogcontent_shoucang_demo"></div>
+            </li>
+            <li>
+                <div class="blogcontent_shoucang_demo"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="blogcontent_pinglun">
+        <div class="blogcontent_pinglun_text">
+            <div><span>评论</span></div>
+            <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+            <div><input type="submit"></div>
+        </div>
+        <ul>
+            <li>
+                <div class="blogcontent_pinglun_demo">666</div>
+            </li>
+        </ul>
+    </div>
+    <div class="blogcontent_util"></div>
+</div>
 
 </body>
 </html>
