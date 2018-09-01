@@ -7,96 +7,112 @@
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.all.js"></script>
-    <script src="js/jquery.sinaEmotion.js"></script>
     <script>
         $(function () {
-            //--------------收藏
-            $(".blogcontent_button_a").eq(0).click(function (e) {
-                e.preventDefault();
-                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
-                }else{
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
-                }
-            })
-            //-------------------转发
-            // $("body").on("click",".forward",function () {
-            //
-            // })
-            //-----------------------评论
-            $(".blogcontent_button_a").eq(2).click(function (e) {
-                e.preventDefault();
-                if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
-                }else{
-                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
-                }
-            })
-            //-----------------------点赞
-            $(".blogcontent_button_a").eq(3).click(function (e) {
-                e.preventDefault();
-                alert("dianza")
-                var str = $(this).find('img').attr("src");
-                if (str=="images/nolike.png"){
-                    $(this).find('img').attr('src','images/like.png');
-                }else{
-                    $(this).find('img').attr('src','images/nolike.png');
-                }
-            })
-
-            var old_main = $(".blogcontent_main").detach();
-            load();//ajax异步提交，下面的方法被提前执行，故表情没有出现
-            $('#result').parseEmotion();
-            function load(){
+            function load() {
                 $.ajax({
-                    url:"/ShowContentServlet",
-                    type:"post",
-                    async:false,
-                    dataType:"json",
-                    success:function (result) {
-                        var re =result;
-                        for (var i=0;i<result.length;i++){
-                            var blogid = result[i].BLOG_ID;
+                    url: "/ShowContentServlet",
+                    type: "post",
+                    dataType: "json",
+                    success: function (result) {
+                        var re = result;
+                        for (var i = 0; i < result.length; i++) {
+
                             var new_main = old_main.clone(true);
-                            new_main.attr("id",blogid);
-                            $("#result").append(new_main);//微博唯一标识
+                            new_main.attr("blogid",result[i].blog_id);
+                            new_main.attr("userid",result[i].USER_ID);
+                            new_main.attr("userna",result[i].USER_NAME);
+                            $("body").append(new_main);
+                            var bid1 = result[i].blog_id;
                             $(".blogcontent_shoucang").hide();
-                            if (re[i].BLOG_IMG==""){
-                                new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
+                            if (re[i].BLOG_IMG == "") {
+                                new_main.children().eq(0).children().attr("src", result[i].HEAD_IMG);
                                 new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
                                 new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
-                            }else {
+                            } else {
                                 var img = JSON.parse(re[i].BLOG_IMG);
-                                new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
+                                new_main.children().eq(0).children().attr("src", result[i].HEAD_IMG);
                                 new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
                                 new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
                                 $.ajax({
-                                    url:"/ShowBlogLikeServlet",
-                                    type:"post",
-                                    data:{"blog_id":blogid},
-                                    dataType:"json",
-                                    success:function (result) {
-                                        // var num = result;
-                                        // new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                    url: "/ShowDiscussServlet",
+                                    type: "post",
+                                    data: {"blog_id": bid1},
+                                    dataType: "json",
+                                    success: function (result) {
+                                        alert(result);
+                                        var num = result;
+                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
                                     }
                                 })
-                                for (var j=0;j<img.length;j++){
-                                    var $node = ('<img src="'+img[j]+'" alt="" width="110px" height="110px" style="margin: 2px">')
+                                for (var j = 0; j < img.length; j++) {
+                                    var $node = ('<img src="' + img[j] + '" alt="" width="110px" height="110px" style="margin: 2px">')
                                     new_main.children().eq(2).children().eq(2).append($node);
                                 }
                             }
                         }
-
                     }
                 })
             }
 
+            //--------------收藏
+            $(".blogcontent_button_a").eq(0).click(function (e) {
+                e.preventDefault();
+                if ($($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')) {
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
+                } else {
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
+                }
+            })
+            //-------------------转发
+            $(".blogcontent_button_a").eq(1).click(function (e) {
+                e.preventDefault();
+
+            })
+            //-----------------------评论
+            $(".blogcontent_button_a").eq(2).click(function (e) {
+                e.preventDefault();
+                if ($($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')) {
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
+                } else {
+                    $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
+                }
+            })
+            $("#tijiaopinglun-btn").click(function () {
+                var bid = $(this).closest($(".blogcontent_main")).attr("blogid");
+                var uid = $(this).closest($(".blogcontent_main")).attr("userid");
+                $.ajax({
+                    url: '/InsertDiscussServlet',
+                    type: 'post',
+                    data: {"discussId": "56", "blogId": bid, "userId": uid, "discussText": "henghengasdfa"},
+                    dataType: 'json',
+                    success: function () {
+                        var node = ('<span>'+result[i].DISCUSS_TEXT+'</span>');
+                        ($(this).closest($(".blogcontent_main"))).find(".append").append();
+
+                    }
+                });
+            })
+
+
+            //-----------------------点赞
+            $(".blogcontent_button_a").eq(3).click(function (e) {
+                e.preventDefault();
+                var str = $(this).find('img').attr("src");
+                if (str == "images/nolike.png") {
+                    $(this).find('img').attr('src', 'images/like.png');
+                } else {
+                    $(this).find('img').attr('src', 'images/nolike.png');
+                }
+            })
+            var old_main = $(".blogcontent_main").detach();
+            load();
         })
     </script>
 </head>
 <body style="background: #999999">
-<div id="result">
-<div id="blogcontent_main" class="blogcontent_main">
+
+<div class="blogcontent_main">
     <div class="blogcontent_head">
         <img src="" alt="">
     </div>
@@ -105,17 +121,20 @@
         <div class="blogcontent_username"><a href=""></a></div>
         <div class="blogcontent_word"><p></p></div>
         <div class="blogcontent_photo">
+
+            <input type="hidden" value="" name="blog_id" id="blog_id">
         </div>
         <div class="blogcontent_bottom">
             <div class="blogcontent_button">
-                <span class="blogcontent_button_span"><a  class="blogcontent_button_a">收藏(3)</a></span>
-                <span class="blogcontent_button_span"><a  class="forward blogcontent_button_a">转发(6)</a></span>
-                <span class="blogcontent_button_span"><a  class="blogcontent_button_a">评论(1)</a></span>
-                <span class="blogcontent_button_span"><a  class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">收藏(3)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">转发(6)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a">评论(1)</a></span>
+                <span class="blogcontent_button_span"><a href="" class="blogcontent_button_a"><img
+                        src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
             </div>
         </div>
     </div>
-    <div class="blogcontent_shoucang">
+    <div class="blogcontent_shoucang">//
         <ul>
             <li>
                 <div class="blogcontent_shoucang_demo"></div>
@@ -129,7 +148,7 @@
         <div class="blogcontent_pinglun_text">
             <div><span>评论</span></div>
             <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
-            <div><input type="submit"></div>
+            <div><input type="submit" class="tijiaopinglun-btn" id="tijiaopinglun-btn"></div>
         </div>
         <ul>
             <li>
@@ -139,6 +158,6 @@
     </div>
     <div class="blogcontent_util"></div>
 </div>
-</div>
+
 </body>
 </html>
