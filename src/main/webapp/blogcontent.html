@@ -7,19 +7,24 @@
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.all.js"></script>
+    <script src="js/jquery.sinaEmotion.js"></script>
     <script>
         $(function () {
+            var old_main = $(".blogcontent_main").detach();
+            load();//ajax异步提交，下面的方法被提前执行，故表情没有出现
+            $('#result').parseEmotion();
             function load(){
                 $.ajax({
                     url:"/ShowContentServlet",
                     type:"post",
+                    async:false,
                     dataType:"json",
                     success:function (result) {
                         var re =result;
                         for (var i=0;i<result.length;i++){
                             var blogid = result[i].BLOG_ID;
                             var new_main = old_main.clone(true);
-                            $("body").append(new_main);
+                            $("#result").append(new_main);
                             $(".blogcontent_shoucang").hide();
                             if (re[i].BLOG_IMG==""){
                                 new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
@@ -30,22 +35,23 @@
                                 new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
                                 new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
                                 new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
-                                $.ajax({
-                                    url:"/ShowBlogLikeServlet",
-                                    type:"post",
-                                    data:{"blog_id":blogid},
-                                    dataType:"json",
-                                    success:function (result) {
-                                        alert(result);
-                                        var num = result;
-                                        new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
-                                    }
-                                })
+                                // $.ajax({
+                                //     url:"/ShowBlogLikeServlet",
+                                //     type:"post",
+                                //     data:{"blog_id":blogid},
+                                //     dataType:"json",
+                                //     success:function (result) {
+                                //         var num = result;
+                                //         new_main.children().eq(2).children().eq(3).children().children().eq(3).children().children(1).test(num);
+                                //     }
+                                // })
                                 for (var j=0;j<img.length;j++){
                                     new_main.children().eq(2).children().eq(2).children().eq(j).attr("src",img[j]);
                                 }
                             }
-                        }}
+                        }
+
+                    }
                 })
             }
             //--------------收藏
@@ -81,13 +87,12 @@
                     $(this).find('img').attr('src','images/nolike.png');
                 }
             })
-            var old_main = $(".blogcontent_main").detach();
-            load();
+
         })
     </script>
 </head>
 <body style="background: #999999">
-
+<div id="result">
 <div class="blogcontent_main">
     <div class="blogcontent_head">
         <img src="" alt="">
@@ -97,9 +102,9 @@
         <div class="blogcontent_username"><a href=""></a></div>
         <div class="blogcontent_word"><p></p></div>
         <div class="blogcontent_photo">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
+            <img src="" alt="" width="80px" height="120px">
+            <img src="" alt="" width="80px" height="120px">
+            <img src="" alt="" width="80px" height="120px">
         </div>
         <div class="blogcontent_bottom">
             <div class="blogcontent_button">
@@ -133,6 +138,6 @@
         </ul>
     </div>
 </div>
-
+</div>
 </body>
 </html>

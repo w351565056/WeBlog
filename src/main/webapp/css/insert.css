@@ -1,21 +1,21 @@
-#insert_img{
+.insert_img{
     width: 284px;
     border-radius: 3px;
     border: 1px solid #ccc;
     box-shadow: 0 4px 20px 1px rgba(0,0,0,0.2);
 
 }
-#title{
+.title{
     font-size: 14px;
     margin: 10px;
     font-weight: 700;
 }
-#titlesec{
+.titlesec{
     margin: 10px;
     font-size: 12px;
     display: inline-block;
 }
-#attention_button{
+.attention_button{
     font-size: 13px;
     display: inline-block;
     width: 62px;
@@ -28,7 +28,7 @@
     color: #fff;
     margin-left: 70px;
 }
-#attention_add{
+.attention_add{
     display: inline-block;
     font-size: 23px;
     line-height: 0px;
@@ -38,18 +38,18 @@
 
 }
 
-#attention_text{
+.attention_text{
     display: inline-block;
     font-size: 13px;
     margin-top: 3px;
     vertical-align: middle;
     color: white;
 }
-#add_area{
+.add_area{
     list-style: none;
-    /*margin-left:-30px;*/
+    margin-left:10px;
 }
-#add{
+.add{
     display: inline-block;
     cursor: pointer;
     width: 80px;

@@ -9,7 +9,6 @@
             $.ajax({
                 url:"/ShowContentServlet",
                 type:"post",
-                dataType:"json",
                 success:function (result) {
                     alert(result)
                     var re =JSON.parse(result);
