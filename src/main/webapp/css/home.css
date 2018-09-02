@@ -35,6 +35,7 @@ body{
 }
 
 #home_blog_content_show{
+    margin-top: 40px;
     width:700px;
     border: 0;
 }
@@ -106,12 +107,12 @@ body{
     background: white;
 }
 .home_username  div{
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url("../images/Home/sexm.png");
-    background-repeat: no-repeat;
-    margin-left: 5px;
+    /*display: inline-block;*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*background-image: url("../images/Home/sexm.png");*/
+    /*background-repeat: no-repeat;*/
+    /*margin-left: 5px;*/
 }
 .home_info_decoration{
     width: 230px;
@@ -181,7 +182,9 @@ body{
     display: inline-block;
     width: 180px;
 }
-
+.home_topic a{
+   height: 17px;
+}
 .home_topic span{
 
     text-align: center;

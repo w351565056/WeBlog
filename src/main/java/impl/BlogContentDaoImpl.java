@@ -3,6 +3,7 @@ package impl;
 import dao.BlogContentDao;
 
 import entity.BlogContent;
+import entity.ShowMyContent;
 import util.BaseDao;
 
 

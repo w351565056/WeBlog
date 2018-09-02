@@ -72,10 +72,44 @@
                     });
 
                 }
-            });
+            })
+            $(function () {
+                $.ajax({
+                    url: "/HomeShowMyInfoServlet",
+                    type: "post",
+                    dataType: "json",
+                    success:function (info) {
+                        $(".home_username span").html(info[0][0].USER_NAME);
+                            $(".one").eq(0).html(info[2][0].ANUM );
+                            $(".one").eq(1).html(info[3][0].FNUM );
+                            $(".one").eq(2).html(info[1][0].CNUM );
+                            if (info[0][0].GENDER == '男'){
+                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexm.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
+                            }else {
+                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexw.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
+                            }
+                            $(".home_my_background_img").html('<img src='+ info[0][0].HEAD_IMG +'>');
 
 
+                        // alert(info[0][0].ADDRESS);
+                        // $("#one1").value().attr(111);
+                        // $(".one").index(0).val(121);
 
+                        // $(".one").index(2).val(131);
+                        // alert("用户名："info[0][0].USER_NAME "性别："info[0][0].GENDER
+                        //      "头像地址："info[0][0].HEAD_IMG  "自我介绍："
+                        //     // + info[1][0].INTRO
+                        //  "微博数"+info[1][0].CNUM "关注人数"
+                            // + info[2][0].ANUM +"粉丝人数"+info[3][0].FNUM
+                        // );
+                        // + info[1].ANUM + info[2].FNUM + info[3].USER_ID
+                    }
+                    }
+                )
+            })
+
+
+        });
 
 
     </script>
@@ -92,20 +126,22 @@
                     <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/Home/home_nav4.png"></li></a>
                     <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/Home/home_nav5.png"></li></a>
                 </ul>
-            </div>
 
+            </div>
+            <div id="home_blog_content_show"></div>
 
         </div>
         <div class="home_content_right">
             <div class="home_my_info">
                 <div class="home_my_background_img">
-                    <img src="images/Home/example_myZone.jpg">
+                    <img src="">
+                    <!--images/Home/example_myZone.jpg-->
                 </div>
-                <div class="home_username">MMMM<div></div></div>
+                <div class="home_username"><span></span><div></div></div>
                 <div class="home_info_decoration">
-                    <div class="home_my_focus"><a href="#"><p class="one">9</p></a><p class="two">关注</p></div>
-                    <div class="home_my_fun"><a href="#"><p class="one">15</p></a><p class="two">粉丝</p></div>
-                    <div class="home_my_blog_count"><a href="#"><p class="one">8</p></a><p class="two">微博</p></div>
+                    <div class="home_my_focus"><a href="#"><p class="one">0</p></a><p class="two">关注</p></div>
+                    <div class="home_my_fun"><a href="#"><p class="one">0</p></a><p class="two">粉丝</p></div>
+                    <div class="home_my_blog_count"><a href="#"><p class="one">0</p></a><p class="two">微博</p></div>
                 </div>
             </div>
             <div class="home_blog_decoration">
