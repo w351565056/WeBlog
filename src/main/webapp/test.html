@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="css/insert.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/jquery.sinaEmotion.css">
 </head>
-<body style="background: #999999">
+<body style="background-color:rgb(237,237,239)">
 <div id="result">
     <div blogid="blogid"  userid="userid" userna="userna" forward="forward" class="blogcontent_main">
         <div class="blogcontent_head">
             <img src="" alt="">
         </div>
-        <div class="blogcontent_sanjiao"></div>
+        <div class="blogcontent_sanjiao">
+            <div class="blogcontent_sanjiao_q"></div>
+        </div>
         <div class="blogcontent_body">
             <div class="blogcontent_username"><a href="" style="font-size: 14px"></a></div>
             <div class="blogcontent_word">
@@ -34,10 +36,10 @@
             </div>
             <div class="blogcontent_bottom">
                 <div class="blogcontent_button">
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a">收藏(3)</a></span>
+                    <span class="blogcontent_button_span"><a  class="collect blogcontent_button_a">收藏(3)</a></span>
                     <span class="blogcontent_button_span"><a id="forward"  class="forward blogcontent_button_a">转发(6)</a></span>
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a">评论(1)</a></span>
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
+                    <span class="blogcontent_button_span"><a  class="talk blogcontent_button_a">评论(1)</a></span>
+                    <span class="blogcontent_button_span"><a  class="like blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
                 </div>
             </div>
         </div>
@@ -55,7 +57,7 @@
             <div class="blogcontent_pinglun_text">
                 <div><span>评论</span></div>
                 <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
-                <div><input type="submit"></div>
+                <div class="append"><input type="submit"></div>
             </div>
             <ul>
                 <li>

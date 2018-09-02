@@ -309,6 +309,40 @@ $(function () {
             }
         });
     });
+    //--------------收藏
+    $("#result").on('click','.collect',function (e) {
+        e.preventDefault();
+        if (  $($(this.parentNode.parentNode.parentNode.parentNode).next()).is(':hidden')){
+            $($(this.parentNode.parentNode.parentNode.parentNode).next()).show();
+        }else{
+            $($(this.parentNode.parentNode.parentNode.parentNode).next()).hide();
+        }
+    });
+    //-----------------------评论
+    $("#result").on('click','.talk',function (e) {
+        alert("nihao");
+        e.preventDefault();
+        if (  $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).is(':hidden')){
+            $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).show();
+        }else{
+            $($(this.parentNode.parentNode.parentNode.parentNode).next().next()).hide();
+        }
+    });
+
+    $("input[type='submit']").click(function () {
+        alert("nihao");
+    })
+    //-----------------------点赞
+    $("#result").on('click','.like',function (e) {
+        e.preventDefault();
+        alert("dianza")
+        var str = $(this).find('img').attr("src");
+        if (str=="images/nolike.png"){
+            $(this).find('img').attr('src','images/like.png');
+        }else{
+            $(this).find('img').attr('src','images/nolike.png');
+        }
+    })
 
 
 })
