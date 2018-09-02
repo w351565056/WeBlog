@@ -1,8 +1,8 @@
 package servlet;
 
-import dao.BlogCollectDao;
-import entity.BlogCollect;
-import impl.BlogCollectDaoImpl;
+import dao.ShowMyLikeNumDao;
+import entity.MyBlogLikeNum;
+import impl.ShowMyBlogLikeNumImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
@@ -18,17 +18,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/showCollectServlet")
-public class showCollectServlet extends HttpServlet {
+@WebServlet( "/ShowMyBlogLikeNumServlet")
+public class ShowMyBlogLikeNumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BigDecimal showcol = new BigDecimal(request.getParameter("userid"));
-        BlogCollectDao blogCollectDao = new BlogCollectDaoImpl();
-//        List<BlogCollect> blogCollects = blogCollectDao.showcollect(showcol);
+        BigDecimal userid = new BigDecimal(request.getParameter("id_shmylinum"));
+        ShowMyLikeNumDao showMyLikeNumDao = new ShowMyBlogLikeNumImpl();
+        List<MyBlogLikeNum> myBlogLikeNums = showMyLikeNumDao.ShowMyLikeNum(userid);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
-//        JSONArray array = JSONArray.fromObject(blogCollects,jsonConfig);
-        PrintWriter out = response.getWriter();
-//        out.print(array);
+        JSONArray jsonArray = JSONArray.fromObject(myBlogLikeNums,jsonConfig);
+        PrintWriter out =response.getWriter();
+        out.print(jsonArray);
         out.flush();
         out.close();
     }

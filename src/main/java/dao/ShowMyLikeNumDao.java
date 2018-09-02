@@ -1,10 +1,11 @@
 package dao;
 
 import entity.BlogLike;
+import entity.MyBlogLikeNum;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface ShowMyLikeNumDao {
-    List<BlogLike> ShowMyLikeNum(BigDecimal likenum);
+    List<MyBlogLikeNum> ShowMyLikeNum(BigDecimal likenum);
 }

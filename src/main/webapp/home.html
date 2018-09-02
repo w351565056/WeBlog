@@ -83,6 +83,12 @@
                             $(".one").eq(0).html(info[2][0].ANUM );
                             $(".one").eq(1).html(info[3][0].FNUM );
                             $(".one").eq(2).html(info[1][0].CNUM );
+                            if (info[0][0].GENDER == '男'){
+                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexm.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
+                            }else {
+                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexw.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
+                            }
+                            $(".home_my_background_img").html('<img src='+ info[0][0].HEAD_IMG +'>');
 
 
                         // alert(info[0][0].ADDRESS);
@@ -128,7 +134,8 @@
         <div class="home_content_right">
             <div class="home_my_info">
                 <div class="home_my_background_img">
-                    <img src="images/Home/example_myZone.jpg">
+                    <img src="">
+                    <!--images/Home/example_myZone.jpg-->
                 </div>
                 <div class="home_username"><span></span><div></div></div>
                 <div class="home_info_decoration">
