@@ -35,6 +35,7 @@ body{
 }
 
 #home_blog_content_show{
+    margin-top: 40px;
     width:700px;
     border: 0;
 }

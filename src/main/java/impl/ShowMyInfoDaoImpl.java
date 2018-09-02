@@ -8,7 +8,7 @@ import util.BaseDao;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ShowMyInfoImpl extends BaseDao<ShowMyInfo> implements ShowMyInfoDao {
+public class ShowMyInfoDaoImpl extends BaseDao<ShowMyInfo> implements ShowMyInfoDao {
 
     @Override
     public List<ShowMyInfo> ShowMyInfo(BigDecimal myuserid) {
