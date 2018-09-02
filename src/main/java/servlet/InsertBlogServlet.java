@@ -26,7 +26,6 @@ public class InsertBlogServlet extends HttpServlet {
         blog.setBLOG_FORWARD(new BigDecimal(forward));//字符串能转成big吗?
         blog.setUSER_ID(new BigDecimal(100003));
         dao.InsertBlog(blog);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

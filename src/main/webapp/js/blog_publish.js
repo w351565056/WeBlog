@@ -120,7 +120,7 @@ $(function () {
                     index++;
                     num--;
                 } else {
-                    alert("上传失败");
+                    layer.msg('上传失败', {icon: 2});
                 }
                 if (num == 0) {//图片上传完毕提交文本内容和图片路径
                     var blogcontent = $(".blogtext").val();
@@ -130,12 +130,67 @@ $(function () {
                         data: {"blogcontent": blogcontent, "imgpath": JSON.stringify(imgpath),"forward":forward},
                         success: function () {
                             layer.closeAll();
+                            layer.msg('发布成功', {icon: 1});
                         }
                     })
                 }
             },
         });
 
+    }
+
+    function videoUpload() {
+        $("#videoupload").trigger("click");
+        //video上传
+        $('.videoupload').fileupload({ //(该方法必须写在这里面)为发布按钮绑定了上传视频的事件
+            url: "/uploadFile",
+            Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
+            dataType: 'json',//服务器返回的数据类型
+            // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
+
+            //add函数为选择文件后执行的操作
+            add: function (e, data) {
+                num++;
+                //绑定上传提交事件
+                $(".publish").click(function () {
+                    data.submit();
+                    event.preventDefault();//因为有form元素，所以要阻止表单的默认提交，不然大文件传不完
+
+                });
+            },
+            //done函数为上传成功后执行的操作
+            done: function (e, ret) {
+                if (ret.result.errno == 0) { //视频上传成功
+                    var videopath = new Array();
+                    var blogcontent = $(".blogtext").val();
+                    videopath[0] = ret.result.data[0];
+                    $.ajax({
+                        url: "/InsertBlogServlet",
+                        type: "post",
+                        data: {"blogcontent": blogcontent, "imgpath": JSON.stringify(videopath),"forward":forward},
+                        success: function () {
+                            layer.closeAll();
+                            layer.msg('发布成功', {icon: 1});
+                        }
+                    })
+                } else {
+                    layer.msg('上传失败', {icon: 2});
+                }
+
+            },
+        });
+    }
+
+    function checkInput() {
+        $(".publish").attr("disabled","disabled").css({"background":"#ffc09f","border":"1px solid #fbbd9e"});
+        $(".blogtext").keyup(function () { //无文字输入时不可点击
+            if($(".blogtext").val()==""){
+                $(".publish").attr("disabled","disabled").css({"background":"#ffc09f","border":"1px solid #fbbd9e"});
+            }else {
+                $(".publish").removeAttr("disabled").css({"background":"#ff8140","border":"1px solid #f77c3d"});
+            }
+
+        })
     }
 
     function getUrl(file) {
@@ -150,8 +205,10 @@ $(function () {
         return url;
     }//获取图片地址
 
+    //--------------发布
     $("#btn").click(function () { //发布微博
         openBlogPublish();
+        checkInput();
         $('.emo').bind({
             click: function (event) {
                 if (!$('#sinaEmotion').is(':visible')) {
@@ -165,67 +222,35 @@ $(function () {
             imgUpload();//为发布按钮绑定了上传图片的事件
         });
         $(".video").click(function () {
-            $("#videoupload").trigger("click");
-            //video上传
-            $('.videoupload').fileupload({ //(该方法必须写在这里面)为发布按钮绑定了上传视频的事件
-                url: "/uploadFile",
-                Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
-                dataType: 'json',//服务器返回的数据类型
-                // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
 
-                //add函数为选择文件后执行的操作
-                add: function (e, data) {
-                    num++;
-                    //绑定上传提交事件
-                    $(".publish").click(function () {
-                        data.submit();
-                        event.preventDefault();//因为有form元素，所以要阻止表单的默认提交，不然大文件传不完
-
-                    });
-                },
-                //done函数为上传成功后执行的操作
-                done: function (e, ret) {
-                    if (ret.result.errno == 0) { //视频上传成功
-                        var videopath = new Array();
-                        var blogcontent = $(".blogtext").val();
-                        videopath[0] = ret.result.data[0];
-                        $.ajax({
-                            url: "/InsertBlogServlet",
-                            type: "post",
-                            data: {"blogcontent": blogcontent, "imgpath": JSON.stringify(videopath),"forward":forward},
-                            success: function () {
-                                layer.closeAll();
-                            }
-                        })
-                    } else {
-                        alert("上传失败");
-                    }
-
-                },
-            });
+            videoUpload();
         });
         $(".publish").click(function () {
+             event.preventDefault();
             if (num == 0) {//无图片视频提交
                 var blogcontent = $(".blogtext").val();
                 $.ajax({
                     url: "/InsertBlogServlet",
                     type: "post",
                     data: {"blogcontent": blogcontent,"forward":forward},
+                    dataType:"text",
                     success: function () {
                         layer.closeAll();
+                        layer.msg('发布成功', {icon: 1});
                     }
-                })
+                });
             }
         });
     });
+    //--------------转发
     $("#result").on("click", ".forward", function () { //转发微博
         var $blogword=$(this).closest($(".blogcontent_body")).find("p");//该元素下包含微博文本及表情
         var blogid=$(this).closest($(".blogcontent_main")).attr("blogid");//转发微博的blog_id
         var userna=$(this).closest($(".blogcontent_main")).attr("userna");//转发微博的user_name
         forward=$(this).closest($(".blogcontent_main")).attr("forward");//转发微博的forward(转发状态)
-        // alert(blogid);alert(userna);alert(forward);
 
         openBlogPublish();
+        checkInput();
         if(forward!=0){ //如果被转发的微博还有转发，则需要拼接用户输入和该微博内容
             $.ajax({
                 url:"/ShowOneContentServlet",
@@ -255,55 +280,62 @@ $(function () {
             imgUpload();//为发布按钮绑定了上传图片的事件
         });
         $(".video").click(function () {
-            $("#videoupload").trigger("click");
-            //video上传
-            $('.videoupload').fileupload({ //(该方法必须写在这里面)为发布按钮绑定了上传视频的事件
-                url: "/uploadFile",
-                Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
-                dataType: 'json',//服务器返回的数据类型
-                // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
-
-                //add函数为选择文件后执行的操作
-                add: function (e, data) {
-                    num++;
-                    //绑定上传提交事件
-                    $(".publish").click(function () {
-                        data.submit();
-                        event.preventDefault();//因为有form元素，所以要阻止表单的默认提交，不然大文件传不完
-
-                    });
-                },
-                //done函数为上传成功后执行的操作
-                done: function (e, ret) {
-                    if (ret.result.errno == 0) { //视频上传成功
-                        var videopath = new Array();
-                        var blogcontent = $(".blogtext").val();
-                        videopath[0] = ret.result.data[0];
-                        $.ajax({
-                            url: "/InsertBlogServlet",
-                            type: "post",
-                            data: {"blogcontent": blogcontent, "imgpath": JSON.stringify(videopath),"forward":forward},
-                            success: function () {
-                                layer.closeAll();
-                            }
-                        })
-                    } else {
-                        alert("上传失败");
-                    }
-
-                },
-            });
+            videoUpload();
+            // $("#videoupload").trigger("click");
+            // //video上传
+            // $('.videoupload').fileupload({ //(该方法必须写在这里面)为发布按钮绑定了上传视频的事件
+            //     url: "/uploadFile",
+            //     Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
+            //     dataType: 'json',//服务器返回的数据类型
+            //     // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
+            //
+            //     //add函数为选择文件后执行的操作
+            //     add: function (e, data) {
+            //         num++;
+            //         //绑定上传提交事件
+            //         $(".publish").click(function () {
+            //             data.submit();
+            //             event.preventDefault();//因为有form元素，所以要阻止表单的默认提交，不然大文件传不完
+            //
+            //         });
+            //     },
+            //     //done函数为上传成功后执行的操作
+            //     done: function (e, ret) {
+            //         if (ret.result.errno == 0) { //视频上传成功
+            //             var videopath = new Array();
+            //             var blogcontent = $(".blogtext").val();
+            //             videopath[0] = ret.result.data[0];
+            //             $.ajax({
+            //                 url: "/InsertBlogServlet",
+            //                 type: "post",
+            //                 data: {"blogcontent": blogcontent, "imgpath": JSON.stringify(videopath),"forward":forward},
+            //                 success: function () {
+            //                     layer.closeAll();
+            //                     layer.msg('发布成功', {icon: 1});
+            //                 }
+            //             })
+            //         } else {
+            //             layer.msg('上传失败', {icon: 2});
+            //         }
+            //
+            //     },
+            // });
         });
         $(".publish").click(function () {
+            event.preventDefault();
             if (num == 0) {//无图片视频提交
                 var blogcontent = $(".blogtext").val();
-                alert(blogcontent)
                 $.ajax({
                     url: "/InsertBlogServlet",
                     type: "post",
                     data: {"blogcontent": blogcontent,"forward":forward},
                     success: function () {
                         layer.closeAll();
+                        layer.msg('发布成功', {icon: 1});
+                    },
+                    error:function () {
+                        layer.closeAll();
+                        layer.msg('发布成功', {icon: 1});
                     }
                 })
             }
