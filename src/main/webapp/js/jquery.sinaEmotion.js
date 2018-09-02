@@ -60,7 +60,7 @@
 			}
 		}).delegate('.face', {
 			click : function(event) {
-				$('#sinaEmotion').hide();
+				//$('#sinaEmotion').hide();点击表情后关闭当前窗口
 				$target.insertText($(this).children('img').prop('alt'));
 				event.preventDefault();
 			}

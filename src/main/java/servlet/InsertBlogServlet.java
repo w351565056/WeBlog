@@ -19,12 +19,13 @@ public class InsertBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String blogcontent = request.getParameter("blogcontent");
         String imgpath = request.getParameter("imgpath");
+        String forward = request.getParameter("forward");
         BlogContent blog = new BlogContent();
         blog.setBLOG_TEXT(blogcontent);
         blog.setBLOG_IMG(imgpath);
+        blog.setBLOG_FORWARD(new BigDecimal(forward));//字符串能转成big吗?
         blog.setUSER_ID(new BigDecimal(100003));
         dao.InsertBlog(blog);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

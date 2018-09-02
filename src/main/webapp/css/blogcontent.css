@@ -47,16 +47,21 @@ li{
     box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
     margin-right: 2px;
+
 }
 .blogcontent_username{
     width: 500px;
     height: 19px;
     margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 14px;
 }
 .blogcontent_word{
     width: 480px;
     padding-left: 20px;
     margin-bottom: 22px;
+    font-size: 14px;
+    line-height: 23px;
 }
 .blogcontent_word p{
     width: 480px;
@@ -110,4 +115,22 @@ li{
 }
 .blogcontent_util{
     clear: both;
+}
+.forwardcontent{
+    background-color: #f2f2f5;
+    width: 560px;
+    margin-left: -48px;
+    margin-bottom: -10px;
+    display: none;
+}
+.forwardcontent_body{
+    width: 510px;
+    margin-left: 48px;
+}
+.forwardcontent_name{
+    font-size: 12px;
+    font-weight: 700;
+}
+.forwardcontent_word{
+    font-size: 12px;
 }
