@@ -457,6 +457,21 @@ a:link,a:visited,a:hover,a:active {
     margin-left: 100px;
     color: #0366D6;
 }
+#yan{
+    width: 100px;
+    height: 50px;
+    position: relative;
+    line-height: 50px;
+    left: 250px;
+    top: -22px;
+    cursor: pointer;
+    text-align: center;
+    color: limegreen;
+}
+#yan :hover{
+    background-color: limegreen;
+    color: white;
+}
 /*
 #captcha canvas{
     opacity: 0;
