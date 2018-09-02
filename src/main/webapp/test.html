@@ -4,30 +4,42 @@
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/blogcontent.css">
-    <link rel="stylesheet" href="css/layer.css">
+    <link rel="stylesheet" href="layer/theme/default/layer.css">
     <link rel="stylesheet" href="css/daohang.css">
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/insert.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/jquery.sinaEmotion.css">
 </head>
-<body style="background: #999999">
+<body style="background-color:rgb(237,237,239)">
 <div id="result">
-    <div blogid="blogid" userid="userid" userna="userna" class="blogcontent_main" >
+    <div blogid="blogid"  userid="userid" userna="userna" forward="forward" class="blogcontent_main">
         <div class="blogcontent_head">
             <img src="" alt="">
         </div>
-        <div class="blogcontent_sanjiao"></div>
+        <div class="blogcontent_sanjiao">
+            <div class="blogcontent_sanjiao_q"></div>
+        </div>
         <div class="blogcontent_body">
-            <div class="blogcontent_username"><a href=""></a></div>
-            <div class="blogcontent_word"><p></p></div>
+            <div class="blogcontent_username"><a href="" style="font-size: 14px"></a></div>
+            <div class="blogcontent_word">
+                <p></p>
+                <div class="forwardcontent">
+                    <div class="forwardcontent_body">
+                        <div class="forwardcontent_name"></div>
+                        <div class="forwardcontent_word"></div>
+                        <div class="forwardcontent_photo">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="blogcontent_photo">
             </div>
             <div class="blogcontent_bottom">
                 <div class="blogcontent_button">
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a">收藏(3)</a></span>
+                    <span class="blogcontent_button_span"><a  class="collect blogcontent_button_a">收藏(3)</a></span>
                     <span class="blogcontent_button_span"><a id="forward"  class="forward blogcontent_button_a">转发(6)</a></span>
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a">评论(1)</a></span>
-                    <span class="blogcontent_button_span"><a  class="blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
+                    <span class="blogcontent_button_span"><a  class="talk blogcontent_button_a">评论(1)</a></span>
+                    <span class="blogcontent_button_span"><a  class="like blogcontent_button_a"><img src="images/nolike.png" alt=""><span class="blogcontent_button_zan_num"></span></a></span>
                 </div>
             </div>
         </div>
@@ -45,7 +57,7 @@
             <div class="blogcontent_pinglun_text">
                 <div><span>评论</span></div>
                 <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
-                <div><input type="submit"></div>
+                <div class="append"><input type="submit"></div>
             </div>
             <ul>
                 <li>
@@ -77,20 +89,51 @@
                     for (var i=0;i<result.length;i++){
                         var blogid = result[i].BLOG_ID;
                         var new_main = old_main.clone(true);
+                        var $blogcontent_word=new_main.children().eq(2).children().eq(1).children();
                         $("#result").append(new_main);
                         new_main.attr("blogid",blogid);
                         new_main.attr("userid",result[i].USER_ID);
                         new_main.attr("userna",result[i].USER_NAME);
+                        new_main.attr("forward",result[i].BLOG_FORWARD);
                         $(".blogcontent_shoucang").hide();
-                        if (re[i].BLOG_IMG==""){
+                        if (re[i].BLOG_IMG==""){//无图片
                             new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
                             new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
-                            new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
-                        }else {
+                            if(result[i].BLOG_FORWARD=="0"){//不包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                            }else {//包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                                $blogcontent_word.eq(1).css("display","block")
+                                $.ajax({
+                                    url:"/ShowOneContentServlet",
+                                    type:"post",
+                                    async:false,
+                                    data:{"blogid":result[i].BLOG_FORWARD},
+                                    dataType:"json",
+                                    success:function (result_f) {
+                                        $blogcontent_word.find($(".forwardcontent_name")).text("@"+result_f[0].USER_NAME)
+                                        $blogcontent_word.find($(".forwardcontent_word")).text(result_f[0].BLOG_TEXT)
+                                        if(result_f[0].BLOG_IMG!=""){//源微博包含图片
+                                            var img_f=JSON.parse(result_f[0].BLOG_IMG);
+                                            for (var f=0;f<img_f.length;f++){
+                                                var $node = ('<img src="'+img_f[f]+'" alt="" width="110px" height="110px" style="margin: 2px">');
+                                                $blogcontent_word.find($(".forwardcontent_photo")).append($node);
+                                            }
+                                        }
+                                    }
+                                })
+
+                            }
+                        }else {//有图片
                             var img = JSON.parse(re[i].BLOG_IMG);
                             new_main.children().eq(0).children().attr("src",result[i].HEAD_IMG);
-                            new_main.children().eq(2).children().eq(0).children().text(result[i].USER_NAME);
-                            new_main.children().eq(2).children().eq(1).children().text(result[i].BLOG_TEXT);
+                            new_main.children().eq(2).children().eq(0).children().eq(0).text(result[i].USER_NAME);
+                            if(result[i].BLOG_FORWARD=="0"){//不包含转发
+                                $blogcontent_word.eq(0).text(result[i].BLOG_TEXT);
+                            }else {//包含转发
+                                $blogcontent_word.eq(0).text("含图片的转发");//图片应该为超链接
+                                $blogcontent_word.eq(1).css("display","block")
+                            }
                             $.ajax({
                                 url:"/ShowBlogLikeServlet",
                                 type:"post",

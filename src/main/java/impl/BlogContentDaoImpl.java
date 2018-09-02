@@ -13,8 +13,8 @@ import java.util.List;
 public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogContentDao {
     @Override
     public void InsertBlog(BlogContent blog) {
-        executeUpdate("insert into blog_content(user_id,blog_text,blog_img) values(?,?,?)",
-                new Object[]{blog.getUSER_ID(), blog.getBLOG_TEXT(), blog.getBLOG_IMG()});
+        executeUpdate("insert into blog_content(user_id,blog_text,blog_img,blog_forward) values(?,?,?,?)",
+                new Object[]{blog.getUSER_ID(),blog.getBLOG_TEXT(),blog.getBLOG_IMG(),blog.getBLOG_FORWARD()});
     }
 
     @Override
@@ -35,8 +35,15 @@ public class BlogContentDaoImpl extends BaseDao<BlogContent> implements BlogCont
         return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.USER_ID = USER_INFO.USER_ID and USER_INFO.USER_ID = ? order by BLOG_CONTENT.BLOG_ID desc",new Object[]{userid});
     }
 
+    @Override
     public List<BlogContent> ShowContenttopic(BigDecimal rowmax, BigDecimal rowmin) {
-        return executeQuery("select * from (select *from (select rownum as ron,NUM1 AS NUMM,TOPIC2 AS TOP from（select count(*) as num1,topic2 from(select nvl(substr(BLOG_TEXT,instr(BLOG_TEXT,'#',1),instr(BLOG_TEXT,'#',1,2)),'null')as topic2 from BLOG_CONTENT)group by topic2 order by num1 desc）where TOPIC2 !='null') where ron <=?) where ron >?", new Object[]{rowmax, rowmin});
-
+        return null;
     }
+
+    @Override
+    public List<BlogContent> ShowContentByBlogId(int blogid) {
+//        return executeQuery("select * from BLOG_CONTENT  where BLOG_ID=?",new Object[]{blogid});
+       return executeQuery("select USER_INFO.USER_NAME,USER_INFO.HEAD_IMG,BLOG_CONTENT.* from USER_INFO,BLOG_CONTENT where BLOG_CONTENT.BLOG_ID= ? AND BLOG_CONTENT.USER_ID = USER_INFO.USER_ID",new Object[]{blogid});
+    }
+
 }
