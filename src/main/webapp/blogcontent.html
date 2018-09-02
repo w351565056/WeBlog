@@ -10,6 +10,7 @@
     <script src="js/jquery.sinaEmotion.js"></script>
     <script>
         $(function () {
+            var pagenum =1;
             //--------------收藏
             $("#result").on('click','.collect',function (e) {
                 e.preventDefault();
@@ -46,15 +47,20 @@
                     $(this).find('img').attr('src','images/nolike.png');
                 }
             })
+            $("body").on('click','#blogcontent_click',function () {
+                pagenum=pagenum+1;
+                load();
+            })
 
             var old_main = $(".blogcontent_main").detach();
             load();//ajax异步提交，下面的方法被提前执行，故表情没有出现
             $('#result').parseEmotion();
             function load(){
                 $.ajax({
-                    url:"/ShowContentServlet",
+                    url:"/ShowContentByNumServlet",
                     type:"post",
                     async:false,
+                    data:{"pagenum":pagenum},
                     dataType:"json",
                     success:function (result) {
                         var re =result;
@@ -144,6 +150,9 @@
     </div>
     <div class="blogcontent_util"></div>
 </div>
+</div>
+<div>
+    <input type="button" width="30px" height="20px" value="加载更多" id="blogcontent_click">
 </div>
 </body>
 </html>
