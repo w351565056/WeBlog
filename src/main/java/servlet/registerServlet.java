@@ -18,6 +18,7 @@ public class registerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //获取表单数据
         String username = request.getParameter("username");
+
         String password = request.getParameter("password");
         String phone_no = request.getParameter("phone_no");
 

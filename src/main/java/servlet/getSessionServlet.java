@@ -30,3 +30,4 @@ public class getSessionServlet extends HttpServlet {
         this.doPost(request,response);
     }
 }
+

@@ -17,11 +17,10 @@
                     type:"post",
                     dataType:"json",
                     success:function (result) {
-                        // var username=result.get(0).USER_NAME;
-                       // $("#home_username")[0].innerHTML=username;
-                        $("#home_username").text(result.USER_NAME)
-                        // alert(result[0].username);
+                        $("#home_username").text(result.USER_NAME);//获取当前对象name
                     }
+                })
+
                 })//home_nav 悬浮效果
 
             $(".hide_pic").hide();
@@ -73,10 +72,10 @@
                     });
 
                 }
-            })
+            });
 
 
-        });
+
 
 
     </script>
