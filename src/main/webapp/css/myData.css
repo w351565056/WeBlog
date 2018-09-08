@@ -1,12 +1,13 @@
-.myData{width: 600px;height: 600px;font-size: 13px;}
+
+.myData{width: 600px;height: 600px;font-size: 13px; }
 .myData_body{width: 560px;height: 600px;margin: auto}
-.basicInfo{width: 560px;height: 50px;font-size: 15px;font-weight:900;font-family: "黑体"}
+.basicInfo{width: 560px;height: 50px;font-size: 15px;font-weight:900;font-family: 宋体}
 .info{position:relative;top:19px;}
 .myData_baseView{width: 560px;height: 600px;}
 .myData_base{width: 550px;height: 650px;}
 .account{width: 560px;height: 50px;}
-.visual{display:inline-block;position:relative;left:400px;top:-33px;background-color:gray}
-.baseView_name{width: 560px;height: 50px;position:relative;left:67px;top:-8px;line-height:25px}
+.visual{display:inline-block;position:relative;left:400px;top:-36px;background-color:gray}
+.baseView_name{width: 560px;height: 50px;position:relative;left:75px;top:-8px;line-height:25px}
 .base_name{width: 560px;height: 50px;}
 .base_telNo{width: 560px;height: 50px;}
 .add{width: 560px;height: 50px;}
@@ -16,13 +17,14 @@
 .regTime{width: 560px;height: 50px;}
 .email{width: 560px;height: 50px;}
 .QQ{width: 560px;height: 50px;}
+.INTRO{width: 560px;height: 50px;}
+textarea{position:relative;top:14px}
 span{margin-left: 10px;}
 .base_part1{width: 60px;height: 40px;text-align:right;color: #919191;display: inline-block;position:relative;top:5px}
-.base_part2{width: 490px;height: 40px;text-align:left;display: inline-block;position:relative;left:12px;top:5px}
+.base_part2{width: 490px;height: 40px;text-align:left;display: inline-block;position:relative;left:15px;top:5px}
 .baseView_name{width: 480px;height: 80px;text-align: left;}
 .baseView_name span{color: #5a73db;font-size:10px;}
-
-#button{background-color: #47bedb;font-size:12px;position:relative;left:510px;top:-5px;}
+#button{background-color: #47bedb;font-family:宋体;font-size:12px;position:relative;left:510px;top:-5px;}
 .spacer{
     width:438px;
     height: 1px;

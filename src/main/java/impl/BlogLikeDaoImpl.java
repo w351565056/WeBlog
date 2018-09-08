@@ -11,6 +11,39 @@ import java.sql.SQLException;
 
 public class BlogLikeDaoImpl extends BaseDao<BlogLike> implements BlogLikeDao {
     @Override
+    public int UserLikeBlog(BlogLike blogLike) {
+        Connection conn = null;
+        ResultSet rs = null;
+        String ret="";
+        int result = -1;
+        try {
+            conn = BaseDao.getConnection();
+            conn.setAutoCommit(true);
+            PreparedStatement pre = conn.prepareStatement("select * from BLOG_LIKE where BLOG_ID=? and USER_ID=?");
+            pre.setInt(1,blogLike.getBLOG_ID().intValue());
+            pre.setInt(2,blogLike.getUSER_ID().intValue());
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                ret = rs.getString(1);
+            }
+            if (ret == "" || ret.equals(null)) {
+                result = 0;
+            } else {
+                result = 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public int showBlogLike(BlogLike blogLike) {
         Connection conn = null;
         ResultSet rs = null;
@@ -52,13 +85,12 @@ public class BlogLikeDaoImpl extends BaseDao<BlogLike> implements BlogLikeDao {
                 ret = rs.getString(1);
             }
             if (ret == "" || ret.equals(null)) {
-                int LikeID = blogLike.getLIKE_ID().intValue();
                 int BlogID = blogLike.getBLOG_ID().intValue();
                 int UserID = blogLike.getUSER_ID().intValue();
-                PreparedStatement pre1 =conn.prepareStatement("insert into BLOG_LIKE(LIKE_ID,BLOG_ID,USER_ID) values (?,?,?)");
-                pre1.setInt(1,LikeID);
-                pre1.setInt(2,BlogID);
-                pre1.setInt(3,UserID);
+                PreparedStatement pre1 =conn.prepareStatement("insert into BLOG_LIKE(BLOG_ID,USER_ID) values (?,?)");
+//                pre1.setInt(1,LikeID);
+                pre1.setInt(1,BlogID);
+                pre1.setInt(2,UserID);
                 result = pre1.executeUpdate();
             } else {
                 int BlogID = blogLike.getBLOG_ID().intValue();

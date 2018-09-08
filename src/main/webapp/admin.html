@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>admin</title>
+  <title>WEBLOG后台管理系统</title>
   <script src="layui/layui.js"></script>
+  <link href="layui/css/layui.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-3.3.1.js"></script>
-  <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery.sinaEmotion.css" type="text/css">
+  <script src="js/jquery.sinaEmotion.js"></script>
+  <script src="js/echarts.js"></script>
+  <script src="js/china.js"></script>
+  <script src="js/macarons.js"></script>
   <script>
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
     layui.use('element', function () {
@@ -13,450 +18,998 @@
 
       //…
     });
-    $(function () {
-      hideright();
+    layui.use('laydate', function () {
+      var laydate = layui.laydate;
 
-      // hideShowLeft();
-
-      function hideright() {
-        $("#t2").hide();
-        $("#t3").hide();
-        $("#t4").hide();
-        $("#t5").hide();
-
-        $("#dt1").click(function () {
-          $("#t2").hide();
-          $("#t3").hide();
-          $("#t4").hide();
-          $("#t5").hide();
-          $("#t1").show();
-        });
-        $("#dt2").click(function () {
-          $("#t1").hide();
-          $("#t3").hide();
-          $("#t4").hide();
-          $("#t5").hide();
-          $("#t2").show()
-        });
-        $("#dt3").click(function () {
-          $("#t1").hide();
-          $("#t2").hide();
-          $("#t4").hide();
-          $("#t5").hide();
-          $("#t3").show();
-        });
-        $("#dt4").click(function () {
-          $("#t2").hide();
-          $("#t3").hide();
-          $("#t1").hide();
-          $("#t5").hide();
-          $("#t4").show();
-        })
-
-        $("#dt5").click(function () {
-          $("#t2").hide();
-          $("#t3").hide();
-          $("#t1").hide();
-          $("#t4").hide();
-          $("#t5").show();
-        })
-      }
-
-      function hideShowLeft() {
-        $("#show_right").hide();
-        $("#hide_left").click(function () {
-          $("#show_right").show();
-          $("#menu_left").hide();
-          $("#hide_left").hide();
-        });
-        $("#show_right").click(function () {
-          $("#menu_left").show();
-          $("#hide_left").show();
-          $("#show_right").hide();
-        });
-      }
-
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#test1' //指定元素
+      });
     });
 
-
   </script>
-  <script>
-    $(function () {
-      $.ajax({
-        url: "/UserInfoServlet",
-        type: "post",
-        dataType: "json",
-        success: function (result) {
-
-          //查询user_info 表的数据
-          //问题：不能显示从数据库获取的日期 就写死了默认值
-          for (var i = 0; i < result.length; i++) {
-            // alert( (new Date()).format("yyyy-MM-dd hh:mm:ss.S"));
-            // alert(format.replace('yyyy-MM-dd',result[i].BIRTHDAY));
-            // var ddd = new Date.format("yyyy-MM-dd");
-            // ddd = result[3].BIRTHDAY;
-            // alert(ddd.result[i].BIRTHDAY);
-            var $node = $('<tr>\n' +
-              '        <td><img src="' + result[i].HEAD_IMG + '" style="width: 100px;"></td>\n' +
-              '        <td>' + result[i].USER_ID + '</td>\n' +
-              '        <td><input type="text" style="border: none;width:90px;" value="' + result[i].PHONE_NO + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_NAME + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_PASS + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].TRUE_NAME + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].GENDER + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:30px;" value="' + result[i].BLOOD_TYPE + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:140px;" value="' + result[i].EMAIL + '"></td>\n' +
-              '        <td><input type="text" style="border: none;" value="' + result[i].ADDRESS + '"></td>\n' +
-              '        <td><input type="datetime" style="border: none;width:90px;" Value="' + result[i].BIRTHDAY + '"></td>\n' +
-              '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].QQ + '"></td>\n' +
-              '        <td>' + result[i].CREATE_DATE_TIME + '</td>\n' +
-              '        <td>' + result[i].MODIFY_DATE_TIME + '</td>\n' +
-              '        <td>\n' +
-              '            <button class="layui-btn layui-btn-warm change">修改</button>\n' +
-              '            <button class="layui-btn layui-btn-danger delete">删除</button>\n' +
-              '        </td>\n' +
-              '      </tr>');
-            $('#tbody1').append($node);
-          }
-        }
-      });
-
-      //  点击删除按钮 获取 user_id
-      //待改内容：先删除再弹窗了，sql语句没删到数据库
-      $('#tbody1').on('click', '.delete', function () {
-        var $node = $(this);
-        var text = "确定删除该用户？";
-
-        layer.open({
-          type: 1,
-          content: '<div style="padding: 20px 100px;">' + text + '</div>',
-          btn: ['确定', '取消'],
-          btnAlign: 'c',
-          yes: function () {
-            $.ajax({
-              url: '/DeleteUserServlet',
-              type: 'post',
-              data: {
-                'USER_ID': $node.closest('tr').children().eq(1).text()
-              },
-              dataType: 'json',
-              success: function () {
-                $node.closest('tr').remove();
-                layer.msg("修改成功！", {
-                  icon: 6,
-                  time: 1000
-                });
-              }
-            });
-            layer.closeAll();
-          }
-        });
-
-
-      });
-
-      // 点击修改获取 user_id 传值 更新表
-      $('#tbody1').on('click', '.change', function () {
-        var text = '确定修改该用户？';
-        var $node = $(this);
-        layer.open({
-          type: 1,
-          content: '<div style="padding: 20px 100px;">' + text + '</div>',
-          btn: ['确定', '取消'],
-          btnAlign: 'c',
-          yes: function () {
-            //  ajax 获取user_id 提交表单数据 更新于数据库
-            $.ajax({
-              url: '/UpdataUserServlet',
-              type: 'post',
-              data: {
-                'USER_ID': $node.closest('tr').children().eq(1).text(),
-                'USER_NAME': $node.closest('tr').children().eq(2).children().val(),
-                'USER_PASS': $node.closest('tr').children().eq(3).children().val(),
-                'TRUE_NAME': $node.closest('tr').children().eq(4).children().val(),
-                'GENDER': $node.closest('tr').children().eq(5).children().val(),
-                'BLOOD_TYPE': $node.closest('tr').children().eq(6).children().val(),
-                'PHONE_NO': $node.closest('tr').children().eq(7).children().val(),
-                'EMAIL': $node.closest('tr').children().eq(8).children().val(),
-                'ADDRESS': $node.closest('tr').children().eq(9).children().val(),
-                'BIRTHDAY': $node.closest('tr').children().eq(10).children().val(),
-                'QQ': $node.closest('tr').children().eq(11).children().val()
-              },
-              dataType: 'json',
-              success: function () {
-                layer.msg("修改成功！", {
-                  icon: 6,
-                  time: 1000
-                });
-              }
-            });
-            layer.closeAll();
-          }
-        });
-      });
-      //添加用户
-      $(".add").click(function () {
+  <script type="text/javascript">
+    layui.use('layer', function () {
+      var layer = layui.layer;
+      $(function () {
         $.ajax({
-          url: '/AddUserServlet',
-          type: 'post',
-          data: {
-            'PHONE_NO':$(this).closest('tr').children().eq(2).children().val(),
-            'USER_NAME':$(this).closest('tr').children().eq(3).children().val(),
-            'USER_PASS': $(this).closest('tr').children().eq(4).children().val(),
-            'TRUE_NAME': $(this).closest('tr').children().eq(5).children().val(),
-            'GENDER': $(this).closest('tr').children().eq(6).children().val(),
-            'BLOOD_TYPE':$(this).closest('tr').children().eq(7).children().val(),
-            'EMAIL': $(this).closest('tr').children().eq(8).children().val(),
-            'ADDRESS': $(this).closest('tr').children().eq(9).children().val(),
-            'BIRTHDAY': $(this).closest('tr').children().eq(10).children().val(),
-            'QQ': $(this).closest('tr').children().eq(11).children().val(),
-          },
-          dataType: 'json',
-          success: function () {
-            layer.msg("修改成功！", {
-              icon: 6,
-              time: 1000
-            });
-            window.location.reload();
+          url: "/showAllUser1Servlet",
+          type: "post",
+          dataType: "json",
+          success: function (result) {
+            //查询user_info 表的数据
+            //问题：不能显示从数据库获取的日期 就写死了默认值
+            for (var i = 0; i < result.length; i++) {
+              var $node = $('<tr>\n' +
+                '        <td><img src="' + result[i].HEAD_IMG + '" style="width: 50px;"></td>\n' +
+                '        <td>' + result[i].USER_ID + '</td>\n' +
+                '        <td><input type="text" style="border: none;width:100px;" value="' + result[i].PHONE_NO + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:80px;" value="' + result[i].USER_NAME + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:50px;" value="' + result[i].USER_PASS + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:50px;" value="' + result[i].TRUE_NAME + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:15px;" value="' + result[i].GENDER + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:19px;" value="' + result[i].BLOOD_TYPE + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:90px;" value="' + result[i].EMAIL + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:60px;" value="' + result[i].ADDRESS + '"></td>\n' +
+                '        <td><input type="text" style="border:none;width:90px;" Value="' + Math.round(Math.random() * 30 + 1970) + '-0' + Math.round(Math.random() * 8 + 1) + '-' + Math.round(Math.random() * 21 + 9) + '"></td>\n' +
+                // '        <td><input type="text" style="border: none;width:70px;"  value="' + result[i].BIRTHDAY + '"></td>\n' +
+                '        <td><input type="text" style="border: none;width:50px;" value="' + result[i].QQ + '"></td>\n' +
+                '        <td>' + result[i].CREATE_DATE_TIME + '</td>\n' +
+                '        <td>' + result[i].MODIFY_DATE_TIME + '</td>\n' +
+                '        <td>\n' +
+                '            <button class="layui-btn layui-btn-warm change">修改</button>\n' +
+                '            <button class="layui-btn layui-btn-danger delete">删除</button>\n' +
+                '        </td>\n' +
+                '      </tr>');
+              $('#tbody1').append($node);
+            }
           }
         });
-      });
-    })
 
+        //  点击删除按钮 获取 user_id
+        //待改内容：先删除再弹窗了，sql语句没删到数据库
+        $('#tbody1').on('click', '.delete', function () {
+          var $node = $(this);
+          var text = "确定删除该用户？";
+
+          layer.open({
+            type: 1,
+            content: '<div style="padding: 20px 100px;">' + text + '</div>',
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function () {
+              $.ajax({
+                url: '/DeleteUserServlet',
+                type: 'post',
+                data: {
+                  'USER_ID': $node.closest('tr').children().eq(1).text()
+                },
+                dataType: 'json',
+                success: function () {
+                  $node.closest('tr').remove();
+                  layer.msg("修改成功！", {
+                    icon: 6,
+                    time: 1000
+                  });
+                }
+              });
+              layer.closeAll();
+            }
+          });
+        });
+
+        // 点击修改获取 user_id 传值 更新表
+        $('#tbody1').on('click', '.change', function () {
+          var text = '确定修改该用户？';
+          var $node = $(this);
+          layer.open({
+            type: 1,
+            content: '<div style="padding: 20px 100px;">' + text + '</div>',
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function () {
+              //  ajax 获取user_id 提交表单数据 更新于数据库
+              $.ajax({
+                url: '/UpdataUserServlet',
+                type: 'post',
+                data: {
+                  'USER_ID': $node.closest('tr').children().eq(1).text(),
+                  'PHONE_NO': $node.closest('tr').children().eq(2).children().val(),
+                  'USER_NAME': $node.closest('tr').children().eq(3).children().val(),
+                  'USER_PASS': $node.closest('tr').children().eq(4).children().val(),
+                  'TRUE_NAME': $node.closest('tr').children().eq(5).children().val(),
+                  'GENDER': $node.closest('tr').children().eq(6).children().val(),
+                  'BLOOD_TYPE': $node.closest('tr').children().eq(7).children().val(),
+                  'EMAIL': $node.closest('tr').children().eq(8).children().val(),
+                  'ADDRESS': $node.closest('tr').children().eq(9).children().val(),
+                  'BIRTHDAY': $node.closest('tr').children().eq(10).children().val(),
+                  'QQ': $node.closest('tr').children().eq(11).children().val()
+                },
+                dataType: 'json',
+                success: function () {
+                  layer.msg("修改成功！", {
+                    icon: 6,
+                    time: 1000
+                  });
+                }
+              });
+              layer.closeAll();
+              location.reload();
+            }
+          });
+        });
+        //添加用户
+        $(".add").click(function () {
+          $.ajax({
+            url: '/AddUserServlet',
+            type: 'post',
+            data: {
+              'HEAD_IMG':'images/101.jpg',
+              'PHONE_NO': $(this).closest('tr').children().eq(2).children().val(),
+              'USER_NAME': $(this).closest('tr').children().eq(3).children().val(),
+              'USER_PASS': $(this).closest('tr').children().eq(4).children().val(),
+              'TRUE_NAME': $(this).closest('tr').children().eq(5).children().val(),
+              'GENDER': $(this).closest('tr').children().eq(6).children().val(),
+              'BLOOD_TYPE': $(this).closest('tr').children().eq(7).children().val(),
+              'EMAIL': $(this).closest('tr').children().eq(8).children().val(),
+              'ADDRESS': $(this).closest('tr').children().eq(9).children().val(),
+              'BIRTHDAY': $(this).closest('tr').children().eq(10).children().val(),
+              'QQ': $(this).closest('tr').children().eq(11).children().val(),
+            },
+            dataType: 'json',
+            success: function () {
+              layer.msg("添加成功！", {
+                icon: 6,
+                time: 1000
+              });
+              window.location.reload();
+            },error:function () {
+              layer.msg("添加失败！",{icon:6})
+            }
+
+          });
+        });
+
+        //  审核微博
+        $.ajax({
+          url: '/ShowReportServlet',
+          type: 'post',
+          dataType: 'json',
+          success: function (result) {
+            for (var i = 0; i < result.length; i++) {
+              var $node = $(
+                '    <tr>\n' +
+                '      <td>' + result[i].BLOG_ID + '</td>\n' +
+                '      <td>' + result[i].USER_ID + '</td>\n' +
+                '      <td>' + result[i].USER_NAME + '</td>\n' +
+                '      <td style="width: 420px">\n' +
+                '        <div style="width:400px;overflow: hidden;white-space: nowrap;display: inline-block"><a class="text_a1">' + result[i].BLOG_TEXT + '</a><a class="text_a2">' + result[i].BLOG_IMG + '</a></div>\n' +
+                '        <i data-method="notice" class="layui-icon layui-icon-more "></i></td>\n' +
+                '      <td>' + result[i].REPORT + '</td>\n' +
+                '      <td>' + result[i].LOCK_STATE + '</td>\n' +
+                '      <td>\n' +
+                '        <button class="layui-btn layui-btn-warm cancel">清空举报</button>\n' +
+                '        <button class="layui-btn layui-btn-danger delete_Bl">删除微博</button>\n' +
+                '        <button class="layui-btn layui-btn-danger lock_it">锁定用户</button>\n' +
+                '      </td>\n' +
+                '    </tr>\n' +
+                '\n');
+              $('#tbody4').append($node);
+            }
+          }
+        });
+        //。。。扩展内容
+        $('#result').parseEmotion();
+        $('#tbody4').on('click', '.layui-icon-more', function () {
+          var $node = $(this).closest('td').children().eq(0).children().eq(1).text();
+          // alert($node);
+          var text = $(this).closest('td').children().eq(0).children().eq(0).text();
+          layer.open({
+            type: 1,
+            area: '1000px',
+            offset: 'c',
+            shade: 0.8,
+            title: false,
+            content: '<div id="result" style="padding: 20px 100px;">' + text + '<br>' + '<img src="' + $node + '">' + '</div>',
+            btn: '返回',
+            btnAlign: 'c',
+            yes: function () {
+              layer.closeAll();
+            }
+          });
+        });
+
+        //清空举报
+        $('#tbody4').on('click', '.cancel', function () {
+          var $node = $(this);
+          var text = '确认是否清空该条微博的举报';
+          layer.open({
+            type: 1,
+            title: '警告！',
+            content: '<div style="padding: 20px 80px;">' + text + '</div>',
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function () {
+              $.ajax({
+                url: '/CancelReportServlet',
+                type: 'post',
+                data: {'BLOG_ID': $node.closest('tr').children().eq(0).text()},
+                dataType: 'json',
+                success: function () {
+                  //局部刷新
+                  layer.msg('清空成功', {icon: 6});
+                  $node.closest('tr').remove();
+                  $.ajax({
+                    url: '/ShowReportServlet',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                      for (var i = 0; i < result.length; i++) {
+                        $node = $(
+                          '    <tr>\n' +
+                          '      <td>' + result[i].BLOG_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_NAME + '</td>\n' +
+                          '      <td style="width: 420px">\n' +
+                          '        <div style="width:400px;overflow: hidden;white-space: nowrap;display: inline-block"><a class="text_a1">' + result[i].BLOG_TEXT + '</a><a class="text_a2">' + result[i].BLOG_IMG + '</a></div>\n' +
+                          '        <i data-method="notice" class="layui-icon layui-icon-more "></i></td>\n' +
+                          '      <td>' + result[i].REPORT + '</td>\n' +
+                          '      <td>' + result[i].LOCK_STATE + '</td>\n' +
+                          '      <td>\n' +
+                          '        <button class="layui-btn layui-btn-warm cancel">清空举报</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger delete_Bl">删除微博</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger lock_it">锁定用户</button>\n' +
+                          '      </td>\n' +
+                          '    </tr>\n' +
+                          '\n');
+                        $('#tbody4').append($node);
+                      }
+                    }
+                  });
+                }
+              });
+              layer.closeAll();
+            }
+          });
+        });
+
+        //  删除该条微博
+        $('#tbody4').on('click', '.delete_Bl', function () {
+          var text = '确定删除该微博?';
+          var $node = $(this);
+          layer.open({
+            type: 1,
+            title: '警告！',
+            content: '<div style="padding: 20px 80px;">' + text + '</div>',
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function () {
+              // $node.closest('tr').children().eq(0).text()
+              $.ajax({
+                url: '/deleteReportUserServlet',
+                type: 'post',
+                data: {'BLOG_ID': $node.closest('tr').children().eq(0).text()},
+                dataType: 'json',
+                success: function () {
+                  layer.msg('删除成功！', {icon: 6});
+                  $node.closest('tr').remove();
+                  $.ajax({
+                    url: '/ShowReportServlet',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                      for (var i = 0; i < result.length; i++) {
+                        $node = $(
+                          '    <tr>\n' +
+                          '      <td>' + result[i].BLOG_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_NAME + '</td>\n' +
+                          '      <td style="width: 420px">\n' +
+                          '        <div style="width:400px;overflow: hidden;white-space: nowrap;display: inline-block"><a class="text_a1">' + result[i].BLOG_TEXT + '</a><a class="text_a2">' + result[i].BLOG_IMG + '</a></div>\n' +
+                          '        <i data-method="notice" class="layui-icon layui-icon-more "></i></td>\n' +
+                          '      <td>' + result[i].REPORT + '</td>\n' +
+                          '      <td>' + result[i].LOCK_STATE + '</td>\n' +
+                          '      <td>\n' +
+                          '        <button class="layui-btn layui-btn-warm cancel">清空举报</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger delete_Bl">删除微博</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger lock_it">锁定用户</button>\n' +
+                          '      </td>\n' +
+                          '    </tr>\n' +
+                          '\n');
+                        $('#tbody4').append($node);
+                      }
+                    }
+                  });
+                }
+              });
+              layer.closeAll();
+            }
+          });
+        });
+
+        //  锁定用户
+        $("#tbody4").on('click', '.lock_it', function () {
+          var text = "锁定该用户：";
+          var $node = $(this);
+          // alert($node.closest('tr').children().eq(0).text());
+          layer.open({
+            type: 1,
+            title: '警告！',
+            content: '<div style="padding: 20px 80px;">' + text +'<input id="day1" type="text" value="1" class="layui-input" style="display:inline;width: 50px">天'+ '</div>',
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function () {
+              $.ajax({
+                url: '/LockReportUserServlet',
+                type: 'post',
+                data: {
+                  'USER_ID': $node.closest('tr').children().eq(1).text()
+                },
+                dataType: 'json',
+                success: function () {
+                  layer.msg('锁定成功！', {icon: 6});
+                  $node.closest('tr').remove();
+                  $.ajax({
+                    url: '/ShowReportServlet',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                      for (var i = 0; i < result.length; i++) {
+                        $node = $(
+                          '    <tr>\n' +
+                          '      <td>' + result[i].BLOG_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_ID + '</td>\n' +
+                          '      <td>' + result[i].USER_NAME + '</td>\n' +
+                          '      <td style="width: 420px">\n' +
+                          '        <div style="width:400px;overflow: hidden;white-space: nowrap;display: inline-block"><a class="text_a1">' + result[i].BLOG_TEXT + '</a><a class="text_a2">' + result[i].BLOG_IMG + '</a></div>\n' +
+                          '        <i data-method="notice" class="layui-icon layui-icon-more "></i></td>\n' +
+                          '      <td>' + result[i].REPORT + '</td>\n' +
+                          '      <td>' + result[i].LOCK_STATE + '</td>\n' +
+                          '      <td>\n' +
+                          '        <button class="layui-btn layui-btn-warm cancel">清空举报</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger delete_Bl">删除微博</button>\n' +
+                          '        <button class="layui-btn layui-btn-danger lock_it">锁定用户</button>\n' +
+                          '      </td>\n' +
+                          '    </tr>\n' +
+                          '\n');
+                        $('#tbody4').append($node);
+                      }
+                    }
+                  });
+                }
+              });
+              layer.closeAll();
+            }
+          });
+        });
+
+
+        //Count
+        $.ajax({
+          url: "/CountAAServlet",
+          type: "post",
+          dataType: "json",
+          success: function (ret) {
+            for (var i = 0; i < ret.length; i++) {
+              $('#span1').html(ret[i].AA);
+            }
+          }
+        });
+        $.ajax({
+          url: "/CountBBServlet",
+          type: "post",
+          dataType: "json",
+          success: function (ret) {
+            for (var i = 0; i < ret.length; i++) {
+              $('#span2').html(ret[i].BB);
+            }
+          }
+        });
+
+      })
+    });
   </script>
+
 </head>
-<body>
-<ul class="layui-nav" lay-filter="" style="background-color: #75c3f1">
-  <li class="layui-nav-item"><a name="top" href=""><img src="images/Home/logo.jpg" width="100px"></a></li>
-  <!--<li class="layui-nav-item layui-this"><a href="">产品</a></li>-->
-  <!--<li class="layui-nav-item"><a href="">大数据</a></li>-->
-  <li class="layui-nav-item layui-this">
-    <a href="javascript:;">用户管理</a>
-    <dl class="layui-nav-child"> <!-- 二级菜单 -->
-      <dd id="dt1"><a href="javascript:;">查询用户信息</a></dd>
-      <dd id="dt3"><a href="javascript:;">查询被举报用户</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">内容管理</a>
-    <dl class="layui-nav-child"> <!-- 二级菜单 -->
-      <dd id="dt4"><a href="#">审核微博</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item" id="dt5"><a href="#">统计模块</a></li>
-</ul>
-<ul class="layui-nav layui-layout-right" style="background-color: #75c3f1">
-  <li class="layui-nav-item">
-    <a href="javascript:;">
-      您好！admin
-    </a>
-    <dl class="layui-nav-child">
-      <dd><a href="">基本资料</a></dd>
-      <dd><a href="">切换用户</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item"><a href="">退出</a></li>
-</ul>
+<body style="background-color: #75c3f1;">
+<div class="layui-tab layui-tab-card" style="border-color: #75c3f1;">
+  <ul class="layui-tab-title" style="background-color: #75c3f1;">
+    <a name="top" href=""><img class="layui-anim layui-anim-scaleSpring" src="images/Home/logo.jpg" width="100px"></a>
+    <li class="layui-this">用户信息<span id="span1" class="layui-badge"></span></li>
+    <li id="report">审核微博<span id="span2" class="layui-badge"></span></li>
+    <li>统计模块</li>
+    <li>其他</li>
+    <li style="float: right"><a href="index.html">退出</a></li>
+    <li style="float: right"><a href="AdminLogin22.html">切换用户</a></li>
+  </ul>
 
 
-<div  id="t1">
-  <!--添加新用户-->
-  <div id="">
-    <table class="layui-table" >
-      <thead>
-      <tr>
-        <th>用户头像</th>
-        <th>用户ID</th>
-        <th>手机号码(必填)</th>
-        <th>用户名(必填)</th>
-        <th>密码</th>
-        <th>真实姓名</th>
-        <th>性别</th>
-        <th>血型</th>
-        <th>邮箱(必填)</th>
-        <th>地址</th>
-        <th>生日</th>
-        <th>QQ</th>
-        <th>创建时间</th>
-        <th>锁定状态</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody id="tbody2">
-      <tr>
-        <td><i class="layui-icon layui-icon-face-smile"></i></td>
-        <td></td>
-        <td><input type="text" style="border: none;width:90px" value="17811781887"></td>
-        <td><input type="text" style="border: none;width:90px" value="考克斯"></td>
-        <td><input type="text" style="border: none;width:90px" value="123456"></td>
-        <td><input type="text" style="border: none;width:90px" value="李狗蛋"></td>
-        <td><input type="text" style="border: none;width:90px" value="男"></td>
-        <td><input type="text" style="border: none;width:90px" value="O"></td>
-        <td><input type="text" style="border: none;width:90px" value="1@qq.com"></td>
-        <td><input type="text" style="border: none;width:90px" value="天津西青"></td>
-        <td><input type="dateTime" class="layui-input" id="test18" placeholder="yyyy/MM/dd"></td>
-        <td><input type="text" style="border: none;width:90px" value="3123131"></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button class="layui-btn layui-btn-warm add">添加</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="layui-tab-content">
+    <!--添加新用户-->
+    <div class="layui-tab-item layui-show">
+      <table class="layui-table">
+        <thead>
+        <tr>
+          <th>用户头像</th>
+          <th>用户ID</th>
+          <th>手机号码(必填)</th>
+          <th>用户名(必填)</th>
+          <th>密码</th>
+          <th>真实姓名</th>
+          <th>性别</th>
+          <th>血型</th>
+          <th>邮箱(必填)</th>
+          <th>地址</th>
+          <th>生日</th>
+          <th>QQ</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbody2">
+        <tr>
+          <td><i class="layui-icon layui-icon-face-smile" style="font-size: 40px;color: red"></i></td>
+          <td><i class="layui-icon layui-icon-face-smile" style="font-size: 40px;color: green"></i></td>
+          <td><input type="text" style="border: none;width:90px" value="17811781887"></td>
+          <td><input type="text" style="border: none;width:90px" value="考克斯"></td>
+          <td><input type="text" style="border: none;width:50px" value="123456"></td>
+          <td><input type="text" style="border: none;width:50px" value="李狗蛋"></td>
+          <td><input type="text" style="border: none;width:50px" value="男"></td>
+          <td><input type="text" style="border: none;width:50px" value="O"></td>
+          <td><input type="text" style="border: none;width:90px" value="1@qq.com"></td>
+          <td><input type="text" style="border: none;width:90px" value="天津西青"></td>
+          <td><input type="text" class="layui-input" id="test18" placeholder="1999-01-01"></td>
+          <td><input type="text" style="border: none;width:90px" value="3123131"></td>
+          <td>
+            <button class="layui-btn layui-btn-warm add">添加</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!--查询用户信息-->
+      <hr class="layui-bg-blue">
+      <table class="layui-table .demo">
+        <thead>
+        <tr>
+          <th>用户头像</th>
+          <th>用户ID</th>
+          <th>手机号码</th>
+          <th>用户名</th>
+          <th>密码</th>
+          <th>真实姓名</th>
+          <th>性别</th>
+          <th>血型</th>
+          <th>邮箱</th>
+          <th>地址</th>
+          <th>生日</th>
+          <th>QQ</th>
+          <th>创建时间</th>
+          <th>修改时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbody1">
+        </tbody>
+      </table>
+    </div>
+
+    <!--审核微博-->
+    <div class="layui-tab-item">
+      <table class="layui-table .demo">
+        <thead>
+        <tr>
+          <th>微博ID</th>
+          <th>用户ID</th>
+          <th>用户名</th>
+          <th>微博内容</th>
+          <!--//微博内容包括 一行blog_text 一行blog_img(存放路径的，有可能是图片，音乐，视频)-->
+          <th>举报数</th>
+          <th>锁定状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbody4">
+        <tr>
+          <td>9527</td>
+          <td>9527</td>
+          <td>一棵大白菜</td>
+          <td style="width: 420px">
+            <div id="result" style="width:400px;overflow: hidden;white-space: nowrap;display: inline-block;">
+              <a>恭喜赖美云获得火箭少女首张EP个人销量第三，《撞》自17号上线至今销量突破1500万，小面包们为赖美云在火箭少女101的第一个作品第一个单链贡献了180966张销量，180多万真金白银，为这个殿堂金钻唱片认证贡献了一份不可磨灭的力量！最后，预祝小面包们九月份搬家成功，小七赖美云冲啊！！</a>
+              <a>http://ww2.sinaimg.cn/bmiddle/a7af5631ly1fuu0awh0g9j20li0w9n3k.jpg</a>
+            </div>
+            <i data-method="notice" class="layui-icon layui-icon-more"></i></td>
+          <td>99999</td>
+          <td>null</td>
+          <td>
+            <button class="layui-btn layui-btn-warm cancel">取消举报</button>
+            <button class="layui-btn layui-btn-danger delete_Bl">删除微博</button>
+            <button class="layui-btn layui-btn-danger lock">锁定账号</button>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <!--统计模块-->
+    <div class="layui-tab-item">
+      <div id="div5" style="width: 1000px;height: 600px;background-color: white;position: relative;left: 10%">
+      </div>
+    </div>
   </div>
-  <!--查询用户信息-->
-  <table class="layui-table">
-    <thead>
-    <tr>
-      <th>用户头像</th>
-      <th>用户ID</th>
-      <th>手机号码</th>
-      <th>用户名</th>
-      <th>密码</th>
-      <th>真实姓名</th>
-      <th>性别</th>
-      <th>血型</th>
-      <th>邮箱</th>
-      <th>地址</th>
-      <th>生日</th>
-      <th>QQ</th>
-      <th>创建时间</th>
-      <th>锁定状态</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-    <tbody id="tbody1">
-    </tbody>
-  </table>
 
-  <!--&lt;!&ndash;添加新用户&ndash;&gt;-->
-  <!--<div id="t2">-->
-  <!--<table class="layui-table" >-->
-    <!--<thead>-->
-    <!--<tr>-->
-      <!--<th>用户头像</th>-->
-      <!--<th>用户ID</th>-->
-      <!--<th>手机号码</th>-->
-      <!--<th>用户名</th>-->
-      <!--<th>密码</th>-->
-      <!--<th>真实姓名</th>-->
-      <!--<th>性别</th>-->
-      <!--<th>血型</th>-->
-      <!--<th>邮箱</th>-->
-      <!--<th>地址</th>-->
-      <!--<th>生日</th>-->
-      <!--<th>QQ</th>-->
-      <!--<th>创建时间</th>-->
-      <!--<th>锁定状态</th>-->
-      <!--<th>操作</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody id="tbody2">-->
-    <!--<tr>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td><input type="text" style="border: none;width:90px"></td>-->
-      <!--<td>-->
-        <!--<button class="layui-btn layui-btn-warm change">添加</button>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--</tbody>-->
-  <!--</table>-->
-  <!--</div>-->
-
-  <!--查询被举报用户-->
-  <table class="layui-table" id="t3">
-    <thead>
-    <tr>
-      <th>用户头像</th>
-      <th>用户ID</th>
-      <th>用户名</th>
-      <th>举报数</th>
-      <th>锁定状态</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
-        <button class="layui-btn layui-btn-warm cancel">取消举报</button>
-        <button class="layui-btn layui-btn-danger lock">锁定账号</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <!--审核微博-->
-  <table class="layui-table" id="t4">
-    <thead>
-    <tr>
-      <th>用户头像</th>
-      <th>用户ID</th>
-      <th>用户名</th>
-      <th>微博内容</th>
-      <th>举报数</th>
-      <th>锁定状态</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
-        <div style="width:150px;overflow: hidden;white-space: nowrap;"><a>啊是大第四u要大陆富豪四度繁华和覅u</a></div>
-        <i data-method="notice" class="layui-icon layui-icon-more"></i></td>
-      <td></td>
-      <td></td>
-      <td>
-        <button class="layui-btn layui-btn-warm cancel">取消举报</button>
-        <button class="layui-btn layui-btn-danger delete_Bl">删除</button>
-
-      </td>
-    </tr>
-
-    </tbody>
-  </table>
-</div>
 </div>
 <a class="layui-btn" href="#top" style="background-color: #75c3f1;position: fixed;bottom: 0;right: 0">
   <i class="layui-icon layui-icon-up"></i>
 </a>
-
-
 <script>
-  layui.use('laydate',function () {
+  function adr1() {
+    var num = 0 ;
+    $.ajax({
+      url:'/showAllUser1Servlet',
+      type:'post',
+      dataType:'json',
+      success:function (ret) {
+        for (var i = 0 ; i < ret.length ; i++){
+        //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("北京") > 0){
+            num++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("海南") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("台湾") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("澳门") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("香港") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("广东") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("福建") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("上海") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("浙江") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("江西") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("湖南") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("广西") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("云南") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("贵州") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("重庆") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("湖北") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("安徽") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("江苏") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("河南") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("山东") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("天津") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("黑龙江") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("吉林") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("辽宁") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("河北") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("山西") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("陕西") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("四川") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("内蒙古") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("宁夏") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("青海") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("甘肃") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("西藏") > 0){
+            num ++;
+          }
+        }
+        for (var i = 0 ; i < ret.length ; i++){
+          //  模糊匹配省份
+          if(ret[i].ADDRESS.indexOf("新疆") > 0){
+            num ++;
+          }
+        }
+
+      }
+    });
+    return num;
+  }
+  function randomData() {
+    return Math.round(Math.random() * 50);
+  }
+
+  var myChart = echarts.init(document.getElementById('div5'), 'myChart1');
+  var option = {
+    title: {
+      text: 'WeBlog用户分布',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      data: ''
+    },
+    visualMap: {
+      min: 0,
+      max: 50,
+      left: 'left',
+      top: 'bottom',
+      text: ['高', '低'], // 文本，默认为数值文本
+      calculable: true
+    },
+    toolbox: {
+      show: true,
+      orient: 'vertical',
+      left: 'right',
+      top: 'center',
+      feature: {
+        dataView: {
+          readOnly: false
+        },
+        restore: {},
+        saveAsImage: {}
+      }
+    },
+    series: [{
+      name: 'users',
+      type: 'map',
+      mapType: 'china',
+      roam: false,
+      label: {
+        normal: {
+          show: true
+        },
+        emphasis: {
+          show: true
+        }
+      },
+      data: [{
+        name: '北京',
+        value: randomData()
+      },
+        {
+          name: '天津',
+          value: randomData()
+        },
+        {
+          name: '上海',
+          value: randomData()
+        },
+        {
+          name: '重庆',
+          value: randomData()
+        },
+        {
+          name: '河北',
+          value: randomData()
+        },
+        {
+          name: '河南',
+          value: randomData()
+        },
+        {
+          name: '云南',
+          value:randomData()
+        },
+        {
+          name: '辽宁',
+          value: randomData()
+        },
+        {
+          name: '黑龙江',
+          value: randomData()
+        },
+        {
+          name: '湖南',
+          value: randomData()
+        },
+        {
+          name: '安徽',
+          value: randomData()
+        },
+        {
+          name: '山东',
+          value: randomData()
+        },
+        {
+          name: '新疆',
+          value:randomData()
+        },
+        {
+          name: '江苏',
+          value: randomData()
+        },
+        {
+          name: '浙江',
+          value:randomData()
+        },
+        {
+          name: '江西',
+          value:randomData()
+        },
+        {
+          name: '湖北',
+          value: randomData()
+        },
+        {
+          name: '广西',
+          value: randomData()
+        },
+        {
+          name: '甘肃',
+          value:randomData()
+        },
+        {
+          name: '山西',
+          value: randomData()
+        },
+        {
+          name: '内蒙古',
+          value:randomData()
+        },
+        {
+          name: '陕西',
+          value: randomData()
+        },
+        {
+          name: '吉林',
+          value:randomData()
+        },
+        {
+          name: '福建',
+          value:randomData()
+        },
+        {
+          name: '贵州',
+          value: randomData()
+        },
+        {
+          name: '广东',
+          value: randomData()
+        },
+        {
+          name: '青海',
+          value: randomData()
+        },
+        {
+          name: '西藏',
+          value: randomData()
+        },
+        {
+          name: '四川',
+          value:randomData()
+        },
+        {
+          name: '宁夏',
+          value: randomData()
+        },
+        {
+          name: '海南',
+          value: randomData()
+        },
+        {
+          name: '台湾',
+          value: randomData()
+        },
+        {
+          name: '香港',
+          value: randomData()
+        },
+        {
+          name: '澳门',
+          value: randomData()
+        }
+      ]
+    }
+    ]
+
+  };
+  myChart.setOption(option);
+
+
+</script>
+<script>
+  layui.use('upload', function () {
+    var upload = layui.upload;
+
+    //执行实例
+    upload.render({
+      elem: '#testload' //绑定元素
+      , url: '/uploadFile' //上传接口
+      , done: function (res) {
+        //上传完毕回调
+        layer.msg('success')
+      }
+      , error: function () {
+        //请求异常回调
+
+      }
+    });
+  });
+  layui.use('flow', function () {
+    var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+    var flow = layui.flow;
+    flow.load({
+      elem: '.demo' //指定列表容器
+      , end: '没啦，都散了吧。散了散了。。',
+      done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+        var lis = [];
+        //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+        $.get('/api/list?page=' + page, function (res) {
+          //假设你的列表返回在data集合中
+          layui.each(res.data, function (index, item) {
+            lis.push('<li>' + item.title + '</li>');
+          });
+
+          //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+          //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+          next(lis.join(''), page < res.pages);
+        });
+      }
+    });
+  });
+  layui.use('laydate', function () {
     var laydate = layui.laydate;
     laydate.render({
       elem: '#test18',
-      format:'yyyy/MM/dd'
-      ,mark: {
-        '0/10/14': '生日'
-        ,'0/12/31': '跨年' //每年的日期
-        ,'0/0/10': '工资' //每月某天
-        ,'0/0/15': '月中'
-        ,'2017/8/15': '' //如果为空字符，则默认显示数字+徽章
-        ,'2099/10/14': '呵呵'
+      format: 'yyyy-MM-dd'
+      , mark: {
+        '0-10-14': '生日'
+        , '0-12-31': '跨年' //每年的日期
+        , '0-0-10': '工资' //每月某天
+        , '0-0-15': '月中'
+        , '2017-8-15': '' //如果为空字符，则默认显示数字+徽章
+        , '2099-10-14': '呵呵'
       }
-      ,done: function(value, date){
-        if(date.year === 2017 && date.month === 8 && date.date === 15){ //点击2017年8月15日，弹出提示语
+      , done: function (value, date) {
+        if (date.year === 2017 && date.month === 8 && date.date === 15) { //点击2017年8月15日，弹出提示语
           layer.msg('这一天是：中国人民抗日战争胜利72周年');
         }
       }
@@ -591,19 +1144,19 @@
     //   });
     // });
 
-
-    $(".cancel").on('click', function () {
-      var text = '确认是否取消举报';
-      layer.open({
-        type: 1,
-        content: '<div style="padding: 20px 100px;">' + text + '</div>',
-        btn: ['是', '否'],
-        btnAlign: 'c',
-        yes: function () {
-          layer.closeAll();
-        }
-      });
-    });
+    //
+    // $(".cancel").on('click', function () {
+    //   var text = '确认是否取消举报';
+    //   layer.open({
+    //     type: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text + '</div>',
+    //     btn: ['是', '否'],
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //       layer.closeAll();
+    //     }
+    //   });
+    // });
 
     $(".lock").on('click', function () {
       var text = '确认是否锁定账号';
@@ -631,54 +1184,22 @@
       });
     });
 
-    $(".layui-icon-more ").on('click', function () {
-      var text = ' 忽然发现自己的爱情观很土气，忍不住笑了起来。\n' +
-        '    对我而言，爱一个人就是满心满意要跟他一起“过日子”，天地鸿蒙荒凉，我们不能妄想把自己扩充为六合八方的空间，只希望彼此的火烬把属于两人的一世时间填满。 \n' +
-        '    客居岁月，暮色里归来，看见有人当街亲热，竟也视若无睹，但每看到一对人手牵手提着一把青菜一条鱼从菜场走出来，一颗心就忍不住恻恻地痛了起来，一蔬一饭里的天长地久原是如此味永难言啊！相拥的那一对也许今晚就分手，但一鼎一镬里却有其朝朝暮暮的恩情啊！\n' +
-        '    爱一个人原来就只是在冰箱里为他留一只苹果，并且等他归来。\n' +
-        '    爱一个人就是在寒冷的夜里不断在他杯子里斟上刚沸的热水。\n' +
-        '    爱一个人就是喜欢两人一起收尽桌上的残肴，并且听他在水槽里刷碗的音乐——事后再偷偷地把他不曾洗干净的地方重洗一遍。\n' +
-        '    爱一个人就有权利霸道地说：“不要穿那件衣服，难看死了。穿这件，这是我新给你买的。”\n' +
-        '    爱一个人就是一本正经地催他去工作，却又忍不住躲在他身后想捣几次小小的蛋。\n' +
-        '    爱一个人就是在拨通电话时忽然不知道要说什么，才知道原来只是想听听那熟悉的声音，原来真正想拨通的，只是自己心底的一根弦。\n' +
-        '    爱一个人就是把他的信藏在皮包里，一日拿出来看几回、哭几回、痴想几回。\n' +
-        '    爱一个人就是在他迟归时想上一千种坏可能，在想象中经历万般劫难，发誓等他回来要好好罚他，一旦见面却又什么都忘了。\n' +
-        '    爱一个人就是在众人暗骂：“讨厌！谁在咳嗽！”你却急道：“唉，唉，他这人就是记性坏啊，我该买一瓶川贝批杷膏放在他的背包里的！”\n' +
-        '    爱一个人就是上一刻钟想把美丽的恋情像冬季的松鼠秘藏坚果一般，将之一一放在最隐秘最安妥的树洞里，下一刻钟却又想告诉全世界这骄傲自豪的消息。\n' +
-        '    爱一个人就是在他的头衔、地位、学历、经历、善行、劣迹之外，看出真正的他不过是个孩子—好孩子或坏孩子——所以疼了他。\n' +
-        '    也因此，爱一个人就是喜欢听他儿时的故事，喜欢听他有几次大难不死，听他如何淘气惹厌，怎样善于玩弹珠或打“水漂漂”，爱一个人就是忍不住替他记住了许多往事。\n' +
-        '    爱一个人就不免希望自已更美丽，希望自己被记得，希望自己的容颜体貌在极盛时于对方如霞光过目，永不相忘，即使在繁花谢树的冬残，也有一个人沉如历史典册的瞳仁可以见证你的华采。\n' +
-        '    爱一个人总会不厌其烦地问些或回答些傻问题，例如：“如果我老了，你还爱我吗？”“爱。”“我的牙都掉光了呢？”“我吻你的牙床！”\n' +
-        '    爱一个人便忍不住迷上那首白发吟：\n' +
-        '    亲爱的，我年已渐老\n' +
-        '    白发如霜银光耀\n' +
-        '    唯你永是我爱人\n' +
-        '    永远美丽又温柔……\n' +
-        '    爱一个人常是一串奇怪的矛盾，你会依他如父，却又怜他如子；尊他如兄，又复宠他如弟；想师从于他，跟他学，却又想教导他把他俘虏成自己的徒弟；亲他如友，又复气他如仇；希望成为他的女皇，他唯一的女主人，却又甘心做他的小丫鬟小女奴。\n' +
-        '    爱一个人会使人变得俗气，你不断地想：晚餐该吃牛舌好呢，还是猪舌？蔬菜该买大白菜，还是小白菜？房子该买在三张犁呢，还是六张犁？而终于在这份世俗里，你了解了众生，你参与了自古以来匹夫匹妇的微不足道的喜悦与悲辛，然后你发觉这世上有超乎雅俗之上的情境，正如日光超越调色盘上的一样。\n' +
-        '    爱一个人就是喜欢和他拥有现在，却又追忆着和他在一起的过去。喜欢听他说，那一年他怎样偷偷喜欢你，远远地凝望着你。爱一个人便是小别时带走他的吻痕，如同一幅画，带着鉴赏者的朱印。\n' +
-        '    爱一个人就是横下心来，把自己小小的赌本跟他合起来，向生命的大轮盘去下一番赌注。\n' +
-        '    爱一个人就是让那人的名字在临终之际成为你双唇间最后的音乐。\n' +
-        '    爱一个人，就不免生出共同的、霸占的欲望。想认识他的朋友，想了解他的事业，想知道他的梦。希望共有一张餐桌，愿意同用一双筷子，喜欢轮饮一杯茶，合穿一件衣，并且同衾共枕，奔赴一个命运，共寝一个墓穴。\n' +
-        '    前两天，整理房间时，理出一只提袋，上面赫然写着“孕妇服装中心”，我愕然许久，既然这房子只我一人住，这只手提袋当然是我的了，可是，我何曾跑到孕妇店去买衣服？于是不甘心地坐下来想，想了许久，终于想出来了。我那天曾去买一件斗篷式的土褐色短褛，便是用这只绿袋子提回来的，我是的确闯到孕妇店去买衣服了。细想起来那家店的模样儿似乎都穿着孕妇装，我好像正是被那种美丽沉甸的繁殖喜悦所吸引而走进去的。这样说来，原来我买的那件宽松适意的斗篷式短褛竟真是给孕妇设计的。\n' +
-        '    这里面有什么心理分析吗？是不是我一直追忆着怀孕时强烈的酸苦和欣喜而情不自禁地又去买了一件那样的衣服呢？想多年前冬夜独起，灯下乳儿的寒冷和温暖便一下涌回心头，小儿吮乳的时候，你多么希望自己的生命就此为他竭泽啊！\n' +
-        '    对我而言，爱一个人，就不免想跟他生一窝孩子。\n' +
-        '    当然，这世上也有人无法生育，那么，就让共同作育的学生，共同经营的事业，共同爱过的子侄晚辈，共同谱成的生活之歌，共同写完的生命之书来作他们的孩子。\n' +
-        '    也许还有更多更多可以说的，正如此刻，爱情对我的意义是终夜守在一盏灯旁，听轰声退潮再复涨潮，看淡紫的天光愈来愈明亮，凝视两人共同凝视过的长窗外的水波，在矛盾的凄凉和欢喜里，在知足感恩和渴切不足里细细体会一条河的韵律，并且写一篇叫《爱情观》的文章。';
-      layer.open({
-        type: 1,
-        title: false, //不显示标题栏
-        closeBtn: false,
-        area: '1000px;',
-        moveType: 1,
-        content: '<div style="padding: 20px 100px;">' + text + '</div>',
-        btn: '返回',
-        btnAlign: 'c',
-        yes: function () {
-          layer.closeAll();
-        }
-      });
-    });
+    // $(".layui-icon-more ").on('click', function () {
+    //   var text = "恭喜赖美云获得火箭少女首张EP个人销量第三，《撞》自17号上线至今销量突破1500万，小面包们为赖美云在火箭少女101的第一个作品第一个单链贡献了180966张销量，180多万真金白银，为这个殿堂金钻唱片认证贡献了一份不可磨灭的力量！最后，预祝小面包们九月份搬家成功，小七赖美云冲啊！！";
+    //     layer.open({
+    //     type: 1,
+    //     title: false, //不显示标题栏
+    //     closeBtn: false,
+    //     area: '1000px;',
+    //     moveType: 1,
+    //     content: '<div style="padding: 20px 100px;">' + text +' <img src="http://ww2.sinaimg.cn/square/a7af5631ly1fuu0awh0g9j20li0w9n3k.jpg">'+ '</div>',
+    //     btn: '返回',
+    //     btnAlign: 'c',
+    //     yes: function () {
+    //       layer.closeAll();
+    //     }
+    //   });
+    // });
 
   });
 </script>

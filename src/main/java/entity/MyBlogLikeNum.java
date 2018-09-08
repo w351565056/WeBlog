@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class MyBlogLikeNum {
+    //我获得赞数量---DJN
     private BigDecimal LIKE_ID;
     private BigDecimal BLOG_ID;
     private BigDecimal USER_ID;

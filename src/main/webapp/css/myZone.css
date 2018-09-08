@@ -1,7 +1,7 @@
 .myZone_content{
     background-image: url("../images/myZone/backgroundimg.jpg");
     background-size: 2200px;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: right;
     background-position: -850px -150px;
 
@@ -18,13 +18,13 @@ a{
 }
 .myZone_header {
     background-color: white;
-    width: 920px;
-    margin-left: 220px;
+    width: 1000px;
+    margin-left: 170px;
     height: 344px;
     margin-bottom: 20px;
 }
 .myZone_header_show{
-    width: 920px;
+    width: 1000px;
     height: 300px;
     background-image: url("../images/myZone/backgroundimg.jpg");
     background-size: cover;
@@ -43,7 +43,7 @@ a{
     box-shadow: #93D1FF 0px 0px 5px 5px;
 }
 .myZone_header_username{
-    width: 920px;
+    width: 1000px;
     height: 28px;
     text-align: center;
     position: relative;
@@ -52,7 +52,7 @@ a{
     font-size: 25px;
 }
 .myZone_header_intro{
-    width: 920px;
+    width: 1000px;
     height: 28px;
     text-align: center;
     position: relative;
@@ -62,7 +62,7 @@ a{
 
 
 .myZone_head_nav{
-    width: 920px;
+    width: 1000px;
     height: 40px;
     background: white;
 }
@@ -94,8 +94,8 @@ a{
     border-color: #f7691d;
 }
 .myZone_body {
-    width: 920px;
-    margin-left: 220px;
+    width: 1000px;
+    margin-left: 170px;
 }
 
 .myZone_left {
@@ -113,7 +113,7 @@ a{
 
 .myZone_right {
     background-color: white;
-    width: 600px;
+    width: 680px;
     margin-left: 16px;
     display: inline-block;
     vertical-align: top;
@@ -172,7 +172,7 @@ a{
 }
 .unit2_header{
     height: 38px;
-    padding-left: 16px;
+    padding-left: 18px;
     line-height: 38px;
 }
 .headr_info{
@@ -180,7 +180,7 @@ a{
     font-weight: 700;
 }
 .unit2_bottom{
-    padding: 6px;
+    padding: 7px;
 
 }
 .unit2_bottom_text{
@@ -326,6 +326,24 @@ a{
 
     box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 }
+.attention_button1{
+    background-color: cadetblue;
+    font-size: 13px;
+    display: inline-block;
+    width: 85px;
+    height: 30px;
+    vertical-align: top;
+    line-height: 35px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #dddeaf;
+    margin-left: 460px;
+    margin-top: 50px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+}
+.attention_text1{
+    color:white;
+}
 .attention_add{
     display: inline-block;
     font-size: 25px;
@@ -360,3 +378,4 @@ a{
     line-height: 25px;
     vertical-align: middle;
 }
+.part2{display: none}

@@ -8,8 +8,108 @@
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/daohang.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.sinaEmotion.css">
+    <link rel="stylesheet" href="css/style.css" /><!--遮罩层-->
+    <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+    <script src="layer/layer.js" type="text/javascript"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/jquery.sinaEmotion.js"></script>
+    <script type="text/javascript" src="js/nav_home.js"></script>
+    <script type="text/javascript" src="js/blog_publish.js"></script>
+    <!--<script type="text/javascript" src="js/modernizr.js"></script>-->
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function () {-->
+
+            <!--$("body").on("mouseenter", ".img", function () {-->
+                <!--$(this).addClass("hover");-->
+            <!--});-->
+            <!--$("body").on("mouseleave", ".img", function () {-->
+                <!--$(this).removeClass("hover");-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 
 </head>
+<script>
+    $(function () {
+        var myUsername;
+        var myUserid;
+        $.ajax({
+            url:"/getSessionServlet",
+            type:"post",
+            dataType:"json",
+            success:function (result) {
+                myUsername=result.USER_NAME;
+                myUserid=result.USER_ID;
+                $("#pp").text(result.USER_NAME);//获取当前对象name
+
+            }
+        })
+
+        $(".toMyZone").click(function () {
+            location.href = "myZone.html?userid="+myUserid;
+        })
+        $("#spp").click(function () {
+            layer.open({
+                content: '确定要退出',
+                btn: ['确认'],
+                yes: function (index, layero) {
+                    $.ajax({
+                        url:"/deleteSessionServlet",
+                        type:"post",
+                        success:function () {
+                            window.location.href = 'index.html';
+                        }
+                    })
+
+                }
+            });
+        });
+        var nowdate = new Date();
+        var nowhours = nowdate.getHours();
+        var tip = null;
+        if (nowhours <12 ){
+            tip = "上午好！"
+        } else if(nowhours > 12 && nowhours <18 ){
+            tip = "下午好！"
+        }else {
+            tip = "晚上好！";
+        }
+        $(".middle-mid").click(function () {
+            layer.open({
+                content: '亲爱的'+myUsername+'，'+ tip +'选择你要搜索内容- -！'
+                ,btn: ['点赞最多', '转发最多', '评论最多']
+                ,yes: function(index, layero){
+                    //按钮【按钮一】的回调
+                    $('#home_blog_content_show').children().empty();
+                    $("#home_blog_content_show").load("blogcontentbylike.html");
+                }
+                ,btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    $('#home_blog_content_show').children().empty();
+                    $("#home_blog_content_show").load("blogcontentbyforward.html");
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                ,btn3: function(index, layero){
+                    //按钮【按钮三】的回调
+                    $('#home_blog_content_show').children().empty();
+                    $("#home_blog_content_show").load("blogcontentbydiscuss.html");
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                ,cancel: function(){
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        });
+    });
+
+
+
+</script>
+
 <body>
 <div id="header" class="daohang_nav_a">
     <div class="logo">
@@ -17,7 +117,7 @@
 
     </div>
 
-    <div class="nav">
+    <div class="nav" style="width: 900px;">
 
         <div class="nav_left">
             <div class="ssch" id="nav_search_blog">
@@ -32,7 +132,7 @@
         </div>
 
         <div class="middle-left">
-            <a href="#">
+            <a href="home.html">
                 <span class="layui-icon layui-icon-home home"></span>
                 <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 16px;color: white">
                     首页</p>
@@ -50,18 +150,15 @@
                 <span class="layui-icon layui-icon-username home"></span>
                 <p style="font-style: normal;float: left;margin-top: 18px;margin-left: 5px;font-size: 15px;color: white"></p>
             </a>
+            <span id="spp">退出</span>
+
+            <p id="pp"></p>
         </div>
         <span class="layui-icon layui-icon-add-circle fabu" id="btn" title="说点儿什么吧"></span>
+        <span style="color: white;float: left;width: 60px;margin-top: 29px;margin-left: 5px;font-size: 15px;">发布微博</span>
     </div>
 </div>
-<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
-<script src="layer/layer.js" type="text/javascript"></script>
-<script src="js/jquery.ui.widget.js"></script>
-<script src="js/jquery.iframe-transport.js"></script>
-<script src="js/jquery.fileupload.js"></script>
-<script src="js/jquery.sinaEmotion.js"></script>
-<script type="text/javascript" src="js/nav_home.js"></script>
-<script type="text/javascript" src="js/blog_publish.js"></script>
+
 
 </body>
 </html>

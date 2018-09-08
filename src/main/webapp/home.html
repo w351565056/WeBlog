@@ -2,55 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>首页</title>
+    <link rel="stylesheet" href="css/insert.css" type="text/css">
+    <link rel="stylesheet" href="layer/theme/default/layer.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.sinaEmotion.css">
     <link rel="stylesheet" href="css/home.css" type="text/css">
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="layer/mobile/need/layer.css">
     <script type="text/javascript" src="layer/layer.js"></script>
     <script type="text/javascript" src="js/nav_home.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/jquery.sinaEmotion.js"></script>
     <script>
-        var pagenu = 1;
+        var pagenu = 1;//超级话题分页展示 全局变量
+        var homenowuser;
+        $(function () {
+            $("#home_nav a").click(function () {
+                // $.session.set('blog_style',$(this).eq());
+                if ($(this).index() == 0) {
+                    // alert("111")
+                    $("#home_blog_content_show").children().empty();
 
-        $(document).ready(function(){
-                $.ajax({
-                    url:"/getSessionServlet",
-                    type:"post",
-                    dataType:"json",
-                    success:function (result) {
-                        $("#home_username").text(result.USER_NAME);//获取当前对象name
-                    }
-                })
+                    $("#home_blog_content_show").load("blogcontentall.html");
+                } else if ($(this).index() == 1) {
+                    $("#home_blog_content_show").children().empty();
 
-                })//home_nav 悬浮效果
+                    $("#home_blog_content_show").load("blogcontentoriginal.html");
+                } else if ($(this).index() == 2) {
+                    $("#home_blog_content_show").children().empty();
 
+                    $("#home_blog_content_show").load("blogcontentpic.html");
+                } else if ($(this).index() == 3) {
+                    $("#home_blog_content_show").children().empty();
+
+                    $("#home_blog_content_show").load("blogcontentvideo.html");
+                } else if ($(this).index() == 4) {
+                    $("#home_blog_content_show").children().empty();
+
+                    $("#home_blog_content_show").load("blogcontentmusic.html");
+                }
+            })
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/getSessionServlet",
+                type: "post",
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    homenowuser = result.USER_ID;
+                    $("#home_username").text(result.USER_NAME);//获取当前对象name
+                }
+            })
+        })
+        //home_nav 悬浮效果
+        $(document).ready(function () {
             $(".hide_pic").hide();
             brandPicTurn();
-            function brandPicTurn(){
+
+            function brandPicTurn() {
                 $(".home_show").hover(
-                    function(){
+                    function () {
                         $(this).children(".brand_name").hide();
-                        $(this).children(".hide_pic").show(200);
-                        },
-                    function(){
+                        $(this).children(".hide_pic").show(100);
+                    },
+                    function () {
                         $(this).children(".hide_pic").hide();
-                        $(this).children(".brand_name").show(200);
+                        $(this).children(".brand_name").show(100);
                     }
                 );
             }
-            //引用导航条
-            $('#header_111').load('daohang.html');
+        });
+        //引用导航条
+        $(function () {
 
-            $("#home_to_top").click(function () {
-               $("html,body").animate({scrollTop:0},500)
+            //右下角置顶button
+            $(".home_to_top img").click(function () {
+                $("html,body").animate({scrollTop: 0}, 500);
             });
-            //超级话题展示
+            //顶部导航条、右边个人信息卡 fix定位
+            $(window).scroll(function () {
+                $('#header_111').css({"position": "fixed"});
+                var scrtop = $(document).scrollTop();
+                if (scrtop > 0) {
+                    $('#header_111').css({"position": "fixed"});
+                    $(".home_content_right").css({"position": "fixed", "top": "75px", "right": "220px"});
+                }
+                else if (scrtop < 120) {
+                    $('#header_111').removeAttr("style");
+                    // $(".home_content_right").removeAttr("style").css({"width": "230px","height": "inherit"," float":" left","margin-left": "24px"});
+                }
+            });
+        });
+        //超级话题分页展示
+        $(document).ready(function () {
             $(function () {
                 load();
-                $(".home_refresh span").click(function () {
-                    $(".home_topic").children().empty();
-                    pagenu++
-                    load();
-                });
+
                 function load() {
                     $.ajax({
                         url: "/showTopicServlet",
@@ -58,115 +109,204 @@
                         dataType: "json",
                         data: {"pagenum": pagenu},
                         success: function (list1) {
-                            if(list1.length ==0){
+                            if (list1.length == 0) {
                                 pagenu = 1;
                                 load();
-                            }else{
-                            for (var i = 0; i < list1.length; i++) {
-                                var $node = $('<a href="#"><li>'+ list1[i].TOP +'</li><span>热度 ' + list1[i].NUMM + '亿</span></a>');
+                            } else {
+                                for (var i = 0; i < list1.length; i++) {
+                                    var $node = $('<a href="#"><li>' + list1[i].TOP + '</li><div>热度 ' + list1[i].NUMM + '亿</div></a>');
                                     $(".home_topic").append($node);
                                     // alert(list1[i].TOP + list1[i].NUMM)
                                 }
                             }
                         }
                     });
-
                 }
+
+                $(".home_refresh span").click(function () {
+                    $(".home_topic").children().empty();
+                    pagenu++
+                    load();
+                });
             })
+            //微博内容页个人信息卡 展示个人信息
             $(function () {
+                $.ajax({
+                    url: "/UserInfoServlet",
+                    type: "post",
+                    data: {"USER_ID": homenowuser},
+                    dataType: "json",
+                    success: function (info) {
+                        $(".home_username span").html(info[0].USER_NAME);
+                        if (info[0].GENDER == '女') {
+                            $(".home_username div").css({
+                                "display": "inline-block",
+                                "width": "16px",
+                                "height": "16px",
+                                "background-image": "url('../images/Home/sexw.png')",
+                                "background-repeat": "no-repeat",
+                                "margin-left": "5px"
+                            });
+                        } else {
+                            $(".home_username div").css({
+                                "display": "inline-block",
+                                "width": "16px",
+                                "height": "16px",
+                                "background-image": "url('../images/Home/sexm.png')",
+                                "background-repeat": "no-repeat",
+                                "margin-left": "5px"
+                            });
+                        }
+                        $(".home_my_background_img").html('<img style="cursor: pointer" class="hometoZone" src=' + info[0].HEAD_IMG + '>');
+                    }
+                })
+                //展示个人关注数
+                $.ajax({
+                    url: "/HomeShowMyAttenNumServlet",
+                    type: "post",
+                    data: {"nowuserid": homenowuser},
+                    dataType: "json",
+                    success: function (info) {
+                        $(".one").eq(0).html(info[0].ANUM);
+                    }
+                })
+                //展示个人粉丝数
+                $.ajax({
+                    url: "/HomeShowMyFanNumServlet",
+                    type: "post",
+                    data: {"nowuserid": homenowuser},
+                    dataType: "json",
+                    success: function (info) {
+                        $(".one").eq(1).html(info[0].FNUM);
+                    }
+                })
+                //展示个人微博数
                 $.ajax({
                     url: "/HomeShowMyInfoServlet",
                     type: "post",
+                    data: {"nowuserid": homenowuser},
                     dataType: "json",
-                    success:function (info) {
-                        $(".home_username span").html(info[0][0].USER_NAME);
-                            $(".one").eq(0).html(info[2][0].ANUM );
-                            $(".one").eq(1).html(info[3][0].FNUM );
-                            $(".one").eq(2).html(info[1][0].CNUM );
-                            if (info[0][0].GENDER == '男'){
-                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexm.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
-                            }else {
-                                $(".home_username div").css({"display":"inline-block","width": "16px","height": "16px","background-image" : "url('../images/Home/sexw.png')", "background-repeat": "no-repeat", "margin-left": "5px"});
-                            }
-                            $(".home_my_background_img").html('<img src='+ info[0][0].HEAD_IMG +'>');
-
-
-                        // alert(info[0][0].ADDRESS);
-                        // $("#one1").value().attr(111);
-                        // $(".one").index(0).val(121);
-
-                        // $(".one").index(2).val(131);
-                        // alert("用户名："info[0][0].USER_NAME "性别："info[0][0].GENDER
-                        //      "头像地址："info[0][0].HEAD_IMG  "自我介绍："
-                        //     // + info[1][0].INTRO
-                        //  "微博数"+info[1][0].CNUM "关注人数"
-                            // + info[2][0].ANUM +"粉丝人数"+info[3][0].FNUM
-                        // );
-                        // + info[1].ANUM + info[2].FNUM + info[3].USER_ID
+                    success: function (info) {
+                        $(".one").eq(2).html(info[0].CNUM);
                     }
+                })
+                //展示我的收藏数量
+                $.ajax({
+                    url: "/ShowMyCollectNumServlet",
+                    type: "post",
+                    data: {"nowuserid": homenowuser},
+                    dataType: "json",
+                    success: function (info) {
+                        $(".home_blog_two").eq(0).html(info[0].NUMCOL);
                     }
-                )
+                })
+                //展示我的赞数
+                $.ajax({
+                    url: "/ShowMyBlogLikeNumServlet",
+                    type: "post",
+                    data: {"nowuserid": homenowuser},
+                    dataType: "json",
+                    success: function (info) {
+                        $(".home_blog_two").eq(1).html(info[0].NUMLIK);
+                    }
+                })
+                //查询并显示含有超级话题的微博
+                //请求url为：/SearchBlogServlet
+                //data为：data:{"keyword":$(this).text()}
+                //回调函数首行 加 清空展示微博内容的div代码：$('#home_blog_content_show').children().empty();
+                $(".home_topic").on("click", "li", function () {
+                    $.ajax({
+                        url: "/SearchBlogServlet",
+                        type: "post",
+                        dataType: "json",
+                        data: {"keyword": $(this).text()},
+                        success: function (info) {
+                            $('#home_blog_content_show').children().empty();
+                        }
+                    })
+                })
+
             })
-
-
+            $('#header_111').load('daohang.html');
+            $('.home_my_background_img').on("click", ".hometoZone", function () {
+                location.href = "myZone.html?userid=" + homenowuser;
+            })
         });
-
-
     </script>
 </head>
 <body>
-    <div id="header_111"></div>
-    <div id="home_content">
-        <div id="home_content_left">
-            <div id="home_nav">
-                <ul id="home_nav_ul">
-                    <a href="#"><li class="home_show"><p class="brand_name">全部</p><img class="hide_pic" src="images/Home/home_nav1.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">原创</p><img class="hide_pic" src="images/Home/home_nav2.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">图片</p><img class="hide_pic" src="images/Home/home_nav3.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">视频</p><img class="hide_pic" src="images/Home/home_nav4.png"></li></a>
-                    <a href="#"><li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic" src="images/Home/home_nav5.png"></li></a>
-                </ul>
-
-            </div>
-            <div id="home_blog_content_show"></div>
+<div id="header_111"></div>
+<div id="home_content">
+    <div id="home_content_left">
+        <div id="home_nav">
+            <ul id="home_nav_ul">
+                <a href="#">
+                    <li class="home_show"><p class="brand_name">全部</p><img class="hide_pic"
+                                                                           src="images/Home/home_nav1.png"></li>
+                </a>
+                <a href="#">
+                    <li class="home_show"><p class="brand_name">原创</p><img class="hide_pic"
+                                                                           src="images/Home/home_nav2.png"></li>
+                </a>
+                <a href="#">
+                    <li class="home_show"><p class="brand_name">图片</p><img class="hide_pic"
+                                                                           src="images/Home/home_nav3.png"></li>
+                </a>
+                <a href="#">
+                    <li class="home_show"><p class="brand_name">视频</p><img class="hide_pic"
+                                                                           src="images/Home/home_nav4.png"></li>
+                </a>
+                <a href="#">
+                    <li class="home_show"><p class="brand_name">音乐</p><img class="hide_pic"
+                                                                           src="images/Home/home_nav5.png"></li>
+                </a>
+            </ul>
 
         </div>
-        <div class="home_content_right">
-            <div class="home_my_info">
-                <div class="home_my_background_img">
-                    <img src="">
-                    <!--images/Home/example_myZone.jpg-->
-                </div>
-                <div class="home_username"><span></span><div></div></div>
-                <div class="home_info_decoration">
-                    <div class="home_my_focus"><a href="#"><p class="one">0</p></a><p class="two">关注</p></div>
-                    <div class="home_my_fun"><a href="#"><p class="one">0</p></a><p class="two">粉丝</p></div>
-                    <div class="home_my_blog_count"><a href="#"><p class="one">0</p></a><p class="two">微博</p></div>
-                </div>
+        <div id="home_blog_content_show" style="z-index:-1"></div>
+
+    </div>
+    <div class="home_content_right">
+        <div class="home_my_info">
+            <div class="home_my_background_img">
             </div>
-            <div class="home_blog_decoration">
-                <div>
-                    <a href="#"><span class="home_blog_one">我的收藏</span></a><a href="#"><span class="home_blog_two">10</span></a>
-                </div>
-                <div>
-                    <a href="#"><span class="home_blog_one">我的赞</span></a><a href="#"><span class="home_blog_two">15</span></a>
-                </div>
+            <div class="home_username"><span></span>
+                <div></div>
             </div>
-            <div class="home_hot_topic">
-                <div class="home_topic_title">
-                    <span>热门话题</span><div class="home_refresh"><span>换一换</span></div><div id="test"></div>
-                    <!--<span id="home_refresh"><a href="#">换一换</a></span>-->
-                </div>
-                <div class="home_topic">
+            <div class="home_info_decoration">
+                <div class="home_my_focus"><a href="#"><p class="one">0</p></a>
+                    <p class="two">关注</p></div>
+                <div class="home_my_fun"><a href="#"><p class="one">0</p></a>
+                    <p class="two">粉丝</p></div>
+                <div class="home_my_blog_count"><a href="#"><p class="one">0</p></a>
+                    <p class="two">微博</p></div>
+            </div>
+        </div>
+        <div class="home_blog_decoration">
+            <div>
+                <a href="#"><span class="home_blog_one">我的收藏</span></a><a href="#"><span class="home_blog_two">0</span></a>
+            </div>
+            <div>
+                <a href="#"><span class="home_blog_one">我的赞</span></a><a href="#"><span
+                    class="home_blog_two">0</span></a>
+            </div>
+        </div>
+        <div class="home_hot_topic">
+            <div class="home_topic_title">
+                <span>热门话题</span>
+                <div class="home_refresh"><span><a href="javascript:void(0)">换一换</a></span></div>
+                <div id="test"></div>
+                <!--<span id="home_refresh"><a href="#">换一换</a></span>-->
+            </div>
+            <div class="home_topic">
 
 
-
-                </div>
             </div>
         </div>
     </div>
-    <!--<div id="home_blog_content_show"></div>-->
-    <div class="home_to_top"><img src="images/Home/to_top.png"></div>
+</div>
+<!--<div id="home_blog_content_show"></div>-->
+<div class="home_to_top"><img src="images/Home/to_top.png"></div>
 </body>
 
 </html>

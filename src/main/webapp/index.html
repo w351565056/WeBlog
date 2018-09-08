@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeBlog</title>
+    <link type="text/css" href="css/register.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="layer/mobile/need/layer.css">
+    <link rel="stylesheet" href="css/jigsaw.css"/>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="layer/layer.js" type="text/javascript"></script>
+    <script src="js/jquery.validate.js" type="text/javascript"></script>
+    <script src="js/jquery.validate.regex.js" type="text/javascript"></script>
+    <script src="js/md5.js"></script>
+    <script src="js/jigsaw.js"></script>
+
+    <script>
+
+        $(function () {
+
+            //背景图片轮播
+            setInterval("changImg()", 5000);
+            //登录注册切换
+            $(".register_for_head div:eq(0)").css("background-color", "white");
+            $(".register_for_head div:eq(0)").click(function () {
+                $(this).css("background-color", "white");
+                $(".register_for_head div:eq(2)").css("background-color", "rgba(0,0,0,0.3)");
+                $(".register_for_body2").hide();
+                $(".register_for_body1").show();
+            });
+            $(".register_for_head div:eq(2)").click(function () {
+                $(this).css("background-color", "white");
+                $(".register_for_head div:eq(0)").css("background-color", "rgba(0,0,0,0.3)");
+                $(".register_for_body1").hide();
+                $(".register_for_body2").show();
+            });
+
+            //账户登录，手机号登录切换
+            $("input[name='name1']").click(function () {
+                $(".register_body_left1").hide();
+                $(".register_body_left").show();
+            });
+            $("input[name='phone_no']").click(function () {
+                $(".register_body_left").hide();
+                $(".register_body_left1").show();
+            });
+
+
+            //登录
+
+
+            $(".login").click(function () {
+                var username = $(".username").val();
+                var pass = $(".password").val();
+                var password = $.md5(pass);
+                if(username!=""){
+                    $.ajax({
+                            url: "/LoginServlet",
+                            type: "post",
+                            dataType: "json",
+                            data: {"userName": username, "userPass": password},
+                            success: function (result) {
+                                if (result!=null) {
+                                    if(result.LOCK_STATE!=null){
+                                        var lockdate=new Date(result.LOCK_STATE);
+                                        var nowdate = new Date();
+                                        var remiandate=lockdate.setDate(lockdate.getDate()+1)-(nowdate.getTime());
+
+                                        if(remiandate>0){
+                                            // var days    = remiandate / 1000 / 60 / 60 / 24;
+                                            // var daysRound   = Math.floor(days);
+                                            // var hours    = remiandate/ 1000 / 60 / 60 - (24 * daysRound);
+                                            // var hoursRound   = Math.floor(hours);
+                                            // var minutes   = remiandate / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
+                                            // var minutesRound  = Math.floor(minutes);
+                                            // var seconds   = remiandate/ 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
+                                            var hours = Math.floor(remiandate/(1000*60*60));
+                                            layer.alert('您的账户被锁定，请于'+hours+'后登录！')
+                                            // layer.alert('您的账户被锁定,请于'+daysRound+'天'+hoursRound+'时'+minutesRound+'分'+'后登录！')
+
+                                        }else {
+                                            $.ajax({
+                                                    url: "/unlockServlet",
+                                                    type: "post",
+                                                    dataType: "json",
+                                                    data:{"username":result.USER_NAME},
+                                                    success:function (ret) {
+                                                        if(ret){
+                                                            window.location.href = 'home.html';
+
+                                                        }else {
+                                                            layer.alert('您的账户未解锁');}
+                                                    }
+                                                }
+                                            );
+                                        }
+
+                                    }else{
+                                        window.location.href = 'home.html';
+                                    }
+                                }
+                                else {layer.msg("账户或密码错误！", {time: 1000});
+                                }
+                            }
+                        }
+                    );
+                }else {
+                    layer.msg("账户名不能为空！", {time: 1000});
+                }
+            });
+
+
+
+
+            //验证用户名是否被注册
+            $("input[name='username1']").keyup(function () {
+                if($(this).val()!=null){
+                    $.ajax({
+                        url:"/findNameServlet",
+                        type:"post",
+                        dataType:"json",
+                        data:{"u_name":$(this).val()},
+                        success:function (result) {
+                            if(result){
+                                $(".span1").hide();
+                                $(".register").attr("disabled",false);
+                            }else {
+                                $(".span1").hide();
+
+                                    $(this).hide();
+                                    $(".span1").text("用户名已存在！");
+
+
+                                $(".span1").show();
+                                $(".register").attr("disabled",true);
+                            }
+                        }
+                    })
+                }else {
+                    //$("#username1-error").show();
+                }
+
+            });
+            //验证手机号是否已被注册
+            $("input[name='phone_no1']").keyup(function () {
+                var pnum = $(this).val();
+                if(pnum!=null){
+                    $.ajax({
+                        url:"/findTelServlet",
+                        type:"post",
+                        dataType:"json",
+                        data:{"pnum":pnum},
+                        success:function (result) {
+                            if(result){
+                                $(".span2").hide();
+                                $(".register").attr("disabled",false);
+
+                            }else {
+                                $(".span2").hide();
+
+                                   $(this).hide();
+                                   $(".span2").text("该号码已存在！");
+
+                                $(".span2").show();
+                                $(".register").attr("disabled",true);
+                            }
+                        }
+                    })
+                }else {
+                    layer.msg("电话号码不能为空！",{time:1000})
+                }
+
+
+
+            });
+
+
+
+            // 注册
+            $(".register").click(function () {
+
+                //表单验证
+                $("#reg_submit2").validate({
+                    onkeyup:true,
+                    focusCleanup:true,
+                    focusInvalid:false,
+                    rules: {
+                        username1: {
+                            required: true
+                        },
+                        password1: {
+                            required: true
+                        },
+                        re_password: {
+                            required: true,
+                            equalTo: "[name='password1']"
+                        },
+                        phone_no1: {
+                            required: true,
+                            digits:true
+                        }
+                    },
+                    messages: {
+                        username1: {
+                            required: "用户名不能为空"
+                        },
+                        password1: {
+                            required: "密码不能为空"
+                        },
+                        re_password: {
+                            required: "请确认密码！",
+                            equalTo: "两次密码不一致哦"
+                        },
+                        phone_no1: {
+                            required: "请输入电话号码！",
+                            digits:"手机号格式不正确哦"
+                        }
+                    },
+                    submitHandler:function (form) {
+
+                        var username = $("input[name='username1']").val();
+                        var pass = $("input[name='password1']").val();
+                        var password = $.md5(pass);
+                        var phone_no = $("input[name='phone_no1']").val();
+                        var pattern = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+                        if(pattern.test(phone_no)) {
+                            $.ajax({
+                                url: "/registerServlet",
+                                type: "post",
+                                dataType: "json",
+                                data: {"username": username, "password": password, "phone_no": phone_no},
+                                success: function (result) {
+                                    if (result) {
+                                        layer.msg("注册成功，请登录！", {time: 1000});
+
+                                    } else {
+                                        layer.msg("hhhhhh！", {time: 1000});
+                                    }
+                                }
+
+                            });
+                        }else {
+                            layer.msg("手机号格式不正确！", {time: 1000});
+                        }
+                    },
+                    invalidHandler:function (form,validator) {
+                        return false;
+                    }
+
+
+                });
+
+
+
+            });
+
+
+            //滑块验证
+            // var timer;
+            // $(".login,#validate_slip").bind("mouseover", showMsgBox);
+            // $(".login").bind("mouseout", hideMsgBox);
+            // $("#validate_slip").bind("mouseout", function () {
+            //     if (timer) {
+            //         clearTimeout(timer);
+            //     }
+            //     $("#validate_slip").hide();
+            // });
+            //
+            // function showMsgBox() {
+            //     if (timer) {
+            //         clearTimeout(timer);
+            //     }
+            //     $("#validate_slip").show();
+            // }
+            //
+            // function hideMsgBox() {
+            //     timer = setTimeout(function () {
+            //         $("#validate_slip").hide();
+            //     }, 300);
+            // }
+
+            //发送短信验证码---------------------------------------------------
+
+
+
+            $("#yan").click(function () {
+                var num = $("input[name='user']").val();
+                var pattern = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+                if(pattern.test(num)){
+                    $.ajax({
+                        url:"/MessageServlet",
+                        type:"post",
+                        data:{"key_num":num},
+                        dataType:"json",
+                        success:function (result) {
+                            if(result){
+                                layer.msg("验证码已发送！", {time: 1000});
+                            }else {
+                                layer.msg("您还没有注册！", {time: 1000});
+                            }
+                        }
+
+                    })
+                }else {
+                    layer.msg("手机号格式错误！",{time:1000})
+                }
+
+
+            });
+
+
+            //验证码审核
+            $("input[name='button_v']").click(function () {
+                var phonepass = $("input[name='phonepass']").val();
+                $.ajax({
+                    url: "/ValidateServlet",
+                    type: "post",
+                    data: {"phonepass": phonepass},
+                    dataType: "json",
+                    success: function (ret) {
+                        if (ret) {
+                            window.location.href = 'home.html';
+                        } else {layer.msg("验证码错误！", {time: 1000});}
+                    }
+                });
+
+            });
+        });
+
+
+        function changImg() {
+            var num =7;
+            var imgId = Math.floor(Math.random() * num+1);
+            var imgUl="images/register/bg_"+imgId+".jpg";
+            $(".register_bg img").attr("src",imgUl);
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+    <div class="register_bg" >
+        <img src="images/register/bg_1.jpg" width="1366px" height="650px"/>
+        <div class="register_log">
+            <span></span>
+        </div>
+        <div class="register_fom">
+            <div class="register_for_head">
+                <div class="register_head1">
+                    <h>登录</h>
+                </div>
+                <div class="register_head2"></div>
+                <div class="register_head1">
+                    <h>注册</h>
+                </div>
+            </div>
+
+            <div class="register_for_body1">
+                <form id="reg_submit1">
+                    <div class="register_body_left">
+                        <div class="register_btn">
+                            <input class="username register_text" type="text" name="username" placeholder="请输入用户名" style="z-index: 10">
+                        </div>
+                        <div class="register_btn">
+                            <input class="password register_text" type="password" name="password" placeholder="请输入密码" style="z-index: 10"/>
+                        </div>
+
+                        <div id="validate_slip">
+                            <div id="captcha" style="position: relative"></div>
+                            <div id="msg" style="position: relative;top: -41px;display: none"></div>
+                        </div>
+                        <div class="register_btn">
+                            <input class="login register_text1 register_font" type="button" name="button" value="登录"/>
+                        </div>
+                    </div>
+
+
+                     <div class="register_body_left1">
+                         <div class="register_btn">
+                             <input class="register_text" type="text" name="user" placeholder="请输入手机号码">
+                         </div>
+                         <div class="register_btn">
+                             <input class="register_text" type="password" name="phonepass" placeholder="请输入验证码"/>
+                             <div id="yan">获取验证码</div>
+                         </div>
+                         <div class="register_btn">
+                             <input class="register_text register_font" type="button" name="button_v" value="登录"/>
+                         </div>
+                     </div>
+                </form>
+                <div class="register_body_right left">
+                    <span class="register_right_name">
+                        <input class="register_right_btn" type="button" name="name1" value="账户名登录"/>
+                    </span>
+                    <span class="register_right_name">
+                        <input class="register_right_btn" type="button" name="phone_no" value="手机号登录"/>
+                    </span>
+                    <p>
+                        <span></span><a href="AdminLogin22.html">偶是管理员？</a>
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="register_for_body2">
+                <div class="register_body_left_tt">
+                    <form id="reg_submit2">
+                        <div class="register_content">
+                            <input class="register_content_text" type="text" name="username1" placeholder="请输入账户名"/>
+                            <span class="span1">hahaha</span>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="text" name="phone_no1" placeholder="请输入手机号码"/>
+                            <span class="span2">hahaha</span>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="password" name="password1" placeholder="请输入密码"/>
+                            <span class="span3">hahaha</span>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_text" type="password" name="re_password" placeholder="请确认密码"/>
+                            <span class="span4">hahaha</span>
+                        </div>
+                        <div class="register_content">
+                            <input class="register_content_btn register" type="submit" name="submit" value="完成"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="register_body_right left ">
+                    <span class="register_img"></span>
+                    <span class="register_forget"><a id="a1" href="">已有账号，去登录？>>>&nbsp;&nbsp;</a></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="register_bg_next">
+        <h2>发现和你志同道合和的人</h2>
+        <p class="sub">集综合搜索引擎、名站导航、自定义收藏、在线音乐试听、实用查询工具、<br>酷站热门网址推荐等服务的网址导航网站
+        </p>
+            <div class="next_img_content">
+                <div class="next_img">
+                    <div class="img_m1">
+                        <h2 style="color:white" >精彩话题</h2>
+                        <p class="sub1" style="color:white" >任何人都可以发起与参与话题，征集作品发现有趣的人，<br>还可以通过客户端参加有趣的贴纸话题。</p>
+                    </div>
+                </div>
+
+                <div class="next_img">
+                    <div class="img_m2">
+                        <h2>随性的记录方式</h2>
+                        <p class="sub1">方便地记录照片、文字、音乐、视频，适用于iPhone、<br>iPad和Android移动客户端及PC端，
+                            让你随时随地的记录与分享。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="next_img">
+                    <div class="img_m3">
+                        <h2 style="color: white">彰显个性的个人主页</h2>
+                        <p class="sub1">方便地记录照片、文字、音乐、视频，适用于iPhone、<br>iPad和Android移动客户端及PC端，
+                            让你随时随地的记录与分享。
+                        </p>
+                    </div>
+                </div>
+                <div class="next_img">
+                    <div class="img_m4"><h2>让兴趣，更有趣</h2></div>
+                </div>
+            </div>
+
+    </div>
+    <div class="register_footer">
+        <span class="register_footer_top">
+            <ul>
+                <li>联系我们&nbsp;&nbsp;&nbsp;|</li>
+                <li>移动客户端&nbsp;&nbsp;&nbsp;|</li>
+                <li>风格模板&nbsp;&nbsp;&nbsp;|</li>
+                <li>官方博客</li>
+
+            </ul>
+        </span>
+        <span class="register_footer_top1">
+            <ul>
+                <li>网易公司版权所有&nbsp;&nbsp;</li>
+                <li>©1997-2018&nbsp;&nbsp;</li>
+                <li>浙公网安备 33010002000017号&nbsp;&nbsp;</li>
+                <li>ICP备：浙B2-20090185-5</li>
+                <li>增值电信业务经营许可证：浙B2-20090185</li>
+
+            </ul>
+        </span>
+    </div>
+
+</body>
+<script>
+    jigsaw.init(document.getElementById('captcha'), function () {
+        document.getElementById('msg').innerHTML = '验证成功！';
+        $("#msg").css("display","block");
+        $(".verifyImg").css("visibility","hidden");
+        $(".block").css("visibility","hidden");
+        $(".refreshIcon").css("visibility","hidden");
+        $(".sliderContainer").unbind();
+    })//必须$(function)放外面
+    $(function () {
+
+        $(".sliderContainer").hover(function () {
+            $(".username").css({"z-index":"0"});
+            $(".password").css({"z-index":"0"});
+            $(".verifyImg").css({"visibility":"visible"});
+            $(".block").css({"visibility":"visible"});
+            $(".refreshIcon").css({"visibility":"visible"});
+        },function () {
+            $(".username").css({"z-index":"10"});
+            $(".password").css({"z-index":"10"});
+            $(".verifyImg").css({"visibility":"hidden"});
+            $(".block").css({"visibility":"hidden"});
+            $(".refreshIcon").css({"visibility":"hidden"});
+        })
+    })
+</script>
+</html>

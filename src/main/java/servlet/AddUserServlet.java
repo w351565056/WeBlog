@@ -23,6 +23,7 @@ import java.util.List;
 public class AddUserServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     UserInfoDao dao = new UserInfoDaoImpl();
+    String HEAD_IMG = request.getParameter("HEAD_IMG");
     String USER_NAME = request.getParameter("USER_NAME");
     String USER_PASS = request.getParameter("USER_PASS");
     String PHONE_NO = request.getParameter("PHONE_NO");
@@ -38,7 +39,7 @@ public class AddUserServlet extends HttpServlet {
       e.printStackTrace();
     }
     String QQ = request.getParameter("QQ");
-    List<UserInfo> list = dao.addUser(USER_NAME, USER_PASS, PHONE_NO, TRUE_NAME, GENDER, EMAIL, ADDRESS, BLOOD_TYPE, BIRTHDAY, QQ);
+    List<UserInfo> list = dao.addUser(HEAD_IMG,USER_NAME, USER_PASS, PHONE_NO, TRUE_NAME, GENDER, EMAIL, ADDRESS, BLOOD_TYPE, BIRTHDAY, QQ);
     JsonConfig jsonConfig = new JsonConfig();
     jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
     JSONArray array = JSONArray.fromObject(list, jsonConfig);

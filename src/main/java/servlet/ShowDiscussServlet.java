@@ -1,8 +1,8 @@
 package servlet;
 
-import dao.BlogDiscussDao;
-import entity.BlogDiscuss;
-import impl.BlogDiscussDaoImpl;
+import dao.ShowDiscussDao;
+import entity.ShowDiscuss;
+import impl.ShowDiscussDaoImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
@@ -21,16 +21,17 @@ import java.util.List;
 @WebServlet("/ShowDiscussServlet")
 public class ShowDiscussServlet extends HttpServlet {
 
-    BlogDiscussDao bdd = new BlogDiscussDaoImpl();
+    ShowDiscussDao sdd = new ShowDiscussDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String bid = request.getParameter("blogId");
         BigDecimal b_id = new BigDecimal(bid);
-        BlogDiscuss blogDiscuss = new BlogDiscuss();
-        blogDiscuss.setBLOG_ID(b_id);
+        ShowDiscuss showDiscuss = new ShowDiscuss();
+        showDiscuss.setBLOG_ID(b_id);
 
-        List<BlogDiscuss> list = bdd.showDiscuss(blogDiscuss);
+        List<ShowDiscuss> list = sdd.showDiscuss(showDiscuss);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
+
 
         PrintWriter out = response.getWriter();
         out.print(JSONArray.fromObject(list,jsonConfig));

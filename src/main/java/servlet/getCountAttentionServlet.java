@@ -15,14 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @WebServlet("/getCountAttentionServlet")
 public class getCountAttentionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        BigDecimal user_id = new BigDecimal(request.getParameter("USER_ID"));
         UserRelDao dao =new UserRelDapImpl();
-        List<getCount> list=dao.getCountAttention(47);
+        List<getCount> list=dao.getCountAttention(user_id);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);
@@ -31,7 +33,6 @@ public class getCountAttentionServlet extends HttpServlet {
         out.flush();
         out.close();
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request,response);
     }

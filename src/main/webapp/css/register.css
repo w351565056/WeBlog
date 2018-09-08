@@ -57,7 +57,8 @@ body {
     height: 124px;
     position:absolute;
     color: white;
-    background-image: url("../images/register/login-logo.png");
+    background-image: url("../images/register/logo.jpg");
+    background-size: 341px 124px;
     margin: auto;
     left: 0;
     right: 0;
@@ -299,12 +300,19 @@ body {
     color: #000000;
 }
 .sub{
-
     width: 1366px;
     height: 60px;
     text-align: center;
     font-size: 20px;
-    font-family: "Arial Black";
+    font-family: Arial;
+}
+.sub1{
+    width: 800px;
+    height: 60px;
+    text-align:center;
+    font-size: 20px;
+    font-family: Arial;
+    color: black;
 }
 .next_img{
     position: relative;
@@ -329,7 +337,7 @@ body {
     left: 0;
     right: 0;
     bottom:0px;
-    background-color:rgba(0,0,0,0.15);
+    background-color:white;
 
 }
 .register_footer_top{
@@ -389,33 +397,131 @@ body {
     height: 1440px;
     position: relative;
     top: 30px;
-    background-image: url("../images/register/backgroundimg.jpg");
+    background-image: url("../images/register/timg.jpg");
     background-size: 1366px 1440px;
 }
+
+.img_m{
+    width:800px ;
+    height: 340px;
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-color:rgba(0,0,0,0.2);
+}
+.img_m1{
+    width:800px ;
+    height: 340px;
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-image: url("../images/register/backgroundimg.jpg");
+    background-size: 800px 340px;
+
+}
+.img_m2{
+    width:800px ;
+    height: 340px;
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-image: url("../images/register/timg.jpg");
+    background-size: 800px 340px;
+}
+.img_m3{
+    width:800px ;
+    height: 340px;
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-image: url("../images/register/img2.jpg");
+    background-size: 800px 340px;
+}
+.img_m4{
+    width:800px ;
+    height: 340px;
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    background-image: url("../images/register/bg_c.jpg");
+    background-size: 800px 340px;
+    color: white;
+}
+
+
+
 .error{
     color: red;
 }
 #username1-error{
     position: relative;
     top: 60px;
-    left: -250px;
+    left: 50px;
+    margin-left: -300px;
 }
 #password1-error{
     position: relative;
     top: 60px;
-    left: -250px;
-
+    left: 50px;
+    margin-left:-300px ;
 }
 #re_password-error{
     position: relative;
     top: 60px;
-    left: -250px;
+    left: 50px;
+    margin-left: -300px;
 }
 #phone_no1-error{
     position: relative;
     top: 60px;
-    left: -250px;
+    left: 50px;
+    margin-left: -300px;
 }
+
+.span1{
+    color: red;
+    position: relative;
+    left: -250px;
+    top: 60px;
+    display: none;
+}
+.span2{
+    color: red;
+    position: relative;
+    left: -250px;
+    top: 60px;
+    display: none;
+}
+.span3{
+    color: red;
+    position: relative;
+    left: -250px;
+    top: 60px;
+    display: none;
+}
+.span4{
+    color: red;
+    position: relative;
+    left: -250px;
+    top: 60px;
+    display: none;
+}
+
 #validate_slip{
     position:absolute;
     width: 304px;
@@ -423,7 +529,20 @@ body {
     z-index: 1;
     left: 48px;
     bottom: 120px;
-    display: none;
+
+}
+
+
+.validate_slip{
+    position:absolute;
+    width: 304px;
+    height:180px;
+    z-index: 1;
+    left: 48px;
+    bottom: 120px;
+    color: limegreen;
+    background-color: white;
+    /*display: none;*/
 
 }
 #validate_slip_img{
@@ -467,6 +586,9 @@ a:link,a:visited,a:hover,a:active {
     cursor: pointer;
     text-align: center;
     color: limegreen;
+    border: 0px;
+    background-color: white;
+
 }
 #yan :hover{
     background-color: limegreen;

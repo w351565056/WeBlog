@@ -2,38 +2,188 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>个人中心</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/myZone.css">
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <script src="//at.alicdn.com/t/font_786622_igfdgk6diqe.js" type="text/javascript"></script>
     <script src="layui/layui.js"></script>
-
     <script>
         layui.use('element', function(){
             var element = layui.element;
         });
         $(function () {
+            //当前的用户ID
+            var nowuser;
+            //获取用户名和用户ID
+            $.ajax({
+                url:"/getSessionServlet",
+                type:"post",
+                async:false,
+                dataType:"json",
+                success:function (result) {
+                    nowuser=result.USER_ID;
+                }
+            })
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            }
+            var userid=parseInt(GetQueryString("userid"));
+            if(userid!=nowuser){
+                $(".nav_title").eq(0).text("他的页面");
+                $(".nav_title").eq(1).text("他的关注");
+                $(".nav_title").eq(2).text("他的粉丝");
+                $(".unit4_bottom").remove();
+                $.ajax({
+                    url:"/QueryAttentionServlet",
+                    type:"post",
+                    dataType:"json",
+                    async:false,
+                    data:{"userid":userid,"USER_ID":nowuser},
+                    success:function (result) {
+                        if(result.length==0){
+                            $(".attention_part2").show();
+                        }else{
+                            $(".attention_part1").show();
+                        }
+                    }
+                })
+            }else{
+                $(".attention_part1").hide();
+                $(".attention_part2").hide();
+            }
             $(".nav_title").click(function () {
                 $(".nav_title").removeClass("nav_border_bottom");
                 $(this).addClass("nav_border_bottom");
+            })
+            $(".a_left").click(function () {
+                $(".Iframe").attr("src","myData_part1.html")
+            })
+
+            $.ajax({
+                url:"/UserInfoServlet",
+                type:"post",
+                DataType:"json",
+                async:false,
+                data:{"USER_ID":userid},
+                success:function (result) {
+                    var j = JSON.parse(result)
+                    $(".myZone_img").attr("src",j[0].HEAD_IMG);
+                    $(".myZone_header_username").text(j[0].USER_NAME);
+                    if(j[0].INTRO==""){
+                        $(".myZone_header_intro").text("一句话介绍一下自己吧，让别人更了解你");
+                    }else{
+                        $(".myZone_header_intro").text(j[0].INTRO);
+                    }
+                }
+            })
+
+            $(".attention_part2").click(function () {
+                var $node = $(this);
+                $.ajax({
+                    url:"/insertAttentionServlet",
+                    type:"post",
+                    async:false,
+                    data:{"userid":userid,"USER_ID":nowuser},
+                    dataType:"json",
+                    success:function (result) {
+                        if(result[0]=="1"){
+                            $node.hide();
+                            $(".attention_part1").show();
+                            window.location.reload()
+                        }
+                    }
+                })
+            })
+            $(".attention_part1").click(function () {
+                var $node = $(this);
+                $.ajax({
+                    url: "/deleteAttentionServlet",
+                    type: "post",
+                    data: {"userid": userid, "USER_ID": nowuser},
+                    dataType: "json",
+                    async:false,
+                    success: function (result) {
+                        if (result[0] == "1") {
+                            $node.hide();
+                            $(".attention_part2").show();
+                            window.location.reload()
+                        }
+                    }
+                })
+            })
+            $.ajax({
+                url: "/ShowAttentionServlet",
+                type: "post",
+                data:{"USER_ID":userid},
+                dataType: "json",
+                success: function (result) {
+                       $(".getCount").eq(0).text(result.length);
+                }
+            })
+            //获取用户粉丝
+            $.ajax({
+                url: "/ShowFansServlet",
+                type: "post",
+                data:{"USER_ID":userid},
+                dataType: "json",
+                success: function (result) {
+                    $(".getCount").eq(1).text(result.length);
+                }
+            })
+            $.ajax({
+                url: "/ShowContentByIDServlet",
+                type: "post",
+                data:{"nowuserid":userid},
+                dataType: "json",
+                success: function (result) {
+                    $(".getCount").eq(2).text(result.length);
+                }
+            })
+
+            $(".myZone_blog").click(function () {
+                $(".Iframe").css("height","1400px")
+            })
+            $(".myZone_at").click(function () {
+                $(".Iframe").css("height","700px")
+            })
+            $(".myZone_fa").click(function () {
+                $(".Iframe").css("height","700px")
 
             })
+            //顶部导航条、右边个人信息卡 fix定位
+            $(window).scroll(function () {
+                $('#header_111').css({"position": "fixed"});
+                var scrtop = $(document).scrollTop();
+                if (scrtop > 0) {
+                    $('#header_111').css({"position": "fixed"});
+                    $(".home_content_right").css({"position": "fixed", "top": "75px", "right": "220px"});
+                }
+                else if (scrtop < 120) {
+                    $('#header_111').removeAttr("style");
+                    // $(".home_content_right").removeAttr("style").css({"width": "230px","height": "inherit"," float":" left","margin-left": "24px"});
+                }
+            });
+            $('#header_111').load('daohang.html');
         })
     </script>
 
 </head>
 <body>
-<div class="myZone_content">
+<div id="header_111" style=""></div>
+<div userid="userid" sessionid="sessionid"class="myZone_content">
     <div class="myZone_header">
         <div class="myZone_header_show">
             <div class="myZone_header_photo">
                 <a href="#">
-                    <img src="images/myZone/example_myZone.jpg">
-                </a>
+                <img class="myZone_img" src="images/defaultimg.jpg" width="100px" height="100px">
+            </a>
             </div>
             <div class="myZone_header_username">
-                <span>微博微博</span>
+                <span >微博微博</span>
                 <svg class="icon-header" aria-hidden="true">
                     <use xlink:href="#icon-sexm"></use>
                 </svg>
@@ -41,18 +191,34 @@
             <div class="myZone_header_intro">
                 一句话介绍一下自己吧，让别人更了解你
             </div>
+            <div class="attention_button1 attention_part1" style="display: none;background-color:#fa7d3c;">
+                <a>
+                    <svg class="icon_duihao border_right" aria-hidden="true">
+                        <use xlink:href="#icon-danduduihao"></use>
+                    </svg>
+                    <span class="attention_text1">已关注</span>
+                </a>
+            </div>
+            <div class="attention_button1 attention_part2" style="display: none">
+                <a>
+                    <svg class="icon_huxiang" aria-hidden="true" color="white" style="margin-left: 10px">
+                        <use xlink:href="#icon--huxiangguanzhu"></use>
+                    </svg>
+                    <span class="attention_text1">关注</span>
+                </a>
+            </div>
         </div>
         <div class="myZone_head_nav">
             <div class="myZone_nav_wrap">
                 <table>
                     <tr>
-                        <td><a class="nav_title" href="#"><span>我的主页</span></a></td>
-                        <td><a class="nav_title" href="myZone_attention.html" target="myZone_iframe" ><span>我的关注</span></a></td>
-                        <td><a class="nav_title" href="myZone_fans.html" target="myZone_iframe" ><span>我的粉丝</span></a></td>
+                        <td class="part1"><a class="myZone_blog nav_title" href="myZone_blog.html" target="myZone_iframe"><span>我的主页</span></a></td>
+                        <td class="part1"><a class="myZone_at nav_title" href="myZone_attention.html" target="myZone_iframe" ><span>我的关注</span></a></td>
+                        <td class="part1"><a class="myZone_fa nav_title" href="myZone_fans.html" target="myZone_iframe" ><span>我的粉丝</span></a></td>
 
-                        <!--<td><a href="#"><span class="nav_title nav_border_bottom">我的主页</span></a></td>
-                        <td><a href="#"><span class="nav_title">我的关注</span><span class="nav_border"></span></a></td>
-                        <td><a href="#"><span class="nav_title">我的粉丝</span><span class="nav_border"></span></a></td>-->
+                        <!--<td class="part2"><a href="#"><span class="nav_title nav_border_bottom">他的主页</span></a></td>-->
+                        <!--<td class="part2"><a href="#"><span class="nav_title">他的关注</span><span class="nav_border"></span></a></td>-->
+                        <!--<td class="part2"><a href="myZone_fans.html"><span class="nav_title">他的粉丝</span><span class="nav_border"></span></a></td>-->
                     </tr>
                 </table>
             </div>
@@ -62,15 +228,15 @@
         <div class="myZone_left ">
             <div class="myZone_left_unit">
                 <div class="unit1_info">
-                    <div class="unit1_number"><a class="a_left">9</a></div>
+                    <div class="unit1_number"><a class="a_left getCount">1</a></div>
                     <div class="unit1_text"><a class="a_left" href="myZone_attention.html" target="myZone_iframe">关注</a></div>
                 </div>
                 <div class="unit1_info border_left">
-                    <div class="unit1_number"><a class="a_left">2</a></div>
+                    <div class="unit1_number"><a class="a_left getCount">1</a></div>
                     <div class="unit1_text"><a class="a_left" href="myZone_fans.html" target="myZone_iframe">粉丝</a></div>
                 </div>
                 <div class="unit1_info border_left">
-                    <div class="unit1_number"><a class="a_left">2</a></div>
+                    <div class="unit1_number"><a class="a_left getCount">1</a></div>
                     <div class="unit1_text"><a class="a_left" href="#">微博</a></div>
                 </div>
             </div>
@@ -78,9 +244,9 @@
                 <div class="unit2_header border_bottom headr_info">个人信息</div>
                 <div class="border_bottom">
                     <div class="unit4_middle">
-                        <div class="percent_text">个人资料完成度<span class="percent">50%</span></div>
+                        <div class="percent_text">个人资料完成度<span class="percent">30%</span></div>
                         <div class="layui-progress">
-                            <div class="layui-progress-bar layui-bg-blue" lay-percent="50%"></div>
+                            <div class="layui-progress-bar layui-bg-blue" lay-percent="30%"></div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +254,7 @@
             </div>
         </div>
         <div class="myZone_right">
-            <iframe name="myZone_iframe" src="myZone_fans.html" scrolling="no" frameborder="no" width="100%" height="600px"></iframe>
+            <iframe name="myZone_iframe" scrolling="no" id="Iframe" class="Iframe" src="myZone_attention.html" frameborder="no" width="100%" height="700px"></iframe>
         </div>
     </div>
     <div class="myZone_footer">

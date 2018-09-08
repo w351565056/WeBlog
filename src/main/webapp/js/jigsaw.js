@@ -97,6 +97,7 @@
       const sliderIcon = createElement('span')
       const text = createElement('span')
 
+      canvas.className='verifyImg'
       block.className = 'block'
       sliderContainer.className = 'sliderContainer'
       refreshIcon.className = 'refreshIcon'
@@ -233,6 +234,9 @@
   window.jigsaw = {
     init: function (element, success, fail) {
       new jigsaw(element, success, fail).init()
+        $(".verifyImg").css("visibility","hidden");
+        $(".block").css("visibility","hidden");
+        $(".refreshIcon").css("visibility","hidden");
     }
   }
 }(window))

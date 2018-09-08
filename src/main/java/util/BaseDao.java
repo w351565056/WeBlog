@@ -4,9 +4,9 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class BaseDao<T> {
@@ -74,8 +74,14 @@ public abstract class BaseDao<T> {
             stat = conn.prepareStatement(sql);// ？不确定:类型、数量
             // 3+、绑定替换数据
             for (int i = 0; i < obj.length; i++) {
-                stat.setObject(i + 1, obj[i]);
+                if(obj[i] instanceof java.util.Date){
+                    Date date = (Date)obj[i];
+                    stat.setTimestamp(i + 1, new Timestamp(date.getTime()));
+                }else {
+                    stat.setObject(i + 1, obj[i]);
+                }
             }
+
             // 4、发送sql语句，并且接收返回结果 : DML -> executeUpdate ; DQL -> executeQuery
             ret = stat.executeUpdate();
             //打印sql语句
@@ -115,7 +121,7 @@ public abstract class BaseDao<T> {
                     //对日期类型进行处理
                     String typeName = f.getType().getName();
                     if (typeName.equals("java.sql.Timestamp") || typeName.equals("java.util.Date") || typeName.equals("java.sql.Date")) {
-                        f.set(t, rs.getDate(i + 1));
+                        f.set(t, rs.getTimestamp(i + 1));
                     } else {
                         f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                     }

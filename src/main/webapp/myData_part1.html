@@ -7,22 +7,45 @@
     <link rel="stylesheet" type="text/css"href="css/myData.css">
     <link rel="stylesheet"type="text/css"href="layui/css/layui.css">
 <script>
-    $(function () {
+    $(document).ready(function () {
+        //当前的用户ID
+        var nowuser;
+        //获取用户名和用户ID
+        $.ajax({
+            url:"/getSessionServlet",
+            type:"post",
+            async:false,
+            dataType:"json",
+            success:function (result) {
+                nowuser=result.USER_ID;
+            }
+        })
             $.ajax({
                 url:"/UserInfoServlet",
                 type:"post",
                 DataType:"json",
+                data:{"USER_ID":nowuser},
                 success:function (result) {
                     var j=JSON.parse(result)
-                    $(".base_part2").eq(0).text(j[0].TRUE_NAME);
                     $(".base_part2").eq(1).text(j[0].USER_NAME);
                     $(".base_part2").eq(2).text(j[0].PHONE_NO);
-                    $(".base_part2").eq(3).text(j[0].ADDRESS);
-                    $(".base_part2").eq(4).text(j[0].GENDER);
-                   //$(".base_part2").eq(5).text(j[0].BIRTHDAY);
-                    $(".base_part2").eq(6).text(j[0].BLOOD_TYPE);
                     $(".base_part2").eq(7).text(j[0].CREATE_DATE_TIME);
+                    if(j[0].TRUE_NAME!='')
+                    $(".base_part2").eq(0).text(j[0].TRUE_NAME);
+                    if(j[0].ADDRESS!='')
+                    $(".base_part2").eq(3).text(j[0].ADDRESS);
+                    if(j[0].GENDER!='')
+                    $(".base_part2").eq(4).text(j[0].GENDER);
+                    if(j[0].BIRTHDAY!='')
+                    $(".base_part2").eq(5).text(j[0].BIRTHDAY);
+                    if(j[0].BLOOD_TYPE!='')
+                    $(".base_part2").eq(6).text(j[0].BLOOD_TYPE);
+                    if(j[0].EMAIL!='')
                     $(".base_part2").eq(8).text(j[0].EMAIL);
+                    if(j[0].QQ!='')
+                    $(".base_part2").eq(9).text(j[0].QQ);
+                    if(j[0].INTRO!='')
+                    $(".base_part2").eq(10).text(j[0].INTRO);
                 }
             })
     })
@@ -49,7 +72,7 @@
                 </div>
                 <div class="add">
                     <div class="base_part1">所在地</div>
-                    <div class="base_part2">山西 打通</div>
+                    <div class="base_part2">山西 大通</div>
                 </div>
                 <div class="sex">
                     <div class="base_part1">性别</div>
@@ -73,6 +96,10 @@
                     <div class="base_part1">QQ</div>
                     <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的QQ信息</span>
                     </div>
+                </div>
+                <div class="Intro">
+                    <div class="base_part1">个人简介</div>
+                    <div class="base_part2"> <img src="images/pen.jpg"class="img"><a href="myData_part2.html"><span class="span">马上填写</span></a><span class="span2">你的个人简介</span></div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,12 @@
     box-shadow: 0 4px 20px 1px rgba(0,0,0,0.2);
 
 }
+.insert_video{
+    width: 390px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 20px 1px rgba(0,0,0,0.2);
+}
 .title{
     font-size: 14px;
     margin: 10px;
@@ -12,7 +18,7 @@
 }
 .titlesec{
     margin: 10px;
-    font-size: 12px;
+    font-size: 14px;
     display: inline-block;
 }
 .attention_button{
@@ -26,7 +32,7 @@
     border-radius: 2px;
     background: #ff8140;
     color: #fff;
-    margin-left: 70px;
+    margin-left: 60px;
 }
 .attention_add{
     display: inline-block;
@@ -53,11 +59,13 @@
     display: inline-block;
     cursor: pointer;
     width: 80px;
-    height:120px;
+    height:80px;
     margin: 0px 6px 6px 0px;
     background-image: url("../images/adddefault1.png");
     background-size: 80px;
     background-position: left;
     background-repeat: no-repeat;
-
+}
+.embed_preview{
+    margin-left: 10px;
 }

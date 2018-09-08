@@ -12,6 +12,7 @@ public class ShowMyCollectNumDaoImpl extends BaseDao<BlogCollect> implements Sho
 
 
     @Override
+    //Home展示我的收藏数---DJN
     public List<BlogCollect> showmyCollectnum(BigDecimal collnum) {
         return executeQuery("select COUNT(*)AS NUMCOL from BLOG_COLLECT WHERE USER_ID = ?",new Object[]{collnum});
     }

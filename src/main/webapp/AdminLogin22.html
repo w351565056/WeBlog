@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>后台登陆</title>
+  <script src="layui/layui.js"></script>
+  <script src="js/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+</head>
+<body style="background-size: cover;background-image: url(images/Home/BigLogo.png)">
+<div style="position: relative;left: 40%;top: 300px;width: 500px;">
+  <form class="layui-form" action="">
+    <div class="layui-form-item">
+      <label class="layui-form-label">用户名：</label>
+      <div class="layui-input-block">
+        <input type="text" name="username" required lay-verify="required" placeholder="admin" autocomplete="off"
+               class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">密码：</label>
+      <div class="layui-input-inline">
+        <input type="password" name="password" required lay-verify="required" placeholder="" autocomplete="off"
+               class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux">admin</div>
+    </div>
+    <!--滑块-->
+    <div id="slideTest1"  style="border: #307d74 5px solid;padding: 20px" ></div>
+    <a style="display: none" id="aaa"></a>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button id="sub" type="button" class="layui-btn">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  layui.use(['slider','layer'], function(){
+    var slider = layui.slider;
+    var layer = layui.layer;
+
+    //渲染
+    slider.render({
+      elem: '#slideTest1',
+      change: function(value){
+        // console.log(value); //动态获取滑块数值
+        //do something
+        if(value > 50){
+          layer.msg('验证成功！',{icon:6})
+          $('#aaa').text(value)
+        }else{
+          layer.msg('验证失败！',{icon:5})
+        }
+      }//绑定元素
+    });
+  });
+</script>
+<script>
+  layui.use('layer', function () {
+    var layer = layui.layer;
+    $("#sub").click(function () {
+        if (($("input[name='username']").val() == 'admin') && ($("input[name='password']").val() == 'admin')) {
+          if ($('#aaa').text() > 50) {
+            window.location.href = 'http://localhost:8080/admin.html';
+          } else {
+            layer.msg('验证失败！!',{icon:5});
+          }
+        } else {
+          layer.msg('用户名或密码错误', {icon: 5, time: 5000});
+
+        }
+    });
+
+  })
+  ;
+</script>
+</body>
+</html>

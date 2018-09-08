@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class MyInfo {
+    //Home个人信息综合---DJN
     private  String USER_NAME;
     private  String HEAD_IMG;
     private BigDecimal BLOG_ID;

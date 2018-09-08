@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,9 +33,10 @@ public class UpdataUserServlet extends HttpServlet {
     String EMAIL = request.getParameter("EMAIL");
     String ADDRESS = request.getParameter("ADDRESS");
     String BLOOD_TYPE = request.getParameter("BLOOD_TYPE");
+    //时间格式
     Date BIRTHDAY = null;
     try {
-      BIRTHDAY =new SimpleDateFormat("yyyy/MM/dd").parse(request.getParameter("BIRTHDAY"));
+      BIRTHDAY = new SimpleDateFormat().parse(request.getParameter("BIRTHDAY"));
     } catch (ParseException e) {
       e.printStackTrace();
     }

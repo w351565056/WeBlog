@@ -20,11 +20,12 @@ public class InsertBlogServlet extends HttpServlet {
         String blogcontent = request.getParameter("blogcontent");
         String imgpath = request.getParameter("imgpath");
         String forward = request.getParameter("forward");
+        String userid = request.getParameter("userid");
         BlogContent blog = new BlogContent();
         blog.setBLOG_TEXT(blogcontent);
         blog.setBLOG_IMG(imgpath);
         blog.setBLOG_FORWARD(new BigDecimal(forward));//字符串能转成big吗?
-        blog.setUSER_ID(new BigDecimal(100003));
+        blog.setUSER_ID(new BigDecimal(userid));
         dao.InsertBlog(blog);
     }
 

@@ -20,8 +20,9 @@ import java.util.List;
 
 @WebServlet( "/ShowMyBlogLikeNumServlet")
 public class ShowMyBlogLikeNumServlet extends HttpServlet {
+    //Home展示我的获得赞数量---DJN
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BigDecimal userid = new BigDecimal(request.getParameter("id_shmylinum"));
+        BigDecimal userid = new BigDecimal(request.getParameter("nowuserid"));
         ShowMyLikeNumDao showMyLikeNumDao = new ShowMyBlogLikeNumImpl();
         List<MyBlogLikeNum> myBlogLikeNums = showMyLikeNumDao.ShowMyLikeNum(userid);
         JsonConfig jsonConfig = new JsonConfig();

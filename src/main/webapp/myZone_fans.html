@@ -4,70 +4,162 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/myZone.css">
+    <script src="layer/layer.js"type="text/javascript"></script>
     <script src="//at.alicdn.com/t/font_786622_igfdgk6diqe.js" type="text/javascript"></script>
     <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
     <script>
         $(function () {
+            //当前的用户ID
+        var nowuser;
+        //获取用户名和用户ID
+        $.ajax({
+            url:"/getSessionServlet",
+            type:"post",
+            async:false,
+            dataType:"json",
+            success:function (result) {
+                nowuser=result.USER_ID;
+            }
+        })
+            function getJsUrl(){
+                var pos,str,para,parastr;
+                var array =[]
+                str = document.referrer;
+                parastr = str.split("?")[1];
+                var arr = parastr.split("&");
+                for (var i=0;i<arr.length;i++){
+                    array[arr[i].split("=")[0]]=arr[i].split("=")[1];
+                }
+                return array;
+            }
+            var req = getJsUrl();
+            var jumpid=req["userid"];
+            if(jumpid!=nowuser){
+                $(".attention_button").remove();
+                $(".unit2_header").text("他的粉丝");
+            }
+
             var ModNode=$(".attention_unit").detach();
             $.ajax({
                 url:"/ShowFansServlet",
                 type:"post",
                 dataType:"json",
+                data:{"USER_ID":jumpid},
                 success:function (result) {
-                    for(var i=0;i<result.length;i++){
-                        var cloneNode=ModNode.clone(true);
+                    for (var i = 0; i < result.length; i++) {
+                        var cloneNode = ModNode.clone(true);
                         var Node = cloneNode.children();
-                            // Node.eq(0).attr("src",result[i].HEAD_IMG)
-                            Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
-                            Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
-                            Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
-                            // Node.eq(1).children().eq(2).children().eq(1).text(result[result.length-1])
-                            $(".attention").append(cloneNode);
+                        Node.eq(0).children().attr("src", result[i].HEAD_IMG);
+                        cloneNode.attr("userid", result[i].USER_ID);
+                        cloneNode.find(".head_img").attr("href","myZone.html?userid="+result[i].USER_ID);
+                        Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
+                        Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
+                        Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
+                        $.ajax({
+                            url:"/ShowAttentionServlet",
+                            type:"post",
+                            dataType:"json",
+                            data:{"USER_ID":jumpid},
+                            success:function (result11) {
+                                if(result11.USER_ID==result.USER_ID){
+                                    Node.find(".attention_part1").css("display","inline-block");
+                                    Node.find(".attention_part2").css("display","none");
+                                }else {
+                                    Node.find(".attention_part1").css("display","none");
+                                    Node.find(".attention_part2").css("display","inline-block");
+                                }
+
+                            }
+                        });
+                        $.ajax({
+                            url:"/getCountFansAServlet",
+                            type:"post",
+                            dataType:"json",
+                            data:{"USER_ID":jumpid},
+                            success:function (result) {
+                                for(var i=0;i<result.length;i++){
+                                    $(".attention_count").eq(i).text(result[i].COUNT);
+                                }
+                            }
+                        })
+                        $.ajax({
+                            url:"/getCountFansServlet",
+                            type:"post",
+                            dataType:"json",
+                            data:{"USER_ID":jumpid},
+                            success:function (result) {
+                                for(var i=0;i<result.length;i++){
+                                    $(".fans_count").eq(i).text(result[i].COUNT);
+                                }
+                            }
+                        })
+                        $.ajax({
+                            url:"/getCountFBlogServlet",
+                            type:"post",
+                           dataType:"json",
+                            data:{"USER_ID":jumpid},
+                            success:function (result) {
+                                for(var i=0;i<result.length;i++){
+                                    $(".blog_count").eq(i).text(result[i].COUNT);
+                                }
+                            }
+                        })
+                        $(".attention").append(cloneNode);
+
+
                     }
+                    var userid;
+                    $(".attention_part2").click(function () {
+                        userid = $(this).closest(".attention_unit").attr("userid");
+                        var $node = $(this);
+                            $.ajax({
+                                url:"/insertAttentionServlet",
+                                type:"post",
+                                async:false,
+                                data:{"userid":userid,"USER_ID":jumpid},
+                                dataType:"json",
+                                success:function (result) {
+                                    if(result=="1"){
+
+                                            //self.opener.location.reload();
+                                            //window.location.reload("myZone_fans.html");
+                                            $node.hide();
+                                            $node.prev().show();
+                                    }
+                                }
+                            })
+                        })
+                    $(".attention_part1").click(function () {
+                        $(this).css("display","none");
+                        $(this).next().css("display","inline-block");
+                    })
                 }
             })
-            // $.ajax({
-            //     url:"/getCountFansServlet",
-            //     type:"post",
-            //     dataType:"json",
-            //     success:function (result) {
-            //         for(var i=0;i<result.length;i++){
-            //             // Node.eq(0).attr("src",result[i].HEAD_IMG)
-            //             // Node.eq(1).children().eq(0).children().text(result[i].USER_NAME);
-            //             // Node.eq(1).children().eq(3).children().eq(1).text(result[i].ADDRESS);
-            //             // Node.eq(1).children().eq(4).children().eq(1).text(result[i].INTRO);
-            //              Node2.eq(1).children().eq(2).children().eq(1).text(result[i].count (*));
-            //
-            //         }
-            //     }
-            // })
         })
     </script>
 </head>
 <body>
-
-
 <div class="attention">
     <div class="unit2_header border_bottom headr_info">我的粉丝</div>
-    <div class="attention_unit border_bottom">
-        <a><img src="images/myZone/attention_img.jpg" class="attention_img"></a>
+    <div userid="userid" class="attention_unit border_bottom">
+        <a class="head_img"href="" target="_parent"><img src="images/myZone/attention_img.jpg" class="attention_img"></a>
         <div class="attention_info">
             <a class="a_attention_name">
-                <div class="attention_name"></div>
+                <div class="attention_name">微博达人</div>
             </a>
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-sexm"></use>
             </svg>
             <div class="attention_row">
                 <span>关注</span>
-                <span><a class="a_attention atten">64</a></span>
+                <span><a class="a_attention attention_count">1</a></span>
                 <div class="attention_row_unit">
                     <span>粉丝</span>
-                    <span><a class="a_attention fans">22891</a></span>
+                    <span><a class="a_attention fans_count">1</a></span>
                 </div>
                 <div class="attention_row_unit">
                     <span>微博</span>
-                    <span><a class="a_attention">960</a></span>
+                    <span><a class="a_attention blog_count">1</a></span>
                 </div>
             </div>
             <div class="attention_row">
@@ -82,16 +174,15 @@
                 通过<a class="a_attention">微博搜索</a> 关注
             </div>
         </div>
-        <!--<div class="attention_button ">-->
-            <!--<a>-->
-                <!--<svg class="icon_duihao border_right" aria-hidden="true">-->
-                    <!--<use xlink:href="#icon-danduduihao"></use>-->
-                <!--</svg>-->
-                <!--<span class="attention_add">+</span>-->
-                <!--<span class="attention_text">关注</span>-->
-            <!--</a>-->
-        <!--</div>--> <!--已关注按钮样式-->
-        <div class="attention_button ">
+        <div class="attention_button attention_part1"style="display: none">
+            <a>
+                <svg class="icon_duihao border_right" aria-hidden="true">
+                    <use xlink:href="#icon-danduduihao"></use>
+                </svg>
+                <span class="attention_text">已关注</span>
+            </a>
+        </div>
+        <div class="attention_button attention_part2" style="display: none">
             <a>
                 <svg class="icon_huxiang" aria-hidden="true">
                     <use xlink:href="#icon--huxiangguanzhu"></use>

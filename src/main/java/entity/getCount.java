@@ -3,15 +3,25 @@ package entity;
 import java.math.BigDecimal;
 
 public class getCount {
+    private BigDecimal USER_ID;
     private BigDecimal FANS_ID;
     private BigDecimal ATTENTION_ID;
-    private BigDecimal count;
+    private BigDecimal COUNT;
     public getCount(){};
-    public getCount(BigDecimal FANS_ID, BigDecimal ATTENTION_ID, BigDecimal count) {
-        this.FANS_ID = FANS_ID;
-        this.ATTENTION_ID = ATTENTION_ID;
-        this.count = count;
+
+    public getCount(BigDecimal USER_ID) {
+        this.USER_ID = USER_ID;
+
     }
+
+    public BigDecimal getUSER_ID() {
+        return USER_ID;
+    }
+
+    public void setUSER_ID(BigDecimal USER_ID) {
+        this.USER_ID = USER_ID;
+    }
+
     public BigDecimal getFANS_ID() {
         return FANS_ID;
     }
@@ -28,11 +38,11 @@ public class getCount {
         this.ATTENTION_ID = ATTENTION_ID;
     }
 
-    public BigDecimal getCount() {
-        return count;
+    public BigDecimal getCOUNT() {
+        return COUNT;
     }
 
-    public void setCount(BigDecimal count) {
-        this.count = count;
+    public void setCOUNT(BigDecimal COUNT) {
+        this.COUNT = COUNT;
     }
 }

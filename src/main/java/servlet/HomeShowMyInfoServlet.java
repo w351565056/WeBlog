@@ -1,12 +1,8 @@
 package servlet;
 
 import dao.ShowMyContentDao;
-import dao.ShowMyInfoDao;
-import dao.ShowMyRelDao;
-import entity.*;
+import entity.ShowMyContent;
 import impl.ShowMyContentDaoImpl;
-import impl.ShowMyInfoDaoImpl;
-import impl.ShowMyRelDaoImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
@@ -26,27 +22,15 @@ import java.util.List;
 public class HomeShowMyInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            BigDecimal myuserid = new BigDecimal("50");
+            //Home个人信息卡返回个人 微博数---DJN
+            BigDecimal myuserid = new BigDecimal(request.getParameter("nowuserid"));
             ShowMyContentDao showMyContent = new ShowMyContentDaoImpl();
-            ShowMyInfoDao showMyInfo = new ShowMyInfoDaoImpl();
-            ShowMyRelDao showMyRel= new ShowMyRelDaoImpl();
+
             List<ShowMyContent> blogContents = showMyContent.ShowMyContent(myuserid);
-            List<ShowMyInfo> showMyInfos = showMyInfo.ShowMyInfo(myuserid);
-            List<ShowMyRel>  showMyRelsatten = showMyRel.ShowMyAttention(myuserid);
-            List<ShowMyRel>  showMyRelsfuns = showMyRel.ShowMyFunnum(myuserid);
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
-            JSONArray array = JSONArray.fromObject(new Object[]{showMyInfos,blogContents,showMyRelsatten,showMyRelsfuns},jsonConfig);
-//            JSONArray jsonArray = new JSONArray();
-//            jsonArray.add(new Object[]{showMyInfos});
-//             jsonArray.add(new Object[]{blogContents,showMyRelsatten,showMyRelsfuns,array });
-
+            JSONArray array = JSONArray.fromObject(blogContents,jsonConfig);
             PrintWriter out = response.getWriter();
-//        out.print(blogContents);
-//        out.print(showMyInfos);
-//        out.print(showMyRelsatten);
-//        out.print(showMyRelsfuns);
-//            out.print(jsonArray);
             out.print(array);
             out.flush();
             out.close();

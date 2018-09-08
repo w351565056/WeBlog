@@ -7,7 +7,7 @@ body {
 #header {
     height: 75px;
     width: 100%;
-    background: #75c3f1;
+    background-color:#000;
     /*background-attachment: fixed;*/
     /*position: fixed;*/
 }
@@ -16,20 +16,20 @@ body {
     margin: 19px 0px 0 0;
     width: 246px;
     height: 56px;
-    background: #75c3f1;
+    background: #000;
     float: left;
     position: relative;
 }
 
 .logo a {
-    background: url("../images/Home/logo.jpg") 0 0 no-repeat;
-    width: 206px;
-    height: 56px;
+    background: url("../images/Home/LOGO.png") 0 0 no-repeat;
+    width: 250px;
+    height: 70px;
     position: relative;
     float: left;
-    background-size: 207px;
+    background-size: 250px 70px;
     margin-left: 165px;
-    margin-top: -5px;
+    margin-top: -15px;
 }
 
 .btn .search {
@@ -40,7 +40,7 @@ body {
 .nav {
     width: 740px;
     height: 74px;
-    background: #75c3f1;
+    background: #000;
     float: left;
     margin-left: 180px;
 }
@@ -109,7 +109,7 @@ form {
 .middle-left {
     width: 110px;
     height: 60px;
-    background: #75c3f1;
+    background: #000;
     float: left;
     margin-top: 8px;
     margin-left: 10px;
@@ -118,7 +118,7 @@ form {
 .middle-mid {
     width: 110px;
     height: 60px;
-    background: #75c3f1;
+    background: #000;
     float: left;
     margin-top: 8px;
     margin-left: -20px;
@@ -127,7 +127,7 @@ form {
 .middle-right {
     width: 150px;
     height: 60px;
-    background: #75c3f1;
+    background: #000;
     float: left;
     margin-top: 8px;
     margin-left: 10px;
@@ -176,7 +176,7 @@ form {
     margin-top: 25px;
     float: left;
     margin-left: 5px;
-    background: #75c3f1;
+    background: #000;
     cursor: pointer;
 }
 
@@ -243,4 +243,21 @@ form {
     margin-right: 16px;
     margin-top: 10px;
     line-height: 0px;
+}
+#pp{
+    display: block;
+    width: 80px;
+    color: white;
+    position: relative;
+    left: 10px;
+    cursor: pointer;
+
+}
+#spp{
+    color: white;
+    position: relative;
+    left: 80px;
+    top: 20px;
+    cursor: pointer;
+    font-size: 15px;
 }

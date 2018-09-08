@@ -1,9 +1,7 @@
 package servlet;
 
 import dao.BlogCollectDao;
-import entity.BlogCollect;
 import impl.BlogCollectDaoImpl;
-import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import util.JsonDateValueProcessor;
 
@@ -16,10 +14,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @WebServlet("/showCollectServlet")
-public class showCollectServlet extends HttpServlet {
+public class ShowCollectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BigDecimal showcol = new BigDecimal(request.getParameter("userid"));
         BlogCollectDao blogCollectDao = new BlogCollectDaoImpl();

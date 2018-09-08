@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class showBlogCollect {
+    //我的收藏数量---DJN
     private BigDecimal COLLECT_ID;
     private BigDecimal USER_ID;
     private BigDecimal BLOG_ID;

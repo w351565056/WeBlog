@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +22,9 @@ import java.util.List;
 public class UserInfoServlet extends HttpServlet {
     UserInfoDao dao = new UserInfoDaoImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        BigDecimal user_id = new BigDecimal(request.getParameter("USER_ID"));
         //查询个人信息
-        List<UserInfo> list = dao.showAllUser(100002);
+        List<UserInfo> list = dao.showUserByUserID(user_id);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONArray array = JSONArray.fromObject(list,jsonConfig);

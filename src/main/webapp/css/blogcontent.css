@@ -96,7 +96,12 @@ li{
     margin-right:2px ;
     box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
+
 }
+/*.blogcontent_pinglun_text{*/
+    /*width: 500px;*/
+    /*padding: 10px 10px 10px 30px;*/
+/*}*/
 .blogcontent_shoucang ul li{
     list-style: none;
 }
@@ -105,6 +110,7 @@ li{
     height: 24px;
     padding: 10px 30px 10px 30px;
     background-color: white;
+    border-bottom: 1px solid #cececf;
 }
 .blogcontent_pinglun{
     display: none;
@@ -114,6 +120,52 @@ li{
     box-shadow: 1px 1px 1px 1px rgb(208,208,210);
     background-color: white;
     margin-right:2px ;
+}
+.blogcontent_pinglun_text{
+    width: 500px;
+    height: 40px;
+    padding: 18px 30px 0px 30px;
+    margin-bottom: 18px;
+}
+.blogcontent_input_pinglun{
+    width: 370px;
+    height: 20px;
+    padding: 9px;
+    border: 1px solid #cececf;
+    float: left;
+}
+.blogcontent_pinglun_submit{
+    float: right;
+    width: 104px;
+    height: 40px;
+    background-color: #779e00;
+    border: none;
+    text-shadow: -1px -1px 0px #779e00;
+    border-radius: 2px;
+    color: white;
+    font-size: 16px;
+}
+.blogcontent_pinglun_demo{
+    width: 500px;
+    padding: 10px 30px;
+    border-bottom: 1px solid #cececf;
+}.blogcontent_pinglun_head{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+ }
+.blogcontent_pinglun_neirong{
+    display: inline-block;
+    width: 365px;
+    font-size: 12px;
+}
+.blogcontent_pinglun_huifu{
+    float: right;
+    width: 40px;
+    margin-left: 20px;
+}
+.blogcontent_huifu{
+    margin-left: 15px;
 }
 .blogcontent_button_a img{
     vertical-align:middle;
@@ -139,3 +191,20 @@ li{
 .forwardcontent_word{
     font-size: 12px;
 }
+.ta_c{text-align: center;
+    margin-top: 100px;}
+
+@-webkit-keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.Rotation{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
+}
+
+/*.img{border-radius: 250px;}*/

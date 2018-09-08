@@ -18,10 +18,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet( "/ShowMyCollectNumServlet")
+@WebServlet("/ShowMyCollectNumServlet")
 public class ShowMyCollectNumServlet extends HttpServlet {
+    //Home展示我的收藏数量---DJN
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BigDecimal userid = new BigDecimal(request.getParameter("id_shmyconu"));
+        BigDecimal userid = new BigDecimal(request.getParameter("nowuserid"));
         ShowMyCollectNumDao showMyCollectNumDao = new ShowMyCollectNumDaoImpl();
         List<BlogCollect> blogCollects = showMyCollectNumDao.showmyCollectnum(userid);
         JsonConfig jsonConfig = new JsonConfig();

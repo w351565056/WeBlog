@@ -22,11 +22,12 @@ import java.util.List;
 public class showTopicServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            //Home展示超级话题---DJN
             BigDecimal rowmin = null;
             BigDecimal rowmax = null;
             BigDecimal pnum = null;
             BigDecimal pagenum = new BigDecimal(request.getParameter("pagenum"));
-            BigDecimal pagesize = new BigDecimal("3");
+            BigDecimal pagesize = new BigDecimal("7");
             pnum = new BigDecimal("1");
             rowmax = pagenum.multiply(pagesize);
             rowmin = pagenum.subtract(pnum).multiply(pagesize);

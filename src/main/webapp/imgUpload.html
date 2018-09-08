@@ -4,13 +4,29 @@
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/insert.css" type="text/css">
+    <link href="layer/theme/default/layer.css">
+    <link rel="stylesheet" href="css/style.css"/>
     <!--下面标签增加和class同名的id即可显示-->
     <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
     <script src="js/jquery.ui.widget.js"></script>
     <script src="js/jquery.iframe-transport.js"></script>
     <script src="js/jquery.fileupload.js"></script>
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/modernizr.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("body").on("mouseenter", ".img", function () {
+                $(this).addClass("hover");
+            });
+            $("body").on("mouseleave", ".img", function () {
+                $(this).removeClass("hover");
+            });
+        });
+    </script>
     <script>
         $(function () {
+            $(".embed_preview").attr("src", "images/1.mp4")
             var num = 0;
             // $(".add_area").on("click",".add",function () {
             //     $("#fileupload").trigger("click")
@@ -31,24 +47,27 @@
                     $(".remainnum").text(9 - num);
                     //获取图片路径并显示预览
                     var url = getUrl(data.files[0]);
-                    var $img = $("<img>").attr("src", url).css({"width": "80px", "height": "120px"})
+                    // var $img = $("<img>").attr("src", url).css({"width": "80px", "height": "120px"})
+                    var $img = $(' <div class="img">\n' +
+                        '            <img src='+url+' alt="" width="80px" height="120px">\n' +
+                        '            <div class="overlay">\n' +
+                        '                <a class="close-overlay">x</a>\n' +
+                        '            </div>\n' +
+                        '        </div>')
                     $(".add:last-child").append($img);
                     //预览之后解除选择图片的事件绑定
                     $(".add").unbind();
-                    //增加新的操作
-                    // $(".add").hover(function () {
-                    //     $(this).css("background-color","#666666");
-                    // })
+
                     $(".add").click(function () {
                         $(this).remove();
-                        data=null;
+                        data = null;
                         num--;
                         if (num == 8) {
                             var newadd = $('<li class="add"><a></a></li>');
                             newadd.click(function () {
                                 $("#fileupload").trigger("click");
                             })
-                            $(".add_area").append(newadd);
+                            $(".effects").append(newadd);
                         }
                     });
 
@@ -58,7 +77,7 @@
                         newadd.click(function () {
                             $("#fileupload").trigger("click");
                         })
-                        $(".add_area").append(newadd);
+                        $(".effects").append(newadd);
                     }
                     //绑定上传提交事件
                     $(".attention_text").click(function () {
@@ -103,10 +122,36 @@
         </a>
     </div>
     <ul class="add_area" style="margin-left: -30px">
-        <li class="add"><a class="add_a"></a></li>
+        <div id="effect-6" class="effects clearfix" style="display: inline-block">
+            <li class="add"><a class="add_a"></a>
 
+            </li>
+        </div>
     </ul>
     <input id="fileupload" class="fileupload" type="file" name="files" multiple="multiple" style="display: none">
 </div>
+<div class="insert_video">
+    <div class="title">上传普通视频</div>
+    <div class="titlesec">请上传时长在15分钟以内的视频，请勿上传色情、反动等违法视频</div>
+    <div class="videopreview">
+        <embed class="embed_preview">
+    </div>
+</div>
+<div id="layer-photos-demo" class="layer-photos-demo">
+    <img class="test_img" layer-src="images/success.png" src="images/forwardimg.PNG" alt="查看图片">
+</div>
+
+<script>
+    //调用示例
+    $(function () {
+        layer.photos({
+            photos: '#layer-photos-demo'
+            , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
+    })
+
+</script>
+<!--<a href="images/success.png">查看图片</a>-->
 </body>
 </html>

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ShowMyBlogLikeNumImpl extends BaseDao<MyBlogLikeNum> implements ShowMyLikeNumDao {
     @Override
+    //Home展示我的赞数---DJN
     public List<MyBlogLikeNum> ShowMyLikeNum(BigDecimal likenum) {
         return executeQuery("SELECT COUNT(*) AS NUMLIK FROM BLOG_LIKE WHERE USER_ID = ?",new Object[]{likenum});
     }
